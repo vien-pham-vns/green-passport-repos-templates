@@ -1,0 +1,27 @@
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.columnHeaderTitle {
+  font-size: 12px;
+}
+
+.columnHeaderTitleContainer {
+  width: 100%;
+  height: 100%;
+}
+
+.columnHeaderTitleContainerContent {
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+}
+
+.cell {
+  font-size: 14px;
+}

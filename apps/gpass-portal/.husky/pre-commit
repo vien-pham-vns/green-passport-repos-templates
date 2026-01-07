@@ -1,0 +1,7 @@
+echo '🔍 Running lint-staged...'
+
+npm run lint:staged ||
+(
+    echo '❌ Lint-staged failed. Please fix the issues above and try again.'
+    false;
+)

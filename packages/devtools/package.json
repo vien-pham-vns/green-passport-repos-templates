@@ -1,0 +1,47 @@
+{
+  "name": "@dt/devtools",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "exports": {
+    "./translation-editor-simple": "./src/components/translation-editor-simple.tsx",
+    "./file-uploader": "./src/components/file-uploader.tsx",
+    "./language-stats": "./src/components/language-stats.tsx",
+    "./translation-table": "./src/components/translation-table.tsx",
+    "./translation-toolbar-simple": "./src/components/translation-toolbar-simple.tsx",
+    "./hooks/use-translation-files": "./src/hooks/use-translation-files.ts",
+    "./hooks/use-translation-sync": "./src/hooks/use-translation-sync.ts",
+    "./hooks/use-translation-filters": "./src/hooks/use-url-search-params.ts",
+    "./hooks/use-filtered-translations": "./src/hooks/use-filtered-translations.ts",
+    "./utils/file-parser": "./src/utils/file-parser.ts",
+    "./utils/file-writer": "./src/utils/file-writer.ts",
+    "./utils/diff-checker": "./src/utils/diff-checker.ts",
+    "./types": "./src/types/index.ts",
+    ".": "./src/index.tsx"
+  },
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "check-types": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@dt/eslint-config": "workspace:*",
+    "@dt/typescript-config": "workspace:*",
+    "@types/node": "^22.15.3",
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3",
+    "eslint": "^9.34.0",
+    "typescript": "5.9.2"
+  },
+  "dependencies": {
+    "@dt/mui-ui": "workspace:*",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^7.3.6",
+    "@mui/material": "^7.3.6",
+    "flat": "^6.0.1",
+    "next": "16.1.1",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "use-debounce": "^10.0.6"
+  }
+}

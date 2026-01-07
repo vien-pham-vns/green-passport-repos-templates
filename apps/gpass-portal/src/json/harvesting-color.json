@@ -1,0 +1,27 @@
+{
+  "veryHight": {
+    "color": "#002877",
+    "min": 0.81,
+    "max": 1
+  },
+  "hight": {
+    "color": "#004ADD",
+    "min": 0.51,
+    "max": 0.8
+  },
+  "medium": {
+    "color": "#4482FF",
+    "min": 0.21,
+    "max": 0.5
+  },
+  "low": {
+    "color": "#99CCFF",
+    "min": 0.11,
+    "max": 0.2
+  },
+  "veryLow": {
+    "color": "#CCDDFF",
+    "min": 0.01,
+    "max": 0.1
+  }
+}

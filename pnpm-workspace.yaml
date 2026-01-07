@@ -1,0 +1,15 @@
+packages:
+  - apps/*
+  - packages/*
+
+ignoredBuiltDependencies:
+  - core-js
+  - core-js-pure
+  - protobufjs
+  - unrs-resolver
+
+onlyBuiltDependencies:
+  - '@firebase/util'
+  - '@swc/core'
+  - esbuild
+  - sharp
