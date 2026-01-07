@@ -25,16 +25,6 @@ pnpm check-types
 
 This monorepo contains **3 microfrontend applications** that can be developed and deployed independently:
 
-### Applications
-
-| App                 | Framework  | Port | Base Path          | Description               |
-| ------------------- | ---------- | ---- | ------------------ | ------------------------- |
-| **doa**             | Next.js 16 | 3000 | `/`                | Main application          |
-| **packing-house**   | Next.js 16 | 3001 | `/packing-house`   | Packing House application |
-| **internal**        | Next.js 16 | 3002 | `/internal`        | Internal application      |
-| **gpass-website**   | Next.js 16 | 3003 | `/gpass-website`   | GPass website             |
-| **propass-website** | Next.js 16 | 3004 | `/propass-website` | ProPass website           |
-
 ### Shared Packages
 
 - `@dt/mui-ui` - Material-UI v7 components with Emotion
@@ -48,15 +38,8 @@ This monorepo contains **3 microfrontend applications** that can be developed an
 
 ```bash
 # Navigate to app directory
-cd apps/doa
+cd apps/gpass-portal
 # or
-cd apps/packing-house
-# or
-cd apps/internal
-# or
-cd apps/gpass-website
-# or
-cd apps/propass-website
 
 # Start development server
 pnpm dev
@@ -81,22 +64,6 @@ cd packages/mui-ui
 pnpm generate:component
 ```
 
-## Microfrontend Configuration
-
-Microfrontends are configured in `apps/web/microfrontends.json`:
-
-```json
-{
-  "applications": {
-    "doa": { "development": { "local": { "port": 3000 } }, "routing": [{ "paths": ["/"] }] },
-    "packing-house": { "development": { "local": { "port": 3001 } }, "routing": [{ "paths": ["/packing-house/:path*"] }] },
-    "internal": { "development": { "local": { "port": 3002 } }, "routing": [{ "paths": ["/internal/:path*"] }] },
-    "gpass-website": { "development": { "local": { "port": 3003 } }, "routing": [{ "paths": ["/gpass-website/:path*"] }] },
-    "propass-website": { "development": { "local": { "port": 3004 } }, "routing": [{ "paths": ["/propass-website/:path*"] }] }
-  }
-}
-```
-
 Each app can:
 
 - Run independently on its own port
@@ -110,7 +77,6 @@ Each app can:
 - **Build System**: Turborepo 2.6.1
 - **Frontend Framework**: React 19
 - **Next.js**: v16.1.1 (App Router with RSC)
-- **Vite**: v7.3.0 (for admin app)
 - **UI Library**: Material-UI v7
 - **TypeScript**: v5.9.2
 - **Node**: >=18
@@ -120,11 +86,7 @@ Each app can:
 ```
 dt-fe-monorepo/
 ├── apps/
-│   ├── doa/                # Next.js app (port 3000)
-│   ├── packing-house/      # Next.js app (port 3001)
-│   ├── internal/           # Next.js app (port 3002)
-│   ├── gpass-website/      # Next.js app (port 3003)
-│   └── propass-website/    # Next.js app (port 3004)
+│   ├── gpass-portal
 ├── packages/
 │   ├── mui-ui/       # Material-UI components
 │   ├── example-ui/   # Example components
@@ -146,19 +108,13 @@ dt-fe-monorepo/
 
 ## Development Guidelines
 
-### Next.js Apps (web, docs)
+### Next.js Apps
 
 - Use **React Server Components** by default
 - Add `"use client"` only when needed (interactivity, hooks)
 - Leverage React 19 features: Server Actions, `useActionState`, `useOptimistic`
 - Use React's `cache()` for request memoization
 - Implement type-safe query params with `nuqs`
-
-### Vite App (propass-website)
-
-- Uses React Router v7
-- SWC for fast builds
-- Separate build pipeline from Next.js apps
 
 ### Shared Components
 
@@ -179,7 +135,7 @@ Each application can be deployed independently:
 
 ```bash
 # Build specific app
-cd apps/web && pnpm build
+cd apps/gpass-portal && pnpm build
 
 # Or build all
 pnpm build
