@@ -14,6 +14,7 @@ const cspHeader = `
     base-uri 'self';
     form-action 'self';
     frame-ancestors 'none';
+    frame-src 'self' https://egap.dt-dev.vnsilicon.cloud;
     upgrade-insecure-requests;
 `;
 
