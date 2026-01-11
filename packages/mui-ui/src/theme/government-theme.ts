@@ -70,6 +70,32 @@ const governmentColors = {
     dark: "hsl(122 45% 28%)", // #1B5E20 - Contrast ratio: 8.91:1
     contrastText: "#ffffff",
   },
+  // Brand: Professional blue shades (same as primary for government)
+  brand: {
+    50: "hsl(214, 100%, 97%)",
+    100: "hsl(214, 95%, 92%)",
+    200: "hsl(214, 90%, 85%)",
+    300: "hsl(214, 87%, 72%)",
+    400: "hsl(214, 80%, 45%)",
+    500: "hsl(214, 84%, 35%)",
+    600: "hsl(214, 85%, 25%)",
+    700: "hsl(214, 87%, 20%)",
+    800: "hsl(214, 90%, 15%)",
+    900: "hsl(214, 95%, 10%)",
+  },
+  // Neutral: Government-appropriate grayscale
+  neutral: {
+    50: "hsl(210, 20%, 98%)",
+    100: "hsl(210, 20%, 96%)",
+    200: "hsl(210, 20%, 92%)",
+    300: "hsl(210, 14%, 84%)",
+    400: "hsl(220, 10%, 66%)",
+    500: "hsl(220, 10%, 46%)",
+    600: "hsl(220, 13%, 34%)",
+    700: "hsl(220, 15%, 27%)",
+    800: "hsl(220, 26%, 17%)",
+    900: "hsl(220, 36%, 12%)",
+  },
 };
 
 /**
@@ -110,6 +136,7 @@ export function createGovernmentTheme(
   highContrast: boolean = false,
 ) {
   return createTheme({
+    colorSchemes: { light: true, dark: true },
     cssVariables: {
       cssVarPrefix: "gov",
       colorSchemeSelector: "class",
