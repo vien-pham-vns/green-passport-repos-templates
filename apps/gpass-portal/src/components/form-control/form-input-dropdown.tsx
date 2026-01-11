@@ -1,3 +1,4 @@
+import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
 import InputLabel from '@mui/material/InputLabel';
@@ -35,7 +36,11 @@ export const FormInputDropdown = ({
             htmlFor={`${name}-input`}
           >
             {label}
-            {required && <span style={{ color: 'red', marginLeft: '4px' }}>*</span>}
+            {required && (
+              <Box component="span" sx={{ color: 'red', marginLeft: '4px' }}>
+                *
+              </Box>
+            )}
           </InputLabel>
           <FormControl error={!!renderProps.fieldState.error} sx={{ minWidth: 200 }}>
             <Select

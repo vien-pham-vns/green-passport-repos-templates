@@ -1,4 +1,4 @@
-# DT Frontend Microfrontends Monorepo
+# Repos
 
 A Turborepo-powered microfrontends monorepo with Next.js and Vite applications sharing common UI packages.
 

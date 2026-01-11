@@ -16,6 +16,7 @@
     "./utils/file-parser": "./src/utils/file-parser.ts",
     "./utils/file-writer": "./src/utils/file-writer.ts",
     "./utils/diff-checker": "./src/utils/diff-checker.ts",
+    "./utils/variables-env": "./src/utils/variables-env.ts",
     "./types": "./src/types/index.ts",
     ".": "./src/index.tsx"
   },

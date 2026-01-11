@@ -2,6 +2,7 @@
 'use memo';
 
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -15,6 +16,7 @@ interface IframeBoxProps {
  * IframeBox component - A reusable box that displays an iframe
  *
  * Features:
+ * - Renders in document body using React Portal
  * - Accessible with ARIA attributes
  * - Error handling for iframe load failures
  *
@@ -35,15 +37,21 @@ export default function IframeBox({ iframeUrl, title = 'Content' }: IframeBoxPro
     setHasError(true);
   };
 
-  return (
+  if (typeof window === 'undefined') return null;
+
+  const content = (
     <Box
       sx={{
         p: 0,
         display: 'flex',
         flexDirection: 'column',
-        position: 'relative',
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
         overflow: 'hidden',
-        height: '100vh',
+        zIndex: 1000,
       }}
     >
       {hasError && (
@@ -74,7 +82,7 @@ export default function IframeBox({ iframeUrl, title = 'Content' }: IframeBoxPro
 
       <Box
         component='iframe'
-        id='iframe-modal-description'
+        id='iframe-description'
         src={iframeUrl}
         title={title}
         onLoad={handleIframeLoad}
@@ -88,4 +96,6 @@ export default function IframeBox({ iframeUrl, title = 'Content' }: IframeBoxPro
       />
     </Box>
   );
+
+  return createPortal(content, document.body);
 }

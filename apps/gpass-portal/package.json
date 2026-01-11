@@ -64,12 +64,13 @@
     "use-debounce": "^10.0.6",
     "zod": "4.3.5",
     "zustand": "^5.0.9",
-    "es-toolkit": "1.43.0"
+    "es-toolkit": "1.43.0",
+    "react-hook-form": "7.71.0"
   },
   "devDependencies": {
     "@dt/eslint-config": "workspace:*",
     "@dt/typescript-config": "workspace:*",
-    "@faker-js/faker": "9.2.0",
+    "@faker-js/faker": "10.2.0",
     "@trivago/prettier-plugin-sort-imports": "^6.0.0",
     "@types/mustache": "^4.2.5",
     "@types/node": "^20",

@@ -2,7 +2,7 @@
 
 import React, { createContext } from 'react';
 
-import { get } from 'lodash-es';
+import { get } from 'es-toolkit/compat';
 import Mustache from 'mustache';
 
 import { Locale } from '@/lib/i18n-config';

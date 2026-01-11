@@ -55,3 +55,5 @@ export {
   calculateCompletionPercentage,
   getLanguageStatistics,
 } from "./utils/diff-checker";
+
+export { loadEnv } from "./utils/variables-env";
