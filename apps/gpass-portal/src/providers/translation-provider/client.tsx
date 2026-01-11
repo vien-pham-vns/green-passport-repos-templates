@@ -8,7 +8,7 @@ import Mustache from 'mustache';
 import { Locale } from '@/lib/i18n-config';
 import { initDayjsLocale } from '@/utils/date';
 
-export type TranslateMessages = Record<string, any>;
+export type TranslateMessages = Record<string, unknown>;
 
 interface TranslationContextValue {
   locale: Locale;

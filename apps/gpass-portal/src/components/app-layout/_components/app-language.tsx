@@ -1,14 +1,15 @@
 'use client';
-'use memo'; // try react compiler opt-in
+
+import { CSSProperties } from 'react';
 
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Stack from '@mui/material/Stack';
 import { GB, TH } from 'country-flag-icons/react/3x2';
 import { Locale } from 'lib/i18n-config';
-import { CSSProperties } from 'react';
-import { useTranslationsContext } from '@/providers/translation-provider/client';
+
 import { setLocale } from '@/lib/cookies';
+import { useTranslationsContext } from '@/providers/translation-provider/client';
 
 const flagStyle: CSSProperties = { width: '24px', height: '24px' };
 
@@ -49,4 +50,4 @@ export default function AppSelectLanguage() {
       ))}
     </Select>
   );
-};
+}

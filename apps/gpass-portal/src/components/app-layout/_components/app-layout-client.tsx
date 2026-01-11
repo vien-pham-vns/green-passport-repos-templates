@@ -1,12 +1,12 @@
 'use client';
 
-import { ReactNode, useState } from 'react';
+import { ReactNode } from 'react';
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import type { SxProps, Theme } from '@mui/material/styles';
 
-import useUserStore from '@/store/use-user-store';
+import useSidebarStore from '@/store/use-sidebar-store';
 
 import { AppHeader } from './app-header';
 import { AppSidebar } from './app-sidebar';
@@ -33,45 +33,31 @@ interface AppLayoutClientProps {
 }
 
 export const AppLayoutClient = ({ children }: AppLayoutClientProps) => {
-  const user = useUserStore((state) => state.user);
-  const userRole = user?.profile?.role;
-
   return <AppLayoutClientInner>{children}</AppLayoutClientInner>;
 };
 
 const AppLayoutClientInner = ({ children }: AppLayoutClientProps & {}) => {
-  const stored =
-    typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('sidebarOpen') : null;
-  const [open, setOpen] = useState(() => (stored !== null ? stored === 'true' : true));
+  const { isOpen, toggleSidebar } = useSidebarStore();
 
   return (
     <Box sx={{ display: 'flex', position: 'relative' }}>
-      <AppSidebar
-        open={open}
-        onToggleOpenAction={() => {
-          sessionStorage.setItem('sidebarOpen', String(!open));
-          setOpen((prev) => !prev);
-        }}
-      />
+      <AppSidebar open={isOpen} onToggleOpenAction={toggleSidebar} />
 
-      <AppBar elevation={2} sx={getAppBarSx(open)} position='fixed'>
+      <AppBar elevation={2} sx={getAppBarSx(isOpen)} position='fixed'>
         <AppHeader />
       </AppBar>
 
       <main
         style={{
           minHeight: '100dvh',
-          width: open
+          width: isOpen
             ? `calc(100% - var(--sidebar-width))`
             : `calc(100% - var(--collapsed-sidebar-width))`,
           padding: 'calc(var(--header-height) + 16px) 16px 16px 16px',
           backgroundColor: 'var(--neutral-100)',
-          position: 'relative',
           flex: 1,
           display: 'flex',
           flexDirection: 'column',
-          overflowX: 'hidden',
-          overflowY: 'auto',
         }}
       >
         {children}
