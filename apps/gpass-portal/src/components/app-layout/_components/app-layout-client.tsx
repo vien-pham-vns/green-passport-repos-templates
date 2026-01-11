@@ -8,12 +8,12 @@ import type { SxProps, Theme } from '@mui/material/styles';
 
 import useSidebarStore from '@/store/use-sidebar-store';
 
-import { AppHeader } from './app-header';
-import { AppSidebar } from './app-sidebar';
+import AppHeader from './app-header';
+import AppSidebar from './app-sidebar';
 
 const getAppBarSx = (open: boolean): SxProps<Theme> => ({
-  background: '#fff',
-  color: '#000',
+  background: (theme) => theme.palette.background.paper,
+  color: (theme) => theme.palette.text.primary,
   width: open
     ? `calc(100% - var(--sidebar-width))`
     : `calc(100% - var(--collapsed-sidebar-width))`,
@@ -37,24 +37,25 @@ export const AppLayoutClient = ({ children }: AppLayoutClientProps) => {
 };
 
 const AppLayoutClientInner = ({ children }: AppLayoutClientProps & {}) => {
-  const { isOpen, toggleSidebar } = useSidebarStore();
+  const isOpen = useSidebarStore((state) => state.isOpen);
+  const toggleSidebar = useSidebarStore((state) => state.toggleSidebar);
 
   return (
     <Box sx={{ display: 'flex', position: 'relative' }}>
-      <AppSidebar open={isOpen} onToggleOpenAction={toggleSidebar} />
+      <AppSidebar />
 
-      <AppBar elevation={2} sx={getAppBarSx(isOpen)} position='fixed'>
-        <AppHeader />
+      <AppBar elevation={2} sx={getAppBarSx(isOpen)} position='fixed' suppressHydrationWarning>
+        <AppHeader open={isOpen} onToggleOpenAction={toggleSidebar} />
       </AppBar>
 
       <main
+        suppressHydrationWarning
         style={{
           minHeight: '100dvh',
           width: isOpen
             ? `calc(100% - var(--sidebar-width))`
             : `calc(100% - var(--collapsed-sidebar-width))`,
           padding: 'calc(var(--header-height) + 16px) 16px 16px 16px',
-          backgroundColor: 'var(--neutral-100)',
           flex: 1,
           display: 'flex',
           flexDirection: 'column',

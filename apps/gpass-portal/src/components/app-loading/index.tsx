@@ -10,7 +10,6 @@ export default function AppLoading() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#fff',
         gap: 1,
       }}
     >

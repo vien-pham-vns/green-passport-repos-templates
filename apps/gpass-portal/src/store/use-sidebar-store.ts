@@ -7,7 +7,8 @@ interface SidebarStore {
 }
 
 const useSidebarStore = create<SidebarStore>((set) => {
-  // Initialize from sessionStorage if available
+  // Initialize from sessionStorage if available (client-side)
+  // This will be undefined on server, defaulting to true
   const stored =
     typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('sidebarOpen') : null;
   const initialIsOpen = stored !== null ? stored === 'true' : true;

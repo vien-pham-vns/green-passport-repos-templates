@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+import { IconTools, IconTransformPoint } from '@tabler/icons-react';
 
 type MenuItem = {
   key: string;
@@ -21,46 +21,28 @@ export const sidebarItemConfig: MenuItem[] = [
   {
     key: 'portal',
     label: 'menu-portal',
-    icon: ({ isActive }) => (
-      <Image
-        src={
-          isActive
-            ? '/icons/sidebar/dashboard-active.svg'
-            : '/icons/sidebar/dashboard.svg'
-        }
-        alt='portal-icon'
-        width={32}
-        height={32}
-      />
-    ),
+    icon: ({ isActive }) => <IconTransformPoint />,
     link: '/',
     activePathnames: ['/'],
     group: 'group-pages',
   },
 
-  // {
-  //   key: 'reports',
-  //   label: 'menu-reports',
-  //   icon: ({ isActive }) => (
-  //     <Image
-  //       src={isActive ? '/icons/sidebar/report-active.svg' : '/icons/sidebar/report.svg'}
-  //       alt='report-icon'
-  //       width={32}
-  //       height={32}
-  //     />
-  //   ),
-  //   link: routes.consumerFeedback.pathname,
-  //   activePathnames: [routes.consumerFeedback.pathname],
-  //   group: 'group-reports',
-  //   children: [
-  //     {
-  //       key: 'report-feedbacks',
-  //       label: 'consumer-feedback',
-  //       link: routes.consumerFeedback.pathname,
-  //       activePathnames: [routes.consumerFeedback.pathname],
-  //     },
-  //   ],
-  // },
+  {
+    key: 'Dev tools',
+    label: 'menu-dev-tools',
+    icon: ({ isActive }) => <IconTools />,
+    link: '/portal/devtools',
+    activePathnames: ['/devtools'],
+    group: 'group-devtools',
+    children: [
+      {
+        key: 'translation',
+        label: 'translation',
+        link: '/portal/devtools',
+        activePathnames: ['/devtools'],
+      },
+    ],
+  },
 ];
 
 export type { MenuItem as MenuItemConfig };

@@ -74,33 +74,8 @@
 *::before,
 *::after {
   box-sizing: border-box;
-  font-family: var(--font-poppins);
 }
 
 a {
   color: var(--brand-500);
-}
-
-@layer utilities {
-  .truncate {
-    display: inline-block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;
-  }
-
-  .truncate-2 {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    overflow: hidden;
-  }
-
-  .truncate-3 {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    overflow: hidden;
-  }
 }

@@ -2,19 +2,17 @@ import { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
 import { Suspense } from 'react';
 
-import 'react-toastify/dist/ReactToastify.css';
+import ThemeRegistry from '@dt/mui-ui/theme';
 
 import AppLoading from '@/components/app-loading';
-import ThemeRegistry from '@/theme/theme-registry';
 
 import './globals.css';
 import ProviderLayout from './provider-layout';
 
 const poppins = Poppins({
+  weight: ['300', '400', '500', '700'],
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600'],
   display: 'swap',
-  variable: '--font-poppins',
 });
 
 export const metadata: Metadata = {
@@ -31,7 +29,7 @@ export default function RootLayout({ children }: Readonly<LayoutProps>) {
   return (
     <html translate='no' suppressHydrationWarning>
       <body className={poppins.className}>
-        <ThemeRegistry>
+        <ThemeRegistry fontName={poppins.style.fontFamily}>
           <Suspense fallback={<AppLoading />}>
             <ProviderLayout>{children}</ProviderLayout>
           </Suspense>

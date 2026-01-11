@@ -9,7 +9,7 @@ export {
   defaultGovernmentTheme,
   highContrastGovernmentTheme,
 } from "./theme";
-export type { ThemeProviderProps } from "./theme";
+
 export * from "./theme/theme-tokens";
 
 // Component exports
@@ -24,6 +24,8 @@ export type { SelectProps } from "./components/select";
 
 export { default as Checkbox } from "./components/checkbox";
 export type { CheckboxProps } from "./components/checkbox";
+
+export { default as ModeSwitch } from "./components/mode-switch";
 
 // Layout exports
 export { default as Container } from "./layouts/container";

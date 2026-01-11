@@ -1,13 +1,12 @@
 'use client';
 'use memo';
 
-import Image from 'next/image';
-import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { FC, startTransition, useEffect, useState } from 'react';
+import { Fragment, startTransition, useEffect, useState } from 'react';
 
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
@@ -20,10 +19,11 @@ import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 
 import { useTranslations } from '@/providers/translation-provider/client';
+import useSidebarStore from '@/store/use-sidebar-store';
 
 import { sidebarItemConfig } from './sidebar/config';
+import { LinkBehavior } from './sidebar/link-behavior';
 import { Drawer } from './sidebar/styles';
-import type { AppSidebarProps } from './sidebar/type';
 import {
   findActiveMenuKey,
   findAutoExpandableKeys,
@@ -34,10 +34,11 @@ import {
 type HoverState = { key: string; top: number } | null;
 
 // Application sidebar with role-based menu filtering and grouped navigation
-export const AppSidebar: FC<AppSidebarProps> = ({ open, onToggleOpenAction }) => {
+export default function AppSidebar() {
   const t = useTranslations('app-layout');
   const router = useRouter();
   const pathname = usePathname();
+  const isOpen = useSidebarStore((state) => state.isOpen);
 
   const [expandedKeys, setExpandedKeys] = useState<Set<string>>(new Set());
   const [hoveredMenu, setHoveredMenu] = useState<HoverState>(null);
@@ -81,31 +82,32 @@ export const AppSidebar: FC<AppSidebarProps> = ({ open, onToggleOpenAction }) =>
   const groupedItems = groupMenuItems(menuItems);
 
   return (
-    <Drawer variant='permanent' open={open}>
+    <Drawer variant='permanent' open={isOpen} suppressHydrationWarning>
       <Box
         onClick={() => startTransition(() => router.push('/'))}
         sx={{
           display: 'flex',
           alignItems: 'center',
-          justifyContent: open ? 'flex-start' : 'center',
+          justifyContent: isOpen ? 'flex-start' : 'center',
           height: 'var(--header-height)',
           cursor: 'pointer',
-          borderBottom: '1px solid var(--neutral-200)',
+          borderBottom: (theme) => `1px solid ${theme.palette.divider}`,
           transition: (theme) =>
             theme.transitions.create(['padding', 'justify-content'], {
               easing: theme.transitions.easing.sharp,
               duration: theme.transitions.duration.enteringScreen,
             }),
         }}
+        suppressHydrationWarning
       >
-        {open ? <>App Logo</> : <>Logo</>}
+        {isOpen ? <>App Logo</> : <>Logo</>}
       </Box>
 
       <List sx={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', padding: 0 }}>
         {groupedItems.map(([groupName, items], index) => (
-          <div key={groupName ?? 'ungrouped'}>
-            {groupName && open && (
-              <ListItem sx={{ px: 2, mt: index > 0 ? 2 : 1 }}>
+          <Fragment key={groupName ?? 'ungrouped'}>
+            {groupName && isOpen && (
+              <ListItem sx={{ px: 2, mt: index > 0 ? 2 : 1 }} suppressHydrationWarning>
                 <Typography
                   fontSize={13}
                   fontWeight={500}
@@ -124,11 +126,11 @@ export const AppSidebar: FC<AppSidebarProps> = ({ open, onToggleOpenAction }) =>
               const hasChildren = Boolean(children?.length);
 
               return (
-                <div key={key}>
+                <Fragment key={key}>
                   <ListItem
                     disablePadding
                     onMouseEnter={(e) => {
-                      if (!open && hasChildren) {
+                      if (!isOpen && hasChildren) {
                         setHoveredMenu({
                           key,
                           top: e.currentTarget.getBoundingClientRect().top,
@@ -136,15 +138,16 @@ export const AppSidebar: FC<AppSidebarProps> = ({ open, onToggleOpenAction }) =>
                       }
                     }}
                     onMouseLeave={() => {
-                      if (!open) setHoveredMenu(null);
+                      if (!isOpen) setHoveredMenu(null);
                     }}
                     sx={{ position: 'relative' }}
+                    suppressHydrationWarning
                   >
                     <Tooltip
                       title={t(label)}
                       placement='right'
                       arrow
-                      disableHoverListener={open || hasChildren}
+                      disableHoverListener={isOpen || hasChildren}
                       slotProps={{
                         popper: {
                           modifiers: [{ name: 'offset', options: { offset: [0, -8] } }],
@@ -161,15 +164,16 @@ export const AppSidebar: FC<AppSidebarProps> = ({ open, onToggleOpenAction }) =>
                       <ListItemButton
                         sx={{ px: 2, py: 1.5 }}
                         selected={isActive && !hasChildren}
-                        href={hasChildren ? '#' : link}
-                        LinkComponent={hasChildren ? undefined : Link}
+                        href={link}
+                        LinkComponent={hasChildren ? undefined : LinkBehavior}
                         onClick={
                           hasChildren
                             ? () => {
-                                if (open) toggleExpanded(key);
+                                if (isOpen) toggleExpanded(key);
                               }
                             : undefined
                         }
+                        suppressHydrationWarning
                       >
                         <ListItemIcon>
                           <IconComponent isActive={isActive} key={`${isActive}`} />
@@ -184,10 +188,11 @@ export const AppSidebar: FC<AppSidebarProps> = ({ open, onToggleOpenAction }) =>
                               {t(label)}
                             </Typography>
                           }
-                          sx={open ? { marginLeft: -2 } : { marginLeft: 0 }}
+                          sx={isOpen ? { marginLeft: -2 } : { marginLeft: 0 }}
+                          suppressHydrationWarning
                         />
                         {hasChildren &&
-                          open &&
+                          isOpen &&
                           (isExpanded ? (
                             <ExpandMoreIcon sx={{ color: 'primary.light' }} />
                           ) : (
@@ -196,7 +201,7 @@ export const AppSidebar: FC<AppSidebarProps> = ({ open, onToggleOpenAction }) =>
                       </ListItemButton>
                     </Tooltip>
 
-                    {!open && hasChildren && hoveredMenu?.key === key && (
+                    {!isOpen && hasChildren && hoveredMenu?.key === key && (
                       <Box
                         sx={{
                           position: 'fixed',
@@ -220,8 +225,10 @@ export const AppSidebar: FC<AppSidebarProps> = ({ open, onToggleOpenAction }) =>
                             <ListItemButton
                               key={child.key}
                               href={child.link}
+                              LinkComponent={LinkBehavior}
                               selected={childIsActive}
                               sx={{ px: 2, py: 1.25, borderRadius: 0.5 }}
+                              suppressHydrationWarning
                             >
                               <Typography
                                 fontSize={14}
@@ -238,7 +245,7 @@ export const AppSidebar: FC<AppSidebarProps> = ({ open, onToggleOpenAction }) =>
                   </ListItem>
 
                   {hasChildren && (
-                    <Collapse in={isExpanded && open} timeout='auto' unmountOnExit>
+                    <Collapse in={isExpanded && isOpen} timeout='auto' unmountOnExit>
                       <List component='div' disablePadding>
                         {children?.map((child) => {
                           const childIsActive = isChildActive(
@@ -246,12 +253,17 @@ export const AppSidebar: FC<AppSidebarProps> = ({ open, onToggleOpenAction }) =>
                             child.activePathnames
                           );
                           return (
-                            <ListItem key={child.key} disablePadding>
+                            <ListItem
+                              key={child.key}
+                              disablePadding
+                              suppressHydrationWarning
+                            >
                               <ListItemButton
+                                href={child.link}
+                                LinkComponent={LinkBehavior}
                                 sx={{ pl: 7, pr: 2, py: 1.25 }}
                                 selected={childIsActive}
-                                href={child.link}
-                                LinkComponent={Link}
+                                suppressHydrationWarning
                               >
                                 <ListItemText
                                   primary={
@@ -271,30 +283,29 @@ export const AppSidebar: FC<AppSidebarProps> = ({ open, onToggleOpenAction }) =>
                       </List>
                     </Collapse>
                   )}
-                </div>
+                </Fragment>
               );
             })}
-          </div>
+          </Fragment>
         ))}
       </List>
 
       <Box
         sx={{
-          borderTop: '1px solid var(--neutral-200)',
+          borderTop: (theme) => `1px solid ${theme.palette.divider}`,
           p: '4px',
           display: 'flex',
-          justifyContent: open ? 'flex-start' : 'center',
+          justifyContent: isOpen ? 'flex-start' : 'center',
         }}
+        suppressHydrationWarning
       >
-        <IconButton onClick={onToggleOpenAction}>
-          <Image
-            src='/icons/sidebar/toggle-sidebar.svg'
-            alt='toggle-sidebar'
-            width={28}
-            height={28}
-          />
+        <IconButton>
+          <Avatar />
+          <Typography sx={{ marginLeft: 1, fontSize: '14px' }} suppressHydrationWarning>
+            {isOpen ? 'centralab@admin.com' : null}
+          </Typography>
         </IconButton>
       </Box>
     </Drawer>
   );
-};
+}

@@ -31,13 +31,5 @@ function InitUserIdentity({ user }: { user: User | null }) {
 }
 
 function ClientFetchInit() {
-  // useFeatureFlagsQuery({
-  //   enabled: true,
-  // });
-
-  // useProvinceLicensePlateQuery({
-  //   enabled: true,
-  // });
-
   return null;
 }

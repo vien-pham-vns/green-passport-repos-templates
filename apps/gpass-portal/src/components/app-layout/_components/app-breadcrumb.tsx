@@ -12,7 +12,6 @@ import { useTranslations } from '@/providers/translation-provider/client';
 import { getBreadcrumbs } from '../_libs/breadcrumb.config';
 
 const baseTextStyles = {
-  color: 'var(--neutral-600)',
   fontSize: 14,
   lineHeight: 1,
   display: 'flex',
@@ -33,6 +32,7 @@ export const AppBreadcrumb = () => {
         sx={{
           '& .MuiBreadcrumbs-separator': {
             mx: 1,
+            color: (theme) => `${theme.palette.brand[500]}`,
             ...baseTextStyles,
           },
         }}
@@ -48,6 +48,7 @@ export const AppBreadcrumb = () => {
                 component='span'
                 sx={{
                   ...baseTextStyles,
+                  color: (theme) => `${theme.palette.info}`,
                   fontWeight: 500,
                 }}
               >
@@ -60,9 +61,10 @@ export const AppBreadcrumb = () => {
             <Box
               key={index}
               component={NextLink}
-              href={item.href! as any}
+              href={(item.href ? item.href : '#') as any}
               sx={{
                 ...baseTextStyles,
+                color: (theme) => `${theme.palette.brand[500]}`,
                 textDecoration: 'none',
                 '&:hover': {
                   color: 'var(--brand-500)',

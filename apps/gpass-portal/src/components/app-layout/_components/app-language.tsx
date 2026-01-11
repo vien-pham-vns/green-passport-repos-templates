@@ -28,7 +28,6 @@ export default function AppSelectLanguage() {
 
   return (
     <Select
-      sx={{ fontSize: '1rem', height: '36px !important' }}
       value={locale}
       onChange={(e) => handleChangeLocale(e.target.value)}
       renderValue={(selected) => {
