@@ -14,22 +14,6 @@ import { portalTheme } from './portal-theme';
  * - Government theme with WCAG 2.2 AA+ compliance
  * - Poppins font integration via CSS variable
  * - Dark/Light mode support with class-based color scheme
- *
- * @example
- * ```tsx
- * // In app/layout.tsx
- * import ThemeRegistry from '@/theme/theme-registry';
- *
- * export default function RootLayout({ children }) {
- *   return (
- *     <html>
- *       <body>
- *         <ThemeRegistry>{children}</ThemeRegistry>
- *       </body>
- *     </html>
- *   );
- * }
- * ```
  */
 export default function ThemeRegistry({ children }: { children: React.ReactNode }) {
   return (
@@ -37,7 +21,7 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
       {/* Server-side color scheme script - prevents flash on load */}
       <InitColorSchemeScript attribute='class' />
 
-      {/* Client-side theme provider with government theme */}
+      {/* Client-side theme provider with default theme */}
       <ThemeProviderCore theme={portalTheme}>{children}</ThemeProviderCore>
     </>
   );

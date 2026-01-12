@@ -1,6 +1,6 @@
 'use client';
 
-import { createAppTheme } from '@dt/mui-ui/theme';
+import { createCustomAppTheme } from '@dt/mui-ui/theme';
 
 /**
  * Green Passport Portal Theme
@@ -11,7 +11,7 @@ import { createAppTheme } from '@dt/mui-ui/theme';
  * - Material Design 3 specifications
  * - Enhanced accessibility features
  */
-export const portalTheme = createAppTheme({
+export const portalTheme = createCustomAppTheme({
   typography: {
     fontFamily:
       'var(--font-poppins, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif)',
