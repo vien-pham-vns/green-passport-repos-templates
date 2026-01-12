@@ -106,6 +106,7 @@ export default function AppSidebar() {
       <List sx={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', padding: 0 }}>
         {groupedItems.map(([groupName, items], index) => (
           <Fragment key={groupName ?? 'ungrouped'}>
+            {/* Show group name */}
             {groupName && isOpen && (
               <ListItem sx={{ px: 2, mt: index > 0 ? 2 : 1 }} suppressHydrationWarning>
                 <Typography
@@ -162,14 +163,15 @@ export default function AppSidebar() {
                       }}
                     >
                       <ListItemButton
+                        component={hasChildren && isOpen ? 'div' : LinkBehavior}
+                        {...(!(hasChildren && isOpen) && { href: link })}
                         sx={{ px: 2, py: 1.5 }}
                         selected={isActive && !hasChildren}
-                        href={link}
-                        LinkComponent={hasChildren ? undefined : LinkBehavior}
                         onClick={
-                          hasChildren
-                            ? () => {
-                                if (isOpen) toggleExpanded(key);
+                          hasChildren && isOpen
+                            ? (e: React.MouseEvent) => {
+                                e.preventDefault();
+                                toggleExpanded(key);
                               }
                             : undefined
                         }
@@ -224,8 +226,8 @@ export default function AppSidebar() {
                           return (
                             <ListItemButton
                               key={child.key}
+                              component={LinkBehavior}
                               href={child.link}
-                              LinkComponent={LinkBehavior}
                               selected={childIsActive}
                               sx={{ px: 2, py: 1.25, borderRadius: 0.5 }}
                               suppressHydrationWarning
@@ -259,8 +261,8 @@ export default function AppSidebar() {
                               suppressHydrationWarning
                             >
                               <ListItemButton
+                                component={LinkBehavior}
                                 href={child.link}
-                                LinkComponent={LinkBehavior}
                                 sx={{ pl: 7, pr: 2, py: 1.25 }}
                                 selected={childIsActive}
                                 suppressHydrationWarning

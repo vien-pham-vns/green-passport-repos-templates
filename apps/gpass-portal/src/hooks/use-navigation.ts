@@ -10,8 +10,18 @@ export function useNavigation() {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
 
-  const navigate = (url: Route | string, options?: { scroll?: boolean }) => {
-    startTransition(() => {
+  const navigate = (
+    url: Route | string,
+    options?: { scroll?: boolean },
+    isPush?: true
+  ) => {
+    if (!isPush) {
+      return startTransition(() => {
+        router.replace(url as Route, options);
+      });
+    }
+
+    return startTransition(() => {
       router.push(url as Route, options);
     });
   };
