@@ -46,7 +46,7 @@ export default function IframeBox({ iframeUrl, title = 'Content' }: IframeBoxPro
         display: 'flex',
         flexDirection: 'column',
         position: 'fixed',
-        top: 0,
+        top: 50,
         left: 0,
         right: 0,
         bottom: 0,

@@ -160,7 +160,7 @@ export default function NotFound() {
             flexWrap='wrap'
           >
             <Button
-              variant='contained'
+              variant='text'
               size='medium'
               startIcon={<HomeIcon />}
               href={`${BASE_PATH}/`}

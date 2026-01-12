@@ -31,14 +31,15 @@ export const sidebarItemConfig: MenuItem[] = [
     key: 'Dev tools',
     label: 'menu-dev-tools',
     icon: ({ isActive }) => <IconTools />,
-    link: '/portal/devtools',
+    link: '/devtools',
     activePathnames: ['/devtools'],
     group: 'group-devtools',
+
     children: [
       {
         key: 'translation',
         label: 'translation',
-        link: '/portal/devtools',
+        link: '/devtools',
         activePathnames: ['/devtools'],
       },
     ],
