@@ -1,0 +1,44 @@
+# Dependencies
+node_modules
+.pnpm-store
+
+# Build outputs
+.next
+.turbo
+dist
+build
+out
+
+# Development files
+.env*.local
+.vscode
+.idea
+
+# Git
+.git
+.gitignore
+
+# Testing
+coverage
+.nyc_output
+*.test.*
+*.spec.*
+**/__tests__
+**/__mocks__
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Misc
+*.md
+!README.md
+.eslintcache
+.prettierignore
