@@ -1,3 +1,5 @@
+'use client';
+
 import Button from '@mui/material/Button';
 import { IconChevronLeft } from '@tabler/icons-react';
 import { redirectToLogin } from 'app/actions/auth';

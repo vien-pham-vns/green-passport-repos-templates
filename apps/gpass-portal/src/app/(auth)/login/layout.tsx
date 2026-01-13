@@ -5,7 +5,8 @@ import AuthFooter from '@/components/auth-layout/auth-footer';
 import { AuthFormTitle } from '@/components/auth-layout/auth-form-title';
 import { AuthLayout } from '@/components/auth-layout/auth-layout';
 import { getAuthToken } from '@/lib/auth';
-import { fetchMe } from '@/utils/server-api';
+
+// import { fetchMe } from '@/utils/server-api';
 
 export default async function LoginLayout({ children }: React.PropsWithChildren) {
   const token = await getAuthToken();
@@ -15,7 +16,7 @@ export default async function LoginLayout({ children }: React.PropsWithChildren)
     // if (user) {
     // redirect('/');
     // }
-    redirect('/');
+    redirect('/portal');
   }
 
   return (

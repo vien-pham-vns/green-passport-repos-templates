@@ -51,6 +51,23 @@ const nextConfig: NextConfig = {
     ],
     qualities: [50, 75, 100], // nextjs 16 by default set to 75 only
   },
+  async rewrites() {
+    return {
+      beforeFiles: [
+        {
+          source: '/portal',
+          destination: '/404',
+        },
+      ],
+      afterFiles: [
+        {
+          source: '/',
+          destination: '/portal',
+        },
+      ],
+      fallback: [],
+    };
+  },
   async headers() {
     return [
       {
@@ -77,10 +94,10 @@ const nextConfig: NextConfig = {
     compilationMode: 'annotation',
   },
   // Next.js native logging - shows cache hits/misses automatically
-  logging: {
-    fetches: {
-      fullUrl: true,
-    },
-  },
+  // logging: {
+  //   fetches: {
+  //     fullUrl: true,
+  //   },
+  // },
 };
 export default nextConfig;

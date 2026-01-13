@@ -2,8 +2,8 @@
 export { default as ThemeProviderCore } from "./theme-provider-core";
 
 // Export theme factories
-export { createAppTheme } from "./create-theme";
-export { createCustomAppTheme } from "./custom-theme";
+export { createAppTheme, defaultTheme } from "./create-theme";
+export { createCustomAppTheme, customTheme } from "./custom-theme";
 export {
   createGovernmentTheme,
   defaultGovernmentTheme,

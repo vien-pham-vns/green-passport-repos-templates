@@ -125,12 +125,6 @@ function TableViewFilterSearch({
       newSearchParams.delete('q');
     }
 
-    if (featureName === 'users') {
-      newSearchParams.delete('cursor'); // Reset cursor for user search
-    } else {
-      newSearchParams.set('page', '1'); // Reset to first page on search
-    }
-
     navigate(`?${newSearchParams.toString()}`, { scroll: false });
   }, 300);
 

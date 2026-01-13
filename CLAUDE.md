@@ -2,6 +2,8 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Project Overview
+
 ## Development Commands
 
 ### Root Level Commands
@@ -14,12 +16,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Application-Specific Commands
 
-Navigate to the specific app directory and use:
+Navigate to the specific app directory (e.g., `apps/gpass-portal`) and use:
 
-- `pnpm dev` - Start development server (port auto-assigned via Turborepo)
+- `pnpm dev` - Start development server
 - `pnpm build` - Build the application
 - `pnpm lint` - Lint with max 0 warnings
 - `pnpm check-types` - Type check without emitting files
+- `pnpm test` - Run tests using Vitest
+- `pnpm test:watch` - Run tests in watch mode
 
 ### Package-Specific Commands (UI Libraries)
 
@@ -29,17 +33,30 @@ Navigate to a package directory (e.g., `packages/mui-ui`):
 
 ## Architecture Overview
 
-This is a **Turborepo microfrontends monorepo** with three applications and shared UI packages. The architecture enables independent deployment of microfrontends while sharing common components and configurations.
+This is a **Turborepo microfrontends monorepo** for Green Passport applications with shared UI packages. The architecture enables independent deployment of microfrontends while sharing common components and configurations.
 
 ### Monorepo Structure
 
-- `apps/web` - Next.js 16 application (port 3000, host application)
-- `apps/docs` - Next.js 16 application (port 3001, basePath: `/docs`)
-- `apps/admin` - Vite + React application (port 3002, basePath: `/admin`)
+- `apps/gpass-portal` - Green Passport government portal (Next.js 16 with App Router)
 - `packages/mui-ui` - Material-UI v7 component library with Emotion styling
-- `packages/example-ui` - Example React component library
+- `packages/devtools` - Development utilities and tools
 - `packages/eslint-config` - Shared ESLint configurations (base, next-js, react-internal)
 - `packages/typescript-config` - Shared TypeScript configurations
+
+### Green Passport Portal (`apps/gpass-portal`)
+
+A Next.js 16 dashboard application for tracking durian supply chain operations.
+
+**Key Features:**
+
+- **Dashboard Analytics**: Supply chain metrics and data visualizations
+- **GAP Harvest Logs**: Geographic tracking with heatmaps using Google Maps
+- **Fraud Risk Detection**: Alert system with configurable rule engine
+- **QR Code Management**: Generation and tracking for products
+- **Shipment Tracking**: End-to-end supply chain visibility
+- **User Management**: Role-based access control (RBAC)
+- **Settings**: Configurable alerts and fraud detection rules
+- **Internationalization**: Thai/English language support
 
 ### Microfrontends Configuration
 
@@ -53,11 +70,16 @@ Port assignment is handled automatically via `turbo get-mfe-port` in dev scripts
 
 ### Technology Stack
 
-- **Package Manager**: pnpm with workspaces
+- **Package Manager**: pnpm with workspaces (v10.16.1)
 - **Build System**: Turborepo 2.6.1 for task orchestration
-- **Next.js Apps**: Next.js 16.1.1 with React 19
-- **Vite App**: Vite 7 with React 19 and React Router 7
+- **Framework**: Next.js 16.1.1 with App Router and React 19
 - **UI Framework**: Material-UI v7 with Emotion (@emotion/react, @emotion/styled)
+- **State Management**: Zustand for global state, TanStack Query (React Query) for server state
+- **Forms**: React Hook Form v7.71.0 with Zod v4.3.5 validation
+- **Maps**: Google Maps with advanced clustering
+- **Charts**: ECharts v5.6.0 for data visualization
+- **Analytics**: PostHog v1.310.1 for product analytics
+- **Testing**: Vitest v4 with React Testing Library
 - **TypeScript**: 5.9.2 across all packages
 - **Node**: >=18 required
 
@@ -106,9 +128,388 @@ Components are imported as: `import Button from '@dt/mui-ui/button'`
 
 - ESLint enforces `--max-warnings 0` across all apps
 - TypeScript strict checking is enabled via `check-types` scripts
-- Next.js apps use `next lint` while Vite app uses standalone ESLint
-- The admin app uses Vite with SWC for faster builds
+- Next.js apps use `next lint` for linting
 - Material-UI components are in a separate package for reuse across apps
+- Husky pre-commit hooks run lint-staged for code quality
+- Docker support available with standalone output configuration
+
+## Green Passport Portal Architecture
+
+### Project Structure
+
+```plaintext
+apps/gpass-portal/
+├── src/
+│   ├── app/              # Next.js App Router pages and layouts
+│   ├── components/       # Reusable UI components
+│   ├── body/             # Page-specific components and business logic
+│   ├── services/         # API service functions
+│   ├── hooks/            # Custom React hooks and React Query hooks
+│   ├── store/            # Zustand state management stores
+│   ├── types/            # TypeScript type definitions
+│   └── utils/            # Utility functions and helpers
+├── messages/             # i18n JSON files (Thai/English)
+├── public/               # Static assets
+└── test/                 # Test configuration and setup
+```
+
+### Configuration Files
+
+- **next.config.ts**: Next.js configuration with base path and output settings
+- **instrumentation-client.ts**: Client-side instrumentation (PostHog analytics)
+- **Dockerfile**: Production container configuration
+- **.env**: Environment variables (API URLs, feature flags)
+- **postcss.config.mjs**: PostCSS with Tailwind CSS v4
+- **vitest.config.ts**: Test configuration with jsdom environment
+
+### State Management Patterns
+
+**Zustand Stores (`src/store/`)**
+
+Use Zustand for global client state like:
+
+- Authentication state
+- UI state (sidebar open/close, theme)
+- Temporary form data
+- Global notifications
+
+**TanStack Query (`src/hooks/queries/`)**
+
+Use React Query hooks for server state including:
+
+- Data fetching with automatic caching
+- Mutations with optimistic updates
+- Background refetching
+- Cache invalidation after mutations
+
+**Example Pattern:**
+
+```typescript
+// src/store/auth-store.ts
+import { create } from "zustand";
+
+interface AuthState {
+  user: User | null;
+  setUser: (user: User | null) => void;
+}
+
+export const useAuthStore = create<AuthState>((set) => ({
+  user: null,
+  setUser: (user) => set({ user }),
+}));
+
+// src/hooks/queries/use-products.ts
+import { useQuery } from "@tanstack/react-query";
+import { getProducts } from "@/services/products";
+
+export function useProducts(params: ProductParams) {
+  return useQuery({
+    queryKey: ["products", params],
+    queryFn: () => getProducts(params),
+    staleTime: 5 * 60 * 1000, // 5 minutes
+  });
+}
+```
+
+### Internationalization
+
+The portal uses server-side cookie-based locale detection with:
+
+- **messages/en.json**: English translations
+- **messages/th.json**: Thai translations
+
+Access translations in Server Components via `next-intl` utilities.
+
+## Green Passport API Patterns
+
+### Server Actions with Caching (`"use cache"`)
+
+The portal uses Next.js 16's `"use cache"` directive for server-side caching. This pattern is critical for optimizing API calls.
+
+**Feature-Based Structure:**
+
+```plaintext
+src/
+└── features/
+    └── container/
+        ├── actions.ts      # Server actions with caching
+        ├── config.ts       # Cache tags and constants
+        ├── type.ts         # TypeScript types
+        └── components/     # Feature components
+```
+
+**Server Action Pattern:**
+
+```typescript
+// src/features/container/actions.ts
+"use server";
+
+import { cacheLife, revalidateTag } from "next/cache";
+import { apiCore } from "services/common";
+import { type CookieContext, fetchApi, getCookieContext } from "@/utils/fetch-api";
+import { type QueryParamsFilter } from "@/utils/fetch-api-helpers";
+import { CONTAINER_CACHE_TAG } from "./config";
+import { Container, ContainerItem, ContainerTableParams, ContainerTableResponse } from "./type";
+
+/**
+ * Get container list with server-side caching
+ * Public function that handles cookie context
+ */
+export async function getContainerServerSide(params?: ContainerTableParams) {
+  const ctx = await getCookieContext();
+  return getContainerCached(ctx, params);
+}
+
+/**
+ * Cached function with "use cache" directive
+ * IMPORTANT: Must be a separate function from the public export
+ */
+async function getContainerCached(ctx: CookieContext, params?: ContainerTableParams) {
+  "use cache";
+  cacheLife("seconds"); // Cache lifetime configuration
+
+  const url = apiCore("/doa/container", "v1");
+
+  const response = await fetchApi<ContainerTableResponse>(url, {
+    ...ctx,
+    method: "GET",
+    params: params as QueryParamsFilter,
+    cacheTags: [CONTAINER_CACHE_TAG], // Tag for cache invalidation
+    logLabel: "ContainerList",
+  });
+
+  if (!response) {
+    throw new Error("Failed to fetch container list");
+  }
+
+  // Transform data before returning
+  return {
+    ...response,
+    data: {
+      ...response.data,
+      items: transformContainer(response.data),
+    },
+  };
+}
+
+function transformContainer(container: Container): ContainerItem[] {
+  if (!container?.items?.length) return [];
+
+  return container.items.map((item) => Object.assign({}, item, { id: item.containerId.toString() }));
+}
+
+/**
+ * Revalidate container list cache
+ * Call this after mutations to refresh the cached data
+ */
+export async function revalidateContainerList() {
+  "use server";
+  revalidateTag(CONTAINER_CACHE_TAG, { expire: 0 });
+}
+```
+
+**Cache Configuration:**
+
+```typescript
+// src/features/container/config.ts
+export const CONTAINER_CACHE_TAG = "container-list";
+```
+
+**Key Principles:**
+
+1. **Separate Public and Cached Functions**: The public function (`getContainerServerSide`) gets the cookie context, while the internal function (`getContainerCached`) has the `"use cache"` directive
+2. **Cache Tags**: Use descriptive cache tags (e.g., `CONTAINER_CACHE_TAG`) for targeted revalidation
+3. **Cache Lifetime**: Use `cacheLife()` to control how long data is cached
+4. **Revalidation**: Provide revalidation functions to clear cache after mutations
+5. **Type Safety**: Use TypeScript types for params, responses, and transformed data
+
+### Form Submission Patterns
+
+**React Hook Form + Zod Validation:**
+
+```typescript
+// src/features/products/components/product-form.tsx
+"use client";
+
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { useActionState } from "react";
+import { createProduct } from "../actions";
+
+const productSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  price: z.number().min(0, "Price must be positive"),
+  category: z.string().min(1, "Category is required"),
+});
+
+type ProductFormData = z.infer<typeof productSchema>;
+
+export function ProductForm() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<ProductFormData>({
+    resolver: zodResolver(productSchema),
+  });
+
+  const [state, formAction, isPending] = useActionState(createProduct, null);
+
+  const onSubmit = async (data: ProductFormData) => {
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("price", data.price.toString());
+    formData.append("category", data.category);
+
+    await formAction(formData);
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <input {...register("name")} placeholder="Product Name" />
+      {errors.name && <span>{errors.name.message}</span>}
+
+      <input {...register("price", { valueAsNumber: true })} type="number" placeholder="Price" />
+      {errors.price && <span>{errors.price.message}</span>}
+
+      <select {...register("category")}>
+        <option value="">Select Category</option>
+        <option value="electronics">Electronics</option>
+        <option value="clothing">Clothing</option>
+      </select>
+      {errors.category && <span>{errors.category.message}</span>}
+
+      <button type="submit" disabled={isSubmitting || isPending}>
+        {isPending ? "Creating..." : "Create Product"}
+      </button>
+
+      {state?.success && <p>Product created successfully!</p>}
+      {state?.error && <p>Error: {state.error}</p>}
+    </form>
+  );
+}
+```
+
+**Server Action for Mutations:**
+
+```typescript
+// src/features/products/actions.ts
+"use server";
+
+import { revalidateTag } from "next/cache";
+import { apiCore } from "services/common";
+import { fetchApi, getCookieContext } from "@/utils/fetch-api";
+import { PRODUCTS_CACHE_TAG } from "./config";
+
+export async function createProduct(prevState: any, formData: FormData) {
+  const ctx = await getCookieContext();
+
+  const name = formData.get("name") as string;
+  const price = parseFloat(formData.get("price") as string);
+  const category = formData.get("category") as string;
+
+  try {
+    const url = apiCore("/products", "v1");
+
+    const response = await fetchApi(url, {
+      ...ctx,
+      method: "POST",
+      body: JSON.stringify({ name, price, category }),
+      logLabel: "CreateProduct",
+    });
+
+    // Revalidate cache after successful mutation
+    revalidateTag(PRODUCTS_CACHE_TAG);
+
+    return { success: true, data: response };
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
+}
+```
+
+### Component Patterns (Composition & Compound)
+
+**Type-Safe Compound Components:**
+
+```typescript
+// src/components/ui/card.tsx
+import { createContext, useContext } from "react";
+
+type CardContextValue = {
+  variant?: "outlined" | "elevated";
+};
+
+const CardContext = createContext<CardContextValue | null>(null);
+
+function useCardContext() {
+  const context = useContext(CardContext);
+  if (!context) {
+    throw new Error("Card compound components must be used within Card");
+  }
+  return context;
+}
+
+export function Card({
+  children,
+  variant = "elevated"
+}: {
+  children: React.ReactNode;
+  variant?: "outlined" | "elevated";
+}) {
+  return (
+    <CardContext.Provider value={{ variant }}>
+      <div className={`card card-${variant}`}>
+        {children}
+      </div>
+    </CardContext.Provider>
+  );
+}
+
+export function CardHeader({ children }: { children: React.ReactNode }) {
+  const { variant } = useCardContext();
+  return <div className={`card-header card-header-${variant}`}>{children}</div>;
+}
+
+export function CardContent({ children }: { children: React.ReactNode }) {
+  return <div className="card-content">{children}</div>;
+}
+
+export function CardActions({ children }: { children: React.ReactNode }) {
+  return <div className="card-actions">{children}</div>;
+}
+
+// Export as namespace for better DX
+Card.Header = CardHeader;
+Card.Content = CardContent;
+Card.Actions = CardActions;
+```
+
+**Usage:**
+
+```typescript
+import { Card } from "@/components/ui/card";
+
+export function ProductCard({ product }) {
+  return (
+    <Card variant="outlined">
+      <Card.Header>
+        <h3>{product.name}</h3>
+      </Card.Header>
+      <Card.Content>
+        <p>{product.description}</p>
+        <p>Price: ${product.price}</p>
+      </Card.Content>
+      <Card.Actions>
+        <button>Buy Now</button>
+      </Card.Actions>
+    </Card>
+  );
+}
+```
+
+**Reference:** [Building Type-Safe Compound Components](https://tkdodo.eu/blog/building-type-safe-compound-components)
 
 ## Next.js Implementation Patterns (React 19 & RSC)
 
@@ -964,3 +1365,192 @@ For implementation examples, refer to the official Next.js examples repository:
    - Use native `searchParams` in Server Components
    - Use `useSearchParams` for simple Client Component needs
    - Use `nuqs` for complex, type-safe query param management with multiple filters
+
+## Green Passport Best Practices
+
+### API Integration
+
+**fetchApi Utility (`src/utils/fetch-api.ts`):**
+
+The portal uses a centralized `fetchApi` utility that handles:
+
+- Cookie-based authentication context
+- Automatic request/response logging
+- Error handling and retries
+- Cache tag management
+- TypeScript type inference
+
+**Example:**
+
+```typescript
+import { fetchApi, getCookieContext } from "@/utils/fetch-api";
+import { apiCore } from "services/common";
+
+const ctx = await getCookieContext();
+const url = apiCore("/doa/container", "v1");
+
+const response = await fetchApi<ContainerTableResponse>(url, {
+  ...ctx,
+  method: "GET",
+  params: { page: 1, limit: 10 },
+  cacheTags: ["containers"],
+  logLabel: "FetchContainers",
+});
+```
+
+### Server Action Guidelines
+
+1. **Always use `"use server"`** directive at the top of server action files
+2. **Separate concerns**: Keep public functions and cached functions distinct
+3. **Cookie context**: Always get cookie context before making authenticated requests
+4. **Cache tags**: Use descriptive, feature-specific cache tags
+5. **Revalidation**: Provide revalidation functions for each cacheable resource
+6. **Error handling**: Return structured responses with success/error states
+7. **Type safety**: Define TypeScript types for all params and responses
+
+### Form Development Guidelines
+
+1. **Validation**: Use Zod schemas for both client and server-side validation
+2. **React Hook Form**: Leverage `useForm` with `zodResolver` for form management
+3. **Server Actions**: Use `useActionState` for progressive enhancement
+4. **Loading States**: Show loading indicators with `isPending` and `isSubmitting`
+5. **Error Display**: Show field-level errors from React Hook Form
+6. **Success Feedback**: Display success messages after successful submissions
+7. **Optimistic Updates**: Use `useOptimistic` for immediate UI feedback
+
+### Component Development Guidelines
+
+1. **Composition**: Build complex components from smaller, reusable pieces
+2. **Compound Components**: Use compound patterns for related component groups
+3. **Type Safety**: Use TypeScript generics and strict typing
+4. **Context**: Use React Context for compound component state sharing
+5. **Server Components**: Default to Server Components, add `"use client"` only when needed
+6. **Material-UI**: Import from `@dt/mui-ui` for shared components
+7. **Styling**: Use Emotion CSS-in-JS or Tailwind CSS v4 utility classes
+
+### State Management Guidelines
+
+**When to use Zustand:**
+
+- Global UI state (theme, sidebar, modals)
+- Authentication state
+- Temporary form data across routes
+- User preferences
+
+**When to use TanStack Query:**
+
+- Server data fetching
+- Data caching with automatic revalidation
+- Mutations with cache invalidation
+- Loading and error states for async operations
+
+**When to use Server Actions with `"use cache"`:**
+
+- Server-side data fetching with caching
+- Authenticated API calls
+- Database queries
+- File system operations
+
+### Testing Guidelines
+
+1. **Vitest**: Use Vitest for unit and integration tests
+2. **React Testing Library**: Test components from user perspective
+3. **jsdom**: Tests run in jsdom environment
+4. **Setup**: Test configuration in `test/setup.ts`
+5. **Co-location**: Place tests near components when possible
+
+### Deployment & Docker
+
+The portal supports Docker deployment with standalone output:
+
+```dockerfile
+# Dockerfile example (see apps/gpass-portal/Dockerfile)
+FROM node:18-alpine AS base
+# Install dependencies, build, and run
+```
+
+**Environment Variables:**
+
+- **NEXT_PUBLIC_API_URL**: API base URL
+- **NEXT_PUBLIC_POSTHOG_KEY**: PostHog analytics key
+- **NEXT_PUBLIC_GOOGLE_MAPS_KEY**: Google Maps API key
+
+### File Naming Conventions
+
+- **Components**: PascalCase (e.g., `ProductCard.tsx`)
+- **Utilities**: kebab-case (e.g., `fetch-api.ts`)
+- **Types**: kebab-case (e.g., `product-types.ts`)
+- **Server Actions**: `actions.ts` within feature folders
+- **Configuration**: `config.ts` within feature folders
+- **Tests**: `*.test.tsx` or `*.spec.tsx`
+
+### Code Organization
+
+**Feature-Based Structure (Recommended):**
+
+```plaintext
+src/features/
+├── container/
+│   ├── actions.ts          # Server actions
+│   ├── config.ts           # Constants and cache tags
+│   ├── type.ts             # TypeScript types
+│   ├── components/
+│   │   ├── ContainerList.tsx
+│   │   └── ContainerForm.tsx
+│   └── hooks/
+│       └── use-container.ts
+```
+
+**Shared Components:**
+
+```plaintext
+src/components/
+├── ui/                      # Base UI components
+│   ├── button.tsx
+│   ├── card.tsx
+│   └── input.tsx
+└── layout/                  # Layout components
+    ├── Header.tsx
+    ├── Sidebar.tsx
+    └── Footer.tsx
+```
+
+### Performance Optimization
+
+1. **Code Splitting**: Use dynamic imports for large components
+2. **Image Optimization**: Use Next.js `<Image>` component
+3. **Caching**: Leverage `"use cache"` for expensive operations
+4. **Suspense**: Wrap async components in Suspense boundaries
+5. **Memoization**: Use React's `cache()` for request deduplication
+6. **Bundle Analysis**: Run `pnpm analyze` to check bundle sizes
+
+### Security Best Practices
+
+1. **Authentication**: Use cookie-based session management
+2. **Authorization**: Implement role-based access control (RBAC)
+3. **Input Validation**: Validate all user input with Zod
+4. **XSS Prevention**: Sanitize user-generated content
+5. **CSRF Protection**: Use Next.js built-in CSRF protection
+6. **Environment Variables**: Never commit secrets, use `.env.local`
+7. **API Security**: Validate authentication tokens on every request
+
+## Additional Resources
+
+- **FETCH_API.md**: Detailed API patterns and examples
+- **README.md**: Quick start and development guide
+- **apps/gpass-portal/CLAUDE.md**: Portal-specific implementation details
+- **Next.js Documentation**: <https://nextjs.org/docs>
+- **Material-UI Documentation**: <https://mui.com/material-ui/>
+- **TanStack Query Documentation**: <https://tanstack.com/query/latest>
+- **React Hook Form Documentation**: <https://react-hook-form.com/>
+- **Zod Documentation**: <https://zod.dev/>
+
+## Support & Contributing
+
+For questions, issues, or contributions:
+
+1. **Code Review**: All PRs require review before merging
+2. **Pre-commit Hooks**: Husky runs linting and type checking
+3. **Commit Messages**: Use conventional commits format
+4. **Testing**: Write tests for new features and bug fixes
+5. **Documentation**: Update CLAUDE.md when adding patterns or features

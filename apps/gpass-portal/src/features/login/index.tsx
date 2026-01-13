@@ -1,14 +1,15 @@
 'use client';
 
 import Link from 'next/link';
-import { useActionState, useEffect } from 'react';
+import { useActionState, useEffect, useEffectEvent } from 'react';
 
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { showToast } from 'utils/toast';
+
+// import { showToast } from 'utils/toast';
 
 import { useTranslations } from '@/providers/translation-provider/client';
 
@@ -22,12 +23,15 @@ const Login = () => {
     null
   );
 
-  // Show toast on error
-  useEffect(() => {
-    if (state?.error) {
-      showToast(state.error, 'error');
-    }
-  }, [state?.error]);
+  // const onShowToast = useEffectEvent(() => {
+  //   if (state?.error) {
+  //     showToast(state.error, 'error');
+  //   }
+  // });
+
+  // useEffect(() => {
+  //   onShowToast();
+  // }, [state?.error]);
 
   return (
     <Box
@@ -48,10 +52,11 @@ const Login = () => {
         </Alert>
       )}
 
-      <Box>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
         <TextField
           required
           fullWidth
+          size='small'
           name='email'
           type='email'
           label='Username'
@@ -62,12 +67,10 @@ const Login = () => {
           autoComplete='email'
           defaultValue={'test@example.com'}
         />
-      </Box>
-
-      <Box>
         <TextField
           required
           fullWidth
+          size='small'
           name='password'
           type='password'
           label='Password'
@@ -91,11 +94,11 @@ const Login = () => {
         {isPending ? 'Signing in...' : t('sign-in-button')}
       </Button>
 
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+      {/* <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
         <Link href={'#'}>
           <Typography fontSize={14}>{t('forgot-password')}</Typography>
         </Link>
-      </Box>
+      </Box> */}
     </Box>
   );
 };

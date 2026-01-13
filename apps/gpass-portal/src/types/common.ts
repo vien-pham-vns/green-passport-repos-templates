@@ -3,6 +3,10 @@ import { Dayjs } from 'utils/date';
 
 export type ValueOf<T> = T[keyof T];
 
+export type SearchParamsAsString<T> = {
+  [K in keyof T]: string;
+};
+
 export type PaginationRequest = {
   limit?: number;
   offset?: number;

@@ -106,7 +106,7 @@
     "need-help-description": "If this problem persists, please contact your system administrator or technical support team with the error details shown above."
   },
   "login": {
-    "app-name": "Smart Durian Traceability System",
+    "app-name": "Central Lab Portal",
     "access-denied-message": "Access denied. Please start from the forgot password page.",
     "back-to-login": "Back to login screen",
     "login": "Login",

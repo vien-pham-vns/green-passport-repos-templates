@@ -1,23 +1,28 @@
 'use client';
-'use memo';
 
 import { usePathname, useRouter } from 'next/navigation';
 import { Fragment, startTransition, useEffect, useState } from 'react';
 
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import LogoutIcon from '@mui/icons-material/Logout';
+import PersonIcon from '@mui/icons-material/Person';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
+import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import MenuItem from '@mui/material/MenuItem';
+import Popover from '@mui/material/Popover';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 
+import { redirectToLogin } from '@/app/actions/auth';
 import { useTranslations } from '@/providers/translation-provider/client';
 import useSidebarStore from '@/store/use-sidebar-store';
 
@@ -42,6 +47,8 @@ export default function AppSidebar() {
 
   const [expandedKeys, setExpandedKeys] = useState<Set<string>>(new Set());
   const [hoveredMenu, setHoveredMenu] = useState<HoverState>(null);
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   const menuItems = sidebarItemConfig.filter(() => {
     return true;
@@ -78,6 +85,32 @@ export default function AppSidebar() {
       return next;
     });
   };
+
+  const handleAvatarClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = async () => {
+    try {
+      setIsLoggingOut(true);
+      handlePopoverClose();
+      await redirectToLogin();
+    } catch (error) {
+      console.error('Logout error:', error);
+      setIsLoggingOut(false);
+    }
+  };
+
+  const handleProfile = () => {
+    handlePopoverClose();
+    startTransition(() => router.push('/profile'));
+  };
+
+  const isPopoverOpen = Boolean(anchorEl);
 
   const groupedItems = groupMenuItems(menuItems);
 
@@ -301,12 +334,56 @@ export default function AppSidebar() {
         }}
         suppressHydrationWarning
       >
-        <IconButton>
-          <Avatar />
+        <IconButton onClick={handleAvatarClick} disabled={isLoggingOut}>
+          <Avatar sx={{ width: 32, height: 32 }} />
           <Typography sx={{ marginLeft: 1, fontSize: '14px' }} suppressHydrationWarning>
             {isOpen ? 'centralab@admin.com' : null}
           </Typography>
         </IconButton>
+
+        <Popover
+          open={isPopoverOpen}
+          anchorEl={anchorEl}
+          onClose={handlePopoverClose}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: isOpen ? 'center' : 'right',
+          }}
+          transformOrigin={{
+            vertical: 'bottom',
+            horizontal: isOpen ? 'center' : 'right',
+          }}
+          slotProps={{
+            paper: {
+              sx: {
+                minWidth: 200,
+                mt: -1,
+              },
+            },
+          }}
+        >
+          <Box sx={{ p: 2 }}>
+            <Typography variant='body2' fontWeight={600}>
+              centralab@admin.com
+            </Typography>
+            <Typography variant='caption' color='text.secondary'>
+              Administrator
+            </Typography>
+          </Box>
+          <Divider />
+          <MenuItem onClick={handleProfile} sx={{ py: 1.5 }}>
+            <ListItemIcon>
+              <PersonIcon fontSize='small' />
+            </ListItemIcon>
+            <ListItemText>Profile</ListItemText>
+          </MenuItem>
+          <MenuItem onClick={handleLogout} sx={{ py: 1.5 }}>
+            <ListItemIcon>
+              <LogoutIcon fontSize='small' />
+            </ListItemIcon>
+            <ListItemText>Logout</ListItemText>
+          </MenuItem>
+        </Popover>
       </Box>
     </Drawer>
   );

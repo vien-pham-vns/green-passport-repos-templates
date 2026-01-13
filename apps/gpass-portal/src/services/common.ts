@@ -16,5 +16,10 @@ export type ApiVersion = 'v1' | 'v2';
  */
 export const api = (path: string, version: ApiVersion): string => {
   const cleanPath = path.replace(/^\//, '');
-  return `<API_DOMAIN>/api/${version}/${cleanPath}`;
+  return `${process.env.API_CORE_DOMAIN}/api/${version}/${cleanPath}`;
+};
+
+export const apiCore = (path: string, version: ApiVersion): string => {
+  const cleanPath = path.replace(/^\//, '');
+  return `${process.env.API_CORE_DOMAIN}/${version}/${cleanPath}`;
 };

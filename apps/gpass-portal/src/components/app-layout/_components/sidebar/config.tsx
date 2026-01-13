@@ -22,8 +22,8 @@ export const sidebarItemConfig: MenuItem[] = [
     key: 'portal',
     label: 'menu-portal',
     icon: ({ isActive }) => <IconTransformPoint />,
-    link: '/',
-    activePathnames: ['/'],
+    link: '/portal',
+    activePathnames: ['/portal'],
     group: 'group-pages',
   },
 

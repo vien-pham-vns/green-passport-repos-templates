@@ -1,5 +1,5 @@
 import type { Route } from 'next';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useTransition } from 'react';
 
 /**
@@ -9,20 +9,28 @@ import { useTransition } from 'react';
 export function useNavigation() {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
+  const pathname = usePathname();
 
   const navigate = (
     url: Route | string,
     options?: { scroll?: boolean },
     isPush?: true
   ) => {
+    // If URL starts with '?', preserve the current pathname
+    // If URL is just '?', use pathname without query params
+    let finalUrl = url;
+    if (url.startsWith('?')) {
+      finalUrl = url === '?' ? pathname : `${pathname}${url}`;
+    }
+
     if (!isPush) {
       return startTransition(() => {
-        router.replace(url as Route, options);
+        router.replace(finalUrl as Route, options);
       });
     }
 
     return startTransition(() => {
-      router.push(url as Route, options);
+      router.push(finalUrl as Route, options);
     });
   };
 
