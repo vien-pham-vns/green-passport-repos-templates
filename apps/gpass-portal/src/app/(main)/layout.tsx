@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 import React from 'react';
 
-import AppLayout from '@/components/app-layout';
+// import AppLayout from '@/components/app-layout';
 import { getAuthToken } from '@/lib/auth';
 
 // import { getCurrentUser } from '../actions/auth';
@@ -14,5 +14,5 @@ export default async function MainLayout({ children }: React.PropsWithChildren) 
     redirect('/login');
   }
 
-  return <AppLayout>{children}</AppLayout>;
+  return <>{children}</>;
 }

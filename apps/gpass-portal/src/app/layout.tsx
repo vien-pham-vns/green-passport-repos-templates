@@ -2,7 +2,6 @@ import { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
 import { Suspense } from 'react';
 
-import AppLoading from '@/components/app-loading';
 import ThemeRegistry from '@/theme/theme-registry';
 
 import './globals.css';
@@ -30,7 +29,7 @@ export default function RootLayout({ children }: Readonly<LayoutProps>) {
     <html translate='no' suppressHydrationWarning>
       <body className={poppins.variable}>
         <ThemeRegistry>
-          <Suspense fallback={<AppLoading />}>
+          <Suspense fallback={<>Loading...</>}>
             <ProviderLayout>{children}</ProviderLayout>
           </Suspense>
         </ThemeRegistry>

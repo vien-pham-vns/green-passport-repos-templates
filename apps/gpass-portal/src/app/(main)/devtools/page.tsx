@@ -4,8 +4,6 @@ import TranslationEditor from '@dt/devtools/translation-editor-simple';
 import { loadEnv } from '@dt/devtools/utils/variables-env';
 import Box from '@mui/material/Box';
 
-import { PaperLayout } from '@/components/paper-layout';
-
 import { loadTranslationFiles } from './actions';
 
 export default async function DevToolsPage() {
@@ -19,7 +17,7 @@ export default async function DevToolsPage() {
 
     return (
       <Box>
-        <Suspense fallback={<PaperLayout>Loading Translation Editor...</PaperLayout>}>
+        <Suspense fallback={<>Loading Translation Editor...</>}>
           <TranslationEditor initialFiles={initialFiles} />
         </Suspense>
       </Box>

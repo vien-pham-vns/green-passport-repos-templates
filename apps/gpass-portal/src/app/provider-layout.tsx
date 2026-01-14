@@ -1,4 +1,3 @@
-import GoogleAnalytics from 'components/google-analytics';
 import QueryClientProvider from 'providers/query-client-provider';
 import { ToastContainer } from 'react-toastify';
 
@@ -18,13 +17,6 @@ export default async function ProviderLayout({
     <TranslationProvider locale={locale} messages={messages}>
       <ToastContainer />
       <QueryClientProvider>{children}</QueryClientProvider>
-      {process.env.DEPLOYMENT_ENV === 'development' ? (
-        <></>
-      ) : (
-        <>
-          <GoogleAnalytics />
-        </>
-      )}
     </TranslationProvider>
   );
 }

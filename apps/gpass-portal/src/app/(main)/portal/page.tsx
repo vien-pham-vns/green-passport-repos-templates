@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 
-import { PaperLayout } from '@/components/paper-layout';
-import { PortalTableLayout } from '@/features/portal/_components/table-layout';
+// import { PaperLayout } from '@/components/paper-layout';
+// import { PortalTableLayout } from '@/features/portal/_components/table-layout';
 import { fetchApplicationServer } from '@/features/portal/actions/example-action';
 import { ApplicationPageProps } from '@/features/portal/type';
 import {
@@ -49,7 +49,7 @@ export default async function ApplicationPage({ searchParams }: ApplicationPageP
   return (
     <div>
       <Suspense fallback={<p>Loading...</p>}>
-        <PortalTableLayout query={query} applicationData={applicationData} />
+        {/* <PortalTableLayout query={query} applicationData={applicationData} /> */}
       </Suspense>
     </div>
   );
