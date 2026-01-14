@@ -54,8 +54,14 @@ export async function loginAction(
         maxAge: 60 * 60 * 24 * 7, // 1 week
         path: "/", // Must match basePath for cookie to be sent
       });
+
+      // Debug: Log callback URL
+      console.log("Login callbackUrl:", callbackUrl);
+
       // Redirect to callbackUrl if provided, otherwise go to home
       const redirectUrl = callbackUrl && callbackUrl.startsWith("/") ? callbackUrl : "/";
+      console.log("Login redirectUrl:", redirectUrl);
+
       redirect(redirectUrl as any);
     }
     // END dummy
@@ -88,6 +94,12 @@ export async function loginAction(
       error: "Invalid credentials. Use test@example.com / password",
     };
   } catch (error) {
+    // Re-throw redirect errors - they're intentional, not actual errors
+    if (error && typeof error === 'object' && 'digest' in error &&
+        typeof error.digest === 'string' && error.digest.startsWith('NEXT_REDIRECT')) {
+      throw error;
+    }
+
     console.error("Login action error:", error);
     return {
       success: false,
