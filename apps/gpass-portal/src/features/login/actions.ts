@@ -52,8 +52,9 @@ export async function loginAction(
         maxAge: 60 * 60 * 24 * 7, // 1 week
         path: '/',
       });
-      redirect('/');
+      redirect('/portal');
     }
+    // END dummy
 
     // Call the API route
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
@@ -89,5 +90,5 @@ export async function loginAction(
   }
 
   // Redirect on success (this will throw and prevent return)
-  redirect('/');
+  redirect('/portal');
 }
