@@ -22,14 +22,13 @@ export type LoginState = {
 };
 
 export async function loginAction(
-  prevState: LoginState | null,
+  _prevState: LoginState | null,
   formData: FormData,
 ): Promise<LoginState> {
   try {
     // Extract form data
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
-    const callbackUrl = formData.get("callbackUrl") as string | null;
 
     // Validate with Zod
     const validationResult = loginSchema.safeParse({ email, password });
@@ -52,17 +51,11 @@ export async function loginAction(
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         maxAge: 60 * 60 * 24 * 7, // 1 week
-        path: "/", // Must match basePath for cookie to be sent
+        path: "/",
       });
 
-      // Debug: Log callback URL
-      console.log("Login callbackUrl:", callbackUrl);
-
-      // Redirect to callbackUrl if provided, otherwise go to home
-      const redirectUrl = callbackUrl && callbackUrl.startsWith("/") ? callbackUrl : "/";
-      console.log("Login redirectUrl:", redirectUrl);
-
-      redirect(redirectUrl as any);
+      // Redirect to central-lab home page
+      redirect("/");
     }
     // END dummy
 
@@ -95,8 +88,13 @@ export async function loginAction(
     };
   } catch (error) {
     // Re-throw redirect errors - they're intentional, not actual errors
-    if (error && typeof error === 'object' && 'digest' in error &&
-        typeof error.digest === 'string' && error.digest.startsWith('NEXT_REDIRECT')) {
+    if (
+      error &&
+      typeof error === "object" &&
+      "digest" in error &&
+      typeof error.digest === "string" &&
+      error.digest.startsWith("NEXT_REDIRECT")
+    ) {
       throw error;
     }
 

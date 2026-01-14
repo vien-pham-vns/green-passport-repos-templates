@@ -12,11 +12,7 @@ import { useTranslations } from '@/providers/translation-provider/client';
 
 import { type LoginState, loginAction } from './actions';
 
-type LoginProps = {
-  callbackUrl?: string;
-};
-
-const Login = ({ callbackUrl }: LoginProps) => {
+const Login = () => {
   const t = useTranslations('login');
 
   const [state, formAction, isPending] = useActionState<LoginState | null, FormData>(
@@ -37,11 +33,6 @@ const Login = ({ callbackUrl }: LoginProps) => {
         </CardHeader>
         <CardContent>
           <form action={formAction} className="space-y-4">
-            {/* Hidden field to preserve callbackUrl */}
-            {callbackUrl && (
-              <input type="hidden" name="callbackUrl" value={callbackUrl} />
-            )}
-
             {/* Show error alert if there's a general error */}
             {state?.error && !state?.fieldErrors && (
               <Alert variant="destructive">

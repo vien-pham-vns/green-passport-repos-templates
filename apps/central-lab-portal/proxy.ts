@@ -2,22 +2,23 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { TOKEN_COOKIE_NAME } from "./lib/constants";
 
-const basePath = "/portal";
+const basePath = "/central-lab";
 
 export async function proxy(request: NextRequest) {
   const token = request.cookies.get(TOKEN_COOKIE_NAME)?.value;
   const { pathname } = request.nextUrl;
 
-  const isBasePathRoute = pathname.startsWith(basePath);
+  const isLoginPage = pathname === `${basePath}/login`;
+  const isProtectedRoute = pathname.startsWith(basePath) && !isLoginPage;
 
-  if (!token && isBasePathRoute) {
-    const loginUrl = new URL(`${basePath}/login`, request.url);
-    loginUrl.searchParams.set("redirect", pathname);
-    return NextResponse.redirect(loginUrl);
+  // Redirect unauthenticated users to login
+  if (!token && isProtectedRoute) {
+    return NextResponse.redirect(new URL(`${basePath}/login`, request.url));
   }
 
-  if (token && isBasePathRoute) {
-    return NextResponse.redirect(new URL(`${basePath}`, request.url));
+  // Redirect authenticated users away from login page
+  if (token && isLoginPage) {
+    return NextResponse.redirect(new URL(basePath, request.url));
   }
 
   return NextResponse.next();

@@ -26,9 +26,9 @@ async function ApplicationDataLoader(
   return responseData.data;
 }
 
-export default async function PortalPage({ searchParams }: PageProps) {
+export default async function CentralLabPage({ searchParams }: PageProps) {
   // Check authentication before fetching any data
-  await getCurrentUser("/portal");
+  await getCurrentUser();
 
   const params = await searchParams;
 
