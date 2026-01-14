@@ -1,0 +1,88 @@
+import { Suspense } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+
+import {
+  getDefaultFromDate,
+  getDefaultToDate,
+  parseSearchParams,
+  toApiParams,
+} from "@/features/portal/utils";
+import { PortalTable } from "@/features/portal/components/portal-table";
+import { PortalFilters } from "@/features/portal/components/portal-filters";
+import { getApplicationPortal } from "@/features/portal/example-actions";
+
+type PageProps = {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+};
+
+async function ApplicationDataLoader(
+  query: ReturnType<typeof parseSearchParams>,
+) {
+  const apiParams = toApiParams(query);
+
+  const responseData = await getApplicationPortal(apiParams);
+  console.log("response data", responseData);
+  return responseData.data;
+}
+
+export default async function PortalPage({ searchParams }: PageProps) {
+  const params = await searchParams;
+
+  /**
+   * For page that have init default params
+   *
+   * Only apply defaults if NO params exist at all (first visit)
+   * Otherwise, use exactly what's in the URL
+   */
+  const isFirstVisit = Object.keys(params).length === 0;
+  const finalParams = isFirstVisit
+    ? { ...params, fromDate: getDefaultFromDate(), toDate: getDefaultToDate() }
+    : params;
+  // END
+
+  const query = parseSearchParams(finalParams); // params
+
+  // Fetch data from server action
+  const applicationData = await ApplicationDataLoader(query);
+
+  return (
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-3xl font-bold tracking-tight">Portal Dashboard</h1>
+        <p className="text-muted-foreground">
+          Manage and track laboratory applications
+        </p>
+      </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Applications</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <PortalFilters />
+
+          <Suspense fallback={<TableSkeleton />}>
+            <PortalTable
+              data={applicationData.data}
+              query={query}
+              total={applicationData.total}
+              page={applicationData.page}
+              pageSize={applicationData.size}
+            />
+          </Suspense>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+function TableSkeleton() {
+  return (
+    <div className="space-y-4">
+      <Skeleton className="h-10 w-full" />
+      <Skeleton className="h-64 w-full" />
+      <Skeleton className="h-10 w-full" />
+    </div>
+  );
+}

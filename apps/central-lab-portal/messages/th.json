@@ -1,0 +1,11 @@
+{
+  "app": {
+    "title": "พอร์ทัลห้องปฏิบัติการกลาง"
+  },
+  "login": {
+    "username-placeholder": "กรอกอีเมล",
+    "password-placeholder": "กรอกรหัสผ่าน",
+    "sign-in-button": "เข้าสู่ระบบ",
+    "forgot-password": "ลืมรหัสผ่าน?"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "app": {
+    "title": "Central Lab Portal"
+  },
+  "login": {
+    "username-placeholder": "Enter your email",
+    "password-placeholder": "Enter your password",
+    "sign-in-button": "Sign In",
+    "forgot-password": "Forgot Password?"
+  }
+}

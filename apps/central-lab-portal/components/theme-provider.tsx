@@ -1,11 +1,16 @@
-'use client'
+"use client";
 
-import * as React from 'react'
 import {
   ThemeProvider as NextThemesProvider,
   type ThemeProviderProps,
-} from 'next-themes'
+} from "next-themes";
+import { Toaster } from "./ui/sonner";
 
 export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
-  return <NextThemesProvider {...props}>{children}</NextThemesProvider>
+  return (
+    <NextThemesProvider {...props}>
+      <Toaster />
+      {children}
+    </NextThemesProvider>
+  );
 }
