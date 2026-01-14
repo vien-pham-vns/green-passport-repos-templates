@@ -29,6 +29,7 @@ export async function loginAction(
     // Extract form data
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
+    const callbackUrl = formData.get("callbackUrl") as string | null;
 
     // Validate with Zod
     const validationResult = loginSchema.safeParse({ email, password });
@@ -51,9 +52,11 @@ export async function loginAction(
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         maxAge: 60 * 60 * 24 * 7, // 1 week
-        path: "/",
+        path: "/", // Must match basePath for cookie to be sent
       });
-      redirect("/");
+      // Redirect to callbackUrl if provided, otherwise go to home
+      const redirectUrl = callbackUrl && callbackUrl.startsWith("/") ? callbackUrl : "/";
+      redirect(redirectUrl as any);
     }
     // END dummy
 

@@ -1,3 +1,5 @@
+"use client";
+
 import { Sun, Moon } from "lucide-react";
 import { useTheme } from "next-themes";
 import * as React from "react";
@@ -27,7 +29,7 @@ export function ModeToggle() {
         setTheme(newMode);
       });
     },
-    [resolvedTheme, setTheme]
+    [resolvedTheme, setTheme],
   );
 
   return (

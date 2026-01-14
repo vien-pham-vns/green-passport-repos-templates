@@ -1,17 +1,6 @@
-import { redirect } from "next/navigation";
 import React from "react";
 
-import { getAuthToken } from "@/lib/auth";
-
-export default async function LoginLayout({
-  children,
-}: React.PropsWithChildren) {
-  const token = await getAuthToken();
-
-  // If already logged in, redirect to portal
-  if (token) {
-    redirect("/");
-  }
-
+export default function LoginLayout({ children }: React.PropsWithChildren) {
+  // Auth redirect is handled by proxy.ts - authenticated users are redirected before reaching here
   return <>{children}</>;
 }
