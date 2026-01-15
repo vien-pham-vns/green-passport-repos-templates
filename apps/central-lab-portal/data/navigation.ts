@@ -23,6 +23,11 @@ export const navigationItems: NavigationItem[] = [
     icon: IconDashboard,
   },
   {
+    title: "Applications",
+    href: "/applications",
+    icon: IconPackage,
+  },
+  {
     title: "Products",
     href: "/products",
     icon: IconPackage,

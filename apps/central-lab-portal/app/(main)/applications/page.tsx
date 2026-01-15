@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 
 import {
@@ -32,17 +32,10 @@ export default async function CentralLabPage({ searchParams }: PageProps) {
 
   const params = await searchParams;
 
-  /**
-   * For page that have init default params
-   *
-   * Only apply defaults if NO params exist at all (first visit)
-   * Otherwise, use exactly what's in the URL
-   */
   const isFirstVisit = Object.keys(params).length === 0;
   const finalParams = isFirstVisit
     ? { ...params, fromDate: getDefaultFromDate(), toDate: getDefaultToDate() }
     : params;
-  // END
 
   const query = parseSearchParams(finalParams); // params
 
@@ -52,7 +45,9 @@ export default async function CentralLabPage({ searchParams }: PageProps) {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Portal Dashboard</h1>
+        <h1 className="text-3xl font-bold tracking-tight">
+          Applications Dashboard
+        </h1>
         <p className="text-muted-foreground">
           Manage and track laboratory applications
         </p>

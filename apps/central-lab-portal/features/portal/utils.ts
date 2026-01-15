@@ -5,8 +5,13 @@ import {
   ApplicationApiRequestParam,
   ApplicationPageProps,
 } from "./type";
-import { transformSort } from "@/utils/transform";
 import { Sort } from "@/types/common";
+import {
+  validatePage,
+  validatePageSize,
+  validateStatus,
+  validateApiParams,
+} from "./validation";
 
 /**
  * Parse URL search params to typed ApplicationSearchParams
@@ -19,10 +24,19 @@ export function parseSearchParams(
     typeof queryParams.fromDate === "string" ? queryParams.fromDate : undefined;
   const toDate =
     typeof queryParams.toDate === "string" ? queryParams.toDate : undefined;
-  const page =
+
+  const pageRaw =
     typeof queryParams.page === "string" ? parseInt(queryParams.page, 10) : 1;
-  const size =
-    typeof queryParams.size === "string" ? parseInt(queryParams.size, 10) : 20;
+  const page = validatePage(pageRaw);
+
+  const sizeRaw =
+    typeof queryParams.size === "string" ? parseInt(queryParams.size, 10) : 10;
+  const size = validatePageSize(sizeRaw);
+
+  const status =
+    typeof queryParams.status === "string"
+      ? validateStatus(queryParams.status)
+      : undefined;
 
   // Parse sort
   let sort: Sort | undefined = undefined;
@@ -39,6 +53,7 @@ export function parseSearchParams(
     toDate,
     page,
     size,
+    status,
     sort,
   };
 }
@@ -56,6 +71,7 @@ export function queryToUrlString(
   if (query.toDate) params.set("toDate", query.toDate);
   if (query.page) params.set("page", String(query.page));
   if (query.size) params.set("size", String(query.size));
+  if (query.status) params.set("status", query.status);
   if (query.sort) {
     params.set("sort", `${query.sort.field}:${query.sort.direction}`);
   }
@@ -80,37 +96,55 @@ export function getDefaultToDate(): string {
 
 /**
  * Transform ApplicationSearchParams to API request params
+ * Maps frontend query params to backend API format with validation
  */
 export function toApiParams(
   params: Partial<ApplicationSearchParams>,
-): Partial<ApplicationApiRequestParam> {
-  let apiParams: Partial<ApplicationApiRequestParam> = {
-    page: 1,
-    size: 20,
+): ApplicationApiRequestParam {
+  // Build raw API params object
+  const rawApiParams: Partial<ApplicationApiRequestParam> = {
+    page: params.page ?? 1,
+    page_size: params.size ?? 10,
   };
 
-  if (params.q) apiParams.keyword = params.q;
+  // Optional: keyword search
+  if (params.q) {
+    rawApiParams.keyword = params.q;
+  }
 
+  // Optional: status filter
+  if (params.status) {
+    rawApiParams.status = params.status;
+  }
+
+  // Optional: date range filters (convert to Unix timestamps)
   if (params.fromDate) {
     const parsedFromDate = getUnixTime(new Date(params.fromDate));
-    apiParams.from_date = parsedFromDate;
+    rawApiParams.from_date = parsedFromDate;
   }
 
   if (params.toDate) {
     const parsedToDate = getUnixTime(new Date(params.toDate));
-    apiParams.to_date = parsedToDate;
+    rawApiParams.to_date = parsedToDate;
   }
 
-  if (params.page) apiParams.page = params.page;
-
-  if (params.size) apiParams.size = params.size;
-
+  // Optional: sorting
   if (params.sort) {
-    const sortValue = transformSort(params.sort);
-    if (sortValue !== undefined) {
-      apiParams.sort = sortValue;
+    const { field, direction } = params.sort;
+
+    // Map sort field to API format
+    if (field === "createdAt" || field === "created_at") {
+      rawApiParams.sort_by = "created_at";
+    } else if (field === "status") {
+      rawApiParams.sort_by = "status";
+    }
+
+    // Map sort direction
+    if (direction === "asc" || direction === "desc") {
+      rawApiParams.sort_dir = direction;
     }
   }
 
-  return apiParams;
+  // Validate and sanitize all parameters
+  return validateApiParams(rawApiParams);
 }

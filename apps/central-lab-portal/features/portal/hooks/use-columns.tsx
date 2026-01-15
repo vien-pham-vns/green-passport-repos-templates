@@ -17,6 +17,10 @@ export function useColumns() {
   const { formatDate } = useFormatDate();
   const router = useRouter();
 
+  const handleViewClick = (application: ApplicationData) => {
+    router.push(`/applications/${application.id}`);
+  };
+
   const columns = useMemo<ColumnDef<ApplicationData>[]>(
     () => [
       {
@@ -127,7 +131,11 @@ export function useColumns() {
         header: () => <div className="text-center">Actions</div>,
         cell: ({ row }) => (
           <div className="flex justify-center">
-            <Button variant="ghost" size="sm">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => handleViewClick(row.original)}
+            >
               <Eye className="mr-2 h-4 w-4" />
               View
             </Button>
@@ -137,7 +145,7 @@ export function useColumns() {
         enableHiding: false,
       },
     ],
-    [formatDate, router],
+    [formatDate, router, handleViewClick],
   );
 
   return { columns };

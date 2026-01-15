@@ -50,6 +50,15 @@ export function AppSidebarMenu() {
     return currentPath === targetPath;
   };
 
+  const isUnderPath = (href: string) => {
+    const currentPath = getPathname(pathname);
+    const targetPath = getPathname(href);
+    // Check if current path starts with target path (for nested routes like /applications/[id])
+    return (
+      currentPath.startsWith(targetPath + "/") || currentPath === targetPath
+    );
+  };
+
   const hasActiveChild = (item: NavigationItem): boolean => {
     if (!item.children) return false;
     return item.children.some(
@@ -59,6 +68,11 @@ export function AppSidebarMenu() {
   };
 
   const isItemActive = (item: NavigationItem): boolean => {
+    // For items without children, check if we're under their path
+    if (!item.children || item.children.length === 0) {
+      return isUnderPath(item.href);
+    }
+    // For items with children, check exact match or if any child is active
     return isCurrentPage(item.href) || hasActiveChild(item);
   };
 

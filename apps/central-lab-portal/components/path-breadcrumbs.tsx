@@ -23,6 +23,7 @@ const routeLabels: Record<string, string> = {
   settings: "Settings",
   users: "Users",
   products: "Products",
+  applications: "Applications",
   // Add more route labels as needed
 };
 
@@ -40,7 +41,9 @@ export function PathBreadcrumbs() {
   // Build breadcrumb items from pathname segments
   const breadcrumbs: BreadcrumbConfig[] = segments.map((segment, index) => {
     const href = "/" + segments.slice(0, index + 1).join("/");
-    const label = routeLabels[segment] || segment.charAt(0).toUpperCase() + segment.slice(1);
+    const label =
+      routeLabels[segment] ||
+      segment.charAt(0).toUpperCase() + segment.slice(1);
 
     return { label, href };
   });
