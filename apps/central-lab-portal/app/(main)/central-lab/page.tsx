@@ -66,7 +66,7 @@ export default async function CentralLabPage({ searchParams }: PageProps) {
             <PortalTable
               data={applicationData.data}
               query={query}
-              total={applicationData.pagination.totalPages}
+              total={applicationData.pagination.total}
               page={applicationData.pagination.page}
               pageSize={applicationData.pagination.pageSize}
             />

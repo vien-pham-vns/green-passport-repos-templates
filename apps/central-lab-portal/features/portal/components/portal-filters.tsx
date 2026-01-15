@@ -1,37 +1,45 @@
-'use client';
+"use client";
 
-import { useState, useTransition } from 'react';
-import { useSearchParams } from 'next/navigation';
-import { Search, X, RefreshCw } from 'lucide-react';
+import { useState, useTransition } from "react";
+import { useSearchParams } from "next/navigation";
+import { Search, X, RefreshCw } from "lucide-react";
 
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { useNavigation } from '@/hooks/use-navigation';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useNavigation } from "@/hooks/use-navigation";
+import { DataTableFilters } from "@/components/ui/data-table-filters";
+import { useDataTableFilters } from "@/components/ui/use-data-table-filters";
 
 export function PortalFilters() {
   const searchParams = useSearchParams();
   const { navigate, refresh } = useNavigation();
   const [isPending, startTransition] = useTransition();
 
-  const currentSearch = searchParams.get('q') || '';
+  const currentSearch = searchParams.get("q") || "";
   const [searchValue, setSearchValue] = useState(currentSearch);
+
+  // Use the data table filters hook
+  const {
+    filters,
+    actions: { handleFiltersChange, handleClearFilters },
+  } = useDataTableFilters();
 
   const handleSearch = () => {
     const params = new URLSearchParams(searchParams.toString());
     if (searchValue.trim()) {
-      params.set('q', searchValue.trim());
+      params.set("q", searchValue.trim());
     } else {
-      params.delete('q');
+      params.delete("q");
     }
-    params.set('page', '1'); // Reset to first page
+    params.set("page", "1"); // Reset to first page
     navigate(`?${params.toString()}`, { scroll: false });
   };
 
   const handleClearSearch = () => {
-    setSearchValue('');
+    setSearchValue("");
     const params = new URLSearchParams(searchParams.toString());
-    params.delete('q');
-    params.set('page', '1');
+    params.delete("q");
+    params.set("page", "1");
     navigate(`?${params.toString()}`, { scroll: false });
   };
 
@@ -42,7 +50,7 @@ export function PortalFilters() {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       handleSearch();
     }
   };
@@ -75,13 +83,19 @@ export function PortalFilters() {
         </Button>
       </div>
 
+      <DataTableFilters
+        filters={filters}
+        onFiltersChange={handleFiltersChange}
+        onClearFilters={handleClearFilters}
+      />
+
       <Button
         variant="outline"
         size="icon"
         onClick={handleRefresh}
         disabled={isPending}
       >
-        <RefreshCw className={`h-4 w-4 ${isPending ? 'animate-spin' : ''}`} />
+        <RefreshCw className={`h-4 w-4 ${isPending ? "animate-spin" : ""}`} />
       </Button>
     </div>
   );
