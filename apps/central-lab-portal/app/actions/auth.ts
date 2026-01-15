@@ -1,5 +1,6 @@
 "use server";
 
+import { cache } from "react";
 import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -27,11 +28,14 @@ export const redirectToLogin = async function () {
 
 /**
  * Get current authenticated user
- * Redirects to login if no valid token or user
+ *
+ * Wrapped with React cache() to deduplicate calls within a single request.
+ * Even if called multiple times in layout + page, it only executes once.
  */
-export async function getCurrentUser(): Promise<User> {
+export const getCurrentUser = cache(async (): Promise<User> => {
   const token = await getAuthToken();
 
+  let user: User | null;
   if (!token) {
     console.debug("No auth token, redirecting to login");
     redirect("/login");
@@ -39,19 +43,19 @@ export async function getCurrentUser(): Promise<User> {
 
   // For development: use dummy user
   // TODO: Replace with real API call in production
-  if (process.env.NODE_ENV === "development") {
-    return getDummyUser();
-  }
+  user = getDummyUser();
+  // END TODO
 
-  const user = await fetchMe();
+  // user = await fetchMe();
 
-  if (!user) {
-    console.debug("Invalid auth token, redirecting to login");
-    redirect("/login");
-  }
+  // if (!user) {
+  //   // Token exists but user fetch failed - clear cookies and redirect
+  //   console.debug("Invalid auth token, redirecting to login");
+  //   redirect("/login" as any);
+  // }
 
   return user;
-}
+});
 
 /**
  * Get current user without redirecting

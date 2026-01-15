@@ -6,7 +6,6 @@ import { loadEnv } from "@dt/devtools/utils/variables-env";
 import { loadTranslationFiles } from "./actions";
 
 export default async function DevToolsPage() {
-  console.log("process.env", loadEnv());
   if (
     process.env.DEPLOYMENT_ENV === "development" ||
     process.env.DEPLOYMENT_ENV === "staging"

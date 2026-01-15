@@ -8,24 +8,30 @@ WORKDIR /app
 RUN npm install -g pnpm@10.16.1
 
 # ENV vars
-ENV NEXT_PUBLIC_XXX=default_value
-ENV XXX=default_value
+# ENV NEXT_PUBLIC_XXX=default_value
+# ENV XXX=default_value
+ENV DOMAIN=https://dt-dev.vnsilicon.cloud
+ENV DEPLOYMENT_ENV=staging
+ENV API_DOMAIN=https://dt-staging.bks.com/api/controller
+ENV API_CORE_DOMAIN=https://dt-staging.bks.com/api/core
+ENV API_DOMAIN_DIRECTUS=https://directus.dt-staging.vnsilicon.cloud
+ENV EGAP_DOMAIN=https://egap.dt-dev.vnsilicon.cloud
 
 # Copy monorepo configuration files
 COPY pnpm-workspace.yaml pnpm-lock.yaml package.json ./
 
 # Copy all workspace packages (needed for workspace dependencies)
 COPY packages ./packages
-COPY apps/gpass-portal/package.json ./apps/gpass-portal/
+COPY apps/central-lab-portal/package.json ./apps/central-lab-portal/
 
-# Install dependencies for the entire monorepo
-RUN pnpm install --frozen-lockfile
+# Install dependencies for the entire monorepo (ignore scripts to skip husky in Docker)
+RUN pnpm install --frozen-lockfile --ignore-scripts
 
 # Copy the app source code
-COPY apps/gpass-portal ./apps/gpass-portal
+COPY apps/central-lab-portal ./apps/central-lab-portal
 
 # Build the specific app
-WORKDIR /app/apps/gpass-portal
+WORKDIR /app/apps/central-lab-portal
 RUN pnpm build
 
 # ----------------------------
@@ -44,12 +50,12 @@ RUN adduser --system --uid 1001 nextjs
 RUN apk add --no-cache gettext
 
 # Copy standalone output
-COPY --from=builder --chown=nextjs:nodejs /app/apps/gpass-portal/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/apps/gpass-portal/.next/static ./apps/gpass-portal/.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/apps/central-lab-portal/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/apps/central-lab-portal/.next/static ./apps/central-lab-portal/.next/static
 
 # Copy public and messages folders if they exist
-COPY --from=builder --chown=nextjs:nodejs /app/apps/gpass-portal/public ./apps/gpass-portal/public
-COPY --from=builder --chown=nextjs:nodejs /app/apps/gpass-portal/messages ./apps/gpass-portal/messages
+COPY --from=builder --chown=nextjs:nodejs /app/apps/central-lab-portal/public ./apps/central-lab-portal/public
+COPY --from=builder --chown=nextjs:nodejs /app/apps/central-lab-portal/messages ./apps/central-lab-portal/messages
 
 USER nextjs
 
@@ -57,4 +63,4 @@ USER nextjs
 EXPOSE $PORT
 
 # The standalone output includes the server.js at the app level
-CMD ["node", "apps/gpass-portal/server.js"]
+CMD ["node", "apps/central-lab-portal/server.js"]

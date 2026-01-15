@@ -23,8 +23,8 @@ const nextConfig = {
   // images: {
   //   unoptimized: true,
   // },
-  assetPrefix: "/portal",
-  basePath: "/portal",
+  assetPrefix: "/central-lab",
+  basePath: "/central-lab",
   cacheComponents: true,
   typedRoutes: true,
   images: {
@@ -56,14 +56,14 @@ const nextConfig = {
     return {
       beforeFiles: [
         {
-          source: "/portal",
+          source: "/central-lab",
           destination: "/404",
         },
       ],
       afterFiles: [
         {
           source: "/",
-          destination: "/portal",
+          destination: "/central-lab",
         },
       ],
       fallback: [],

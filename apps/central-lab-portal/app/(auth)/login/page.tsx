@@ -1,5 +1,5 @@
 import Login from '@/features/login';
 
-export default function LoginPage() {
+export default async function LoginPage() {
   return <Login />;
 }

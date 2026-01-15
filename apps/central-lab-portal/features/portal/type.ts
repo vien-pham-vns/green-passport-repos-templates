@@ -44,6 +44,6 @@ export interface ApplicationApiRequestParam {
   sort: string; // -abc (desc), abc (asc)
 }
 
-export interface ApplicationPageProps extends PageProps<"/portal"> {
+export interface ApplicationPageProps extends PageProps<"/central-lab"> {
   searchParams: Promise<Partial<SearchParamsAsString<ApplicationSearchParams>>>;
 }

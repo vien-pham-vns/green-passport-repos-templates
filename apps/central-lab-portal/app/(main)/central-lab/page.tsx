@@ -11,6 +11,7 @@ import {
 import { PortalTable } from "@/features/portal/components/portal-table";
 import { PortalFilters } from "@/features/portal/components/portal-filters";
 import { getApplicationPortal } from "@/features/portal/example-actions";
+import { getCurrentUser } from "@/app/actions/auth";
 
 type PageProps = {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
@@ -22,11 +23,13 @@ async function ApplicationDataLoader(
   const apiParams = toApiParams(query);
 
   const responseData = await getApplicationPortal(apiParams);
-  console.log("response data", responseData);
   return responseData.data;
 }
 
-export default async function PortalPage({ searchParams }: PageProps) {
+export default async function CentralLabPage({ searchParams }: PageProps) {
+  // Check authentication before fetching any data
+  await getCurrentUser();
+
   const params = await searchParams;
 
   /**

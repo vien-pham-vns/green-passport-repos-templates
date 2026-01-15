@@ -22,7 +22,7 @@ export type LoginState = {
 };
 
 export async function loginAction(
-  prevState: LoginState | null,
+  _prevState: LoginState | null,
   formData: FormData,
 ): Promise<LoginState> {
   try {
@@ -53,6 +53,8 @@ export async function loginAction(
         maxAge: 60 * 60 * 24 * 7, // 1 week
         path: "/",
       });
+
+      // Redirect to central-lab home page
       redirect("/");
     }
     // END dummy
@@ -85,6 +87,17 @@ export async function loginAction(
       error: "Invalid credentials. Use test@example.com / password",
     };
   } catch (error) {
+    // Re-throw redirect errors - they're intentional, not actual errors
+    if (
+      error &&
+      typeof error === "object" &&
+      "digest" in error &&
+      typeof error.digest === "string" &&
+      error.digest.startsWith("NEXT_REDIRECT")
+    ) {
+      throw error;
+    }
+
     console.error("Login action error:", error);
     return {
       success: false,
