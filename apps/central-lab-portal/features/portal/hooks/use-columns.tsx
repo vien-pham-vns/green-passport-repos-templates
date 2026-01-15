@@ -9,79 +9,38 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { DataTableColumnHeader } from "@/components/ui/data-table-column-header";
 import useFormatDate from "@/hooks/use-format-date";
+import { ApplicationData, ApplicationStatus } from "../type";
 
-import { ApplicationItem } from "../type";
+const DEFAULT_VALUE = "--";
 
 export function useColumns() {
   const { formatDate } = useFormatDate();
   const router = useRouter();
 
-  const columns = useMemo<ColumnDef<ApplicationItem>[]>(
+  const columns = useMemo<ColumnDef<ApplicationData>[]>(
     () => [
       {
-        accessorKey: "batchlot",
+        accessorKey: "number",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Batch Lot ID" />
+          <DataTableColumnHeader column={column} title="Application ID" />
         ),
         cell: ({ row }) => (
-          <div className="font-medium">{row.getValue("batchlot")}</div>
+          <div className="font-medium text-[#2563EB] cursor-pointer">
+            {row.getValue("number")}
+          </div>
         ),
-        enableSorting: true,
+        enableSorting: false,
         enableHiding: false,
       },
       {
-        accessorKey: "farmName",
+        accessorKey: "type",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Farm Name" />
+          <DataTableColumnHeader column={column} title="Type" />
         ),
-        cell: ({ row }) => <div>{row.getValue("farmName")}</div>,
-        enableSorting: true,
+        cell: ({ row }) => <div>{row.getValue("type") || DEFAULT_VALUE}</div>,
+        enableSorting: false,
       },
-      {
-        accessorKey: "farmerName",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Farmer Name" />
-        ),
-        cell: ({ row }) => <div>{row.getValue("farmerName")}</div>,
-        enableSorting: true,
-      },
-      {
-        accessorKey: "totalWeight",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Weight (kg)" />
-        ),
-        cell: ({ row }) => {
-          const weight = row.getValue("totalWeight") as number;
-          return (
-            <div className="text-right font-mono">
-              {weight.toLocaleString("en-US", {
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 2,
-              })}
-            </div>
-          );
-        },
-        enableSorting: true,
-      },
-      {
-        accessorKey: "province",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Province" />
-        ),
-        cell: ({ row }) => <div>{row.getValue("province")}</div>,
-        enableSorting: true,
-      },
-      {
-        accessorKey: "dateCreated",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Harvest Date" />
-        ),
-        cell: ({ row }) => {
-          const date = row.getValue("dateCreated") as string;
-          return <div className="text-center">{formatDate(date)}</div>;
-        },
-        enableSorting: true,
-      },
+
       {
         accessorKey: "status",
         header: ({ column }) => (
@@ -89,22 +48,77 @@ export function useColumns() {
         ),
         cell: ({ row }) => {
           const status = row.getValue("status") as string;
+
           const statusConfig = {
-            pending: { label: "Pending", variant: "outline" as const },
-            approved: { label: "Approved", variant: "default" as const },
-            rejected: { label: "Rejected", variant: "destructive" as const },
-            processing: { label: "Processing", variant: "secondary" as const },
+            [ApplicationStatus.WAITING]: {
+              label: "Pending",
+              variant: "outline" as const,
+            },
+            [ApplicationStatus.PROCESSING]: {
+              label: "Processing",
+              variant: "secondary" as const,
+            },
+            [ApplicationStatus.COMPLETED]: {
+              label: "Completed",
+              variant: "default" as const,
+            },
+            [ApplicationStatus.CANCELLED]: {
+              label: "Cancelled",
+              variant: "destructive" as const,
+            },
           };
 
           const config =
             statusConfig[status as keyof typeof statusConfig] ||
-            statusConfig.pending;
+            statusConfig[ApplicationStatus.WAITING];
 
           return (
             <Badge variant={config.variant} className="capitalize">
               {config.label}
             </Badge>
           );
+        },
+        enableSorting: false,
+      },
+      {
+        accessorKey: "labBranch",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Branch" />
+        ),
+        cell: ({ row }) => (
+          <div>{row.getValue("labBranch") || DEFAULT_VALUE}</div>
+        ),
+        enableSorting: false,
+      },
+      {
+        accessorKey: "result",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Result" />
+        ),
+        cell: ({ row }) => <div>{row.getValue("result") || DEFAULT_VALUE}</div>,
+        enableSorting: false,
+      },
+      {
+        accessorKey: "userCreated",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Created By" />
+        ),
+        cell: ({ row }) => {
+          const user = row.getValue(
+            "userCreated",
+          ) as ApplicationData["userCreated"];
+          return <div>{user?.firstName || DEFAULT_VALUE}</div>;
+        },
+        enableSorting: false,
+      },
+      {
+        accessorKey: "createdAt",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Created Date" />
+        ),
+        cell: ({ row }) => {
+          const date = row.getValue("createdAt") as string;
+          return <div>{formatDate(date)}</div>;
         },
         enableSorting: true,
       },

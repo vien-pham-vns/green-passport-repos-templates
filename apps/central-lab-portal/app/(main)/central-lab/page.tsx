@@ -10,7 +10,7 @@ import {
 } from "@/features/portal/utils";
 import { PortalTable } from "@/features/portal/components/portal-table";
 import { PortalFilters } from "@/features/portal/components/portal-filters";
-import { getApplicationPortal } from "@/features/portal/example-actions";
+import { getApplicationPortal } from "@/features/portal/actions";
 import { getCurrentUser } from "@/app/actions/auth";
 
 type PageProps = {
@@ -23,7 +23,7 @@ async function ApplicationDataLoader(
   const apiParams = toApiParams(query);
 
   const responseData = await getApplicationPortal(apiParams);
-  return responseData.data;
+  return responseData;
 }
 
 export default async function CentralLabPage({ searchParams }: PageProps) {
@@ -59,9 +59,6 @@ export default async function CentralLabPage({ searchParams }: PageProps) {
       </div>
 
       <Card>
-        <CardHeader>
-          <CardTitle>Applications</CardTitle>
-        </CardHeader>
         <CardContent className="space-y-4">
           <PortalFilters />
 
@@ -69,9 +66,9 @@ export default async function CentralLabPage({ searchParams }: PageProps) {
             <PortalTable
               data={applicationData.data}
               query={query}
-              total={applicationData.total}
-              page={applicationData.page}
-              pageSize={applicationData.size}
+              total={applicationData.pagination.totalPages}
+              page={applicationData.pagination.page}
+              pageSize={applicationData.pagination.pageSize}
             />
           </Suspense>
         </CardContent>

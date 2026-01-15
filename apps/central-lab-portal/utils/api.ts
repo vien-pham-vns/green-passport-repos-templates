@@ -23,3 +23,8 @@ export const apiCore = (path: string, version: ApiVersion): string => {
   const cleanPath = path.replace(/^\//, "");
   return `${process.env.API_CORE_DOMAIN}/${version}/${cleanPath}`;
 };
+
+export const apiCentralLab = (path: string, version: ApiVersion): string => {
+  const cleanPath = path.replace(/^\//, "");
+  return `${process.env.API_EGAP_CENTRAL_LAB_DOMAIN}/${version}/${cleanPath}`;
+};

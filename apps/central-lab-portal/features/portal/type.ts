@@ -1,5 +1,18 @@
 import { SearchParamsAsString, Sort } from "@/types/common";
 
+export enum ApplicationType {
+  LAB_TEST = "lab_test",
+  REVIEW_DOC = "review_doc",
+}
+
+export enum ApplicationStatus {
+  WAITING = "waiting",
+  PROCESSING = "processing",
+  COMPLETED = "completed",
+  CANCELLED = "cancelled",
+  NEW = "new",
+}
+
 export interface ApplicationSearchParams {
   q: string;
   fromDate: string;
@@ -9,30 +22,51 @@ export interface ApplicationSearchParams {
   sort: Sort;
 }
 
-export interface ApplicationItem {
+export type AcceptFileTypes = "application/pdf" | "image/png" | "image/jpeg";
+
+export interface Image {
   id: string;
-  batchlot: string;
-  dateCreated: string;
-  totalWeight: number;
-  farmName: string;
-  farmerId: string;
-  farmerName: string;
-  province: string;
-  district: string;
-  subDistrict: string;
-  status: string;
+  filenameDisk: string;
+  filenameDownload: string;
+  filesize?: number;
+  type?: AcceptFileTypes;
 }
 
 export interface ApplicationData {
-  data: ApplicationItem[];
-  total: number;
+  id: string;
+  number: string;
+  type?: ApplicationType;
+  status: ApplicationStatus;
+  labBranch?: string;
+  result?: string;
+  resultFile?: Image;
+  userCreated?: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    role: string;
+    roleLabel?: {
+      en: string;
+      th: string;
+    };
+    profile: {
+      nickname?: string;
+    };
+  };
+  createdAt: string;
+}
+
+export interface PaginationData {
   page: number;
-  size: number;
+  pageSize: number;
+  total: number;
+  totalPages: number;
 }
 
 export interface ApplicationTableResponse {
-  success: boolean;
-  data: ApplicationData;
+  message: string;
+  pagination: PaginationData;
+  data: ApplicationData[];
 }
 
 export interface ApplicationApiRequestParam {
