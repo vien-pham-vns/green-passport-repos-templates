@@ -4,6 +4,7 @@ import {
   ApplicationSearchParams,
   ApplicationApiRequestParam,
   ApplicationPageProps,
+  PageSize,
 } from "./type";
 import { Sort } from "@/types/common";
 import {
@@ -104,7 +105,7 @@ export function toApiParams(
   // Build raw API params object
   const rawApiParams: Partial<ApplicationApiRequestParam> = {
     page: params.page ?? 1,
-    page_size: params.size ?? 10,
+    page_size: (params.size ?? 10) as PageSize,
   };
 
   // Optional: keyword search

@@ -27,7 +27,7 @@ export function ApplicationDetailContent({
 
   // Format the title
   const formattedDate = formatDate(application.createdAt);
-  const title = `${application.number} - ${formattedDate}`;
+  const title = application.number;
 
   const handleIframeLoad = () => {
     setIsLoading(false);

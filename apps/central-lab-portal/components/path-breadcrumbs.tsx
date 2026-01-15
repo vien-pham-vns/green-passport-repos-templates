@@ -53,7 +53,7 @@ export function PathBreadcrumbs() {
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <Link href="/">
+            <Link href="/dashboard">
               <Home className="h-4 w-4" />
             </Link>
           </BreadcrumbLink>

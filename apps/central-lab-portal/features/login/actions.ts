@@ -55,7 +55,7 @@ export async function loginAction(
       });
 
       // Redirect to central-lab home page
-      redirect("/");
+      redirect("/dashboard");
     }
     // END dummy
 

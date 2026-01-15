@@ -19,7 +19,7 @@ export interface NavigationItem {
 export const navigationItems: NavigationItem[] = [
   {
     title: "Dashboard",
-    href: "/",
+    href: "/dashboard",
     icon: IconDashboard,
   },
   {
