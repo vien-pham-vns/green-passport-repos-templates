@@ -57,8 +57,11 @@ export function PortalTable({
     if (sorting.length > 0) {
       const sort = sorting[0];
       // Validate sort field before setting
-      if (sort.id === "created_at" || sort.id === "status") {
-        params.set("sort", `${sort.id}:${sort.desc ? "desc" : "asc"}`);
+      // Map column accessor keys to API field names
+      if (sort.id === "createdAt" || sort.id === "created_at") {
+        params.set("sort", `createdAt:${sort.desc ? "desc" : "asc"}`);
+      } else if (sort.id === "status") {
+        params.set("sort", `status:${sort.desc ? "desc" : "asc"}`);
       }
     } else {
       params.delete("sort");
