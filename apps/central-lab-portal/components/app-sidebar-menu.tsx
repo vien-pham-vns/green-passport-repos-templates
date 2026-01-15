@@ -145,7 +145,7 @@ export function AppSidebarMenu() {
                               />
                             }
                           >
-                            <item.icon className="size-7" />
+                            <item.icon className="size-8" />
                             <span>{item.title}</span>
                           </PopoverTrigger>
                           <PopoverContent
@@ -154,7 +154,7 @@ export function AppSidebarMenu() {
                             sideOffset={8}
                             className="w-56 p-2"
                           >
-                            <div className="text-sm font-medium mb-2 px-2">
+                            <div className="text-base font-medium mb-2 px-2">
                               {item.title}
                             </div>
                             <NavigationSubmenu
@@ -177,8 +177,8 @@ export function AppSidebarMenu() {
                             isActive={isActive}
                             onClick={(e) => handleNavigationClick(e, item)}
                           >
-                            <item.icon className="size-5" />
-                            <span>{item.title}</span>
+                            <item.icon className="size-6" />
+                            <span className="text-base">{item.title}</span>
                           </SidebarMenuButton>
                           <CollapsibleTrigger
                             render={<SidebarMenuAction showOnHover />}
@@ -222,9 +222,9 @@ export function AppSidebarMenu() {
                     }
                   >
                     <item.icon
-                      className={state === "collapsed" ? "size-7" : "size-5"}
+                      className={state === "collapsed" ? "size-8" : "size-6"}
                     />
-                    <span>{item.title}</span>
+                    <span className="text-base">{item.title}</span>
                     {item.badge && (
                       <SidebarMenuBadge>{item.badge}</SidebarMenuBadge>
                     )}

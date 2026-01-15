@@ -64,21 +64,18 @@ export function AppSidebarFooter({ user }: AppSidebarFooterProps) {
                     : "h-8 w-8 rounded-lg"
                 }
               >
-                <AvatarImage
-                  src={defaultUser.avatar}
-                  alt={defaultUser.name}
-                />
+                <AvatarImage src={defaultUser.avatar} alt={defaultUser.name} />
                 <AvatarFallback className="rounded-lg">
                   <UserIcon />
                 </AvatarFallback>
               </Avatar>
               {state !== "collapsed" && (
                 <>
-                  <div className="flex flex-col flex-1 text-left text-sm leading-tight justify-center">
+                  <div className="flex flex-col flex-1 text-left text-base leading-tight justify-center">
                     <span className="truncate font-semibold">
                       {defaultUser.name}
                     </span>
-                    <span className="truncate text-xs">
+                    <span className="truncate text-sm">
                       {defaultUser.email}
                     </span>
                   </div>
@@ -124,4 +121,3 @@ export function AppSidebarFooter({ user }: AppSidebarFooterProps) {
     </SidebarFooter>
   );
 }
-

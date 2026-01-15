@@ -145,7 +145,7 @@ export function Notifications() {
         <Button variant="ghost" size="icon" className="relative">
           <Bell className="h-5 w-5" />
           {unreadCount > 0 && (
-            <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground">
+            <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
               {unreadCount > 9 ? "9+" : unreadCount}
             </span>
           )}
@@ -154,12 +154,12 @@ export function Notifications() {
       </PopoverTrigger>
       <PopoverContent className="w-[380px] p-0" align="end">
         <div className="flex items-center justify-between border-b px-4 py-3">
-          <h3 className="font-semibold text-sm">Notifications</h3>
+          <h3 className="font-semibold text-base">Notifications</h3>
           {unreadCount > 0 && (
             <Button
               variant="ghost"
               size="sm"
-              className="h-auto p-0 text-xs text-muted-foreground hover:text-foreground"
+              className="h-auto p-0 text-sm text-muted-foreground hover:text-foreground"
               onClick={markAllAsRead}
             >
               Mark all as read
@@ -170,7 +170,7 @@ export function Notifications() {
           {notifications.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-8 text-center">
               <Bell className="h-12 w-12 text-muted-foreground/50 mb-2" />
-              <p className="text-sm text-muted-foreground">
+              <p className="text-base text-muted-foreground">
                 No notifications yet
               </p>
             </div>
@@ -196,16 +196,16 @@ export function Notifications() {
                       <div className="flex-1 space-y-1 min-w-0">
                         <p
                           className={cn(
-                            "text-sm leading-tight",
+                            "text-base leading-tight",
                             !notification.isRead && "font-semibold",
                           )}
                         >
                           {notification.title}
                         </p>
-                        <p className="text-xs text-muted-foreground leading-tight line-clamp-2">
+                        <p className="text-sm text-muted-foreground leading-tight line-clamp-2">
                           {notification.description}
                         </p>
-                        <p className="text-xs text-muted-foreground/80 leading-tight">
+                        <p className="text-sm text-muted-foreground/80 leading-tight">
                           {formatDistanceToNow(notification.timestamp, {
                             addSuffix: true,
                           })}{" "}
@@ -228,7 +228,7 @@ export function Notifications() {
           <div className="border-t p-2">
             <Button
               variant="ghost"
-              className="w-full text-xs text-muted-foreground hover:text-foreground"
+              className="w-full text-sm text-muted-foreground hover:text-foreground"
               onClick={() => setIsOpen(false)}
             >
               View all notifications

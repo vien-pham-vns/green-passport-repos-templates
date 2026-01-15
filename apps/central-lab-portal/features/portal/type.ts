@@ -41,21 +41,24 @@ export interface ApplicationData {
   labBranch?: string;
   result?: string;
   resultFile?: Image;
-  userCreated?: {
-    id: string;
-    firstName: string;
-    lastName: string;
-    role: string;
-    roleLabel?: {
-      en: string;
-      th: string;
-    };
-    profile: {
-      nickname?: string;
-    };
-  };
+  userCreated?: User;
+  assignee?: User;
   createdAt: string;
   paymentId?: string;
+}
+
+export interface User {
+  id: string;
+  firstName: string;
+  lastName: string;
+  role: string;
+  roleLabel?: {
+    en: string;
+    th: string;
+  };
+  profile: {
+    nickname?: string;
+  };
 }
 
 export interface PaginationData {

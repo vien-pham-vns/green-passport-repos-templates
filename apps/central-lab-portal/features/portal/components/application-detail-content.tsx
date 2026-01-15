@@ -80,15 +80,15 @@ export function ApplicationDetailContent({
       <div className="lg:col-span-7">
         <Card className="h-full">
           <CardHeader>
-            <CardTitle>{title}</CardTitle>
+            <CardTitle className="text-2xl">{title}</CardTitle>
           </CardHeader>
           <CardContent className="p-0">
             <div className="relative h-[80vh]">
               {isLoading && (
                 <div className="absolute inset-0 flex items-center justify-center bg-background/80 z-10">
                   <div className="flex flex-col items-center gap-2">
-                    <Loader2 className="h-8 w-8 animate-spin text-primary" />
-                    <p className="text-sm text-muted-foreground">
+                    <Loader2 className="h-10 w-10 animate-spin text-primary" />
+                    <p className="text-base text-muted-foreground">
                       Loading application form...
                     </p>
                   </div>
@@ -98,10 +98,10 @@ export function ApplicationDetailContent({
               {hasError && !isLoading && (
                 <div className="absolute inset-0 flex items-center justify-center bg-background">
                   <div className="flex flex-col items-center gap-2 text-center p-4">
-                    <p className="text-sm text-destructive font-medium">
+                    <p className="text-base text-destructive font-medium">
                       Failed to load application form
                     </p>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-sm text-muted-foreground">
                       Please check your connection and try again
                     </p>
                   </div>
@@ -125,43 +125,43 @@ export function ApplicationDetailContent({
       <div className="lg:col-span-3">
         <Card>
           <CardHeader>
-            <CardTitle>Application Details</CardTitle>
+            <CardTitle className="text-xl">Application Details</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             {/* Application ID */}
             <div className="space-y-1">
-              <p className="text-sm text-muted-foreground">Application ID</p>
-              <p className="text-sm font-semibold">
+              <p className="text-base text-muted-foreground">Application ID</p>
+              <p className="text-base font-semibold">
                 {application.number || DEFAULT_VALUE}
               </p>
             </div>
 
             {/* Status */}
             <div className="space-y-1">
-              <p className="text-sm text-muted-foreground">Status</p>
+              <p className="text-base text-muted-foreground">Status</p>
               <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge>
             </div>
 
             {/* Payment ID */}
             <div className="space-y-1">
-              <p className="text-sm text-muted-foreground">Payment ID</p>
-              <p className="text-sm font-semibold">
+              <p className="text-base text-muted-foreground">Payment ID</p>
+              <p className="text-base font-semibold">
                 {application.paymentId || DEFAULT_VALUE}
               </p>
             </div>
 
             {/* Created By */}
             <div className="space-y-1">
-              <p className="text-sm text-muted-foreground">Created By</p>
-              <p className="text-sm font-semibold">
+              <p className="text-base text-muted-foreground">Created By</p>
+              <p className="text-base font-semibold">
                 {application.userCreated?.firstName || DEFAULT_VALUE}
               </p>
             </div>
 
             {/* Created Date */}
             <div className="space-y-1">
-              <p className="text-sm text-muted-foreground">Created Date</p>
-              <p className="text-sm font-semibold">
+              <p className="text-base text-muted-foreground">Created Date</p>
+              <p className="text-base font-semibold">
                 {formatDate(application.createdAt) || DEFAULT_VALUE}
               </p>
             </div>
@@ -170,19 +170,19 @@ export function ApplicationDetailContent({
             <div className="pt-4 space-y-3">
               <Button
                 onClick={handleDownloadPDF}
-                className="w-full"
+                className="w-full text-base"
                 variant="outline"
               >
-                <Download className="mr-2 h-4 w-4" />
+                <Download className="mr-2 h-5 w-5" />
                 Download PDF
               </Button>
 
               <Button
                 onClick={handleSubmitTestResult}
-                className="w-full"
+                className="w-full text-base"
                 variant="default"
               >
-                <Send className="mr-2 h-4 w-4" />
+                <Send className="mr-2 h-5 w-5" />
                 Submit Test Result
               </Button>
             </div>

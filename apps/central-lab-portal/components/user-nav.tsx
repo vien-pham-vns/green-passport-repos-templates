@@ -60,10 +60,10 @@ export function UserNav({ user }: UserNavProps) {
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">
+            <p className="text-base font-medium leading-none">
               {displayUser.name || "User"}
             </p>
-            <p className="text-xs leading-none text-muted-foreground">
+            <p className="text-sm leading-none text-muted-foreground">
               {displayUser.email}
             </p>
           </div>

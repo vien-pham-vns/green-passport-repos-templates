@@ -69,13 +69,13 @@ export function DataTablePagination<TData>({
 
   return (
     <div className="flex items-center justify-between px-2">
-      <div className="text-muted-foreground flex-1 text-sm">
+      <div className="text-muted-foreground flex-1 text-base">
         {table.getFilteredSelectedRowModel().rows.length} of{" "}
         {table.getFilteredRowModel().rows.length} row(s) selected.
       </div>
       <div className="flex items-center space-x-6 lg:space-x-8">
         <div className="flex items-center space-x-2">
-          <p className="text-sm font-medium">Rows per page</p>
+          <p className="text-base font-medium">Rows per page</p>
           <Select
             value={`${table.getState().pagination.pageSize}`}
             onValueChange={(value) => {
@@ -122,7 +122,7 @@ export function DataTablePagination<TData>({
                 return (
                   <span
                     key={`ellipsis-${index}`}
-                    className="flex h-8 w-8 items-center justify-center text-sm"
+                    className="flex h-8 w-8 items-center justify-center text-base"
                   >
                     ...
                   </span>
@@ -145,7 +145,7 @@ export function DataTablePagination<TData>({
             })}
           </div>
 
-          <div className="flex items-center justify-center text-sm font-medium lg:hidden">
+          <div className="flex items-center justify-center text-base font-medium lg:hidden">
             Page {currentPage} of {totalPages}
           </div>
 

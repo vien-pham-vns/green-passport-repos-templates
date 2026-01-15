@@ -127,6 +127,16 @@ export function useColumns() {
         enableSorting: true,
       },
       {
+        accessorKey: "assignee",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Assignee" />
+        ),
+        cell: ({ row }) => (
+          <div>{row.getValue("assignee") || DEFAULT_VALUE}</div>
+        ),
+        enableSorting: false,
+      },
+      {
         id: "actions",
         header: () => <div className="text-center">Actions</div>,
         cell: ({ row }) => (

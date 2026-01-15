@@ -148,8 +148,8 @@ export function DataTableFilters({
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger
         render={
-          <Button variant="outline" size="sm">
-            <Filter className="mr-2 h-4 w-4" />
+          <Button variant="outline" size="sm" className="text-base">
+            <Filter className="mr-2 h-5 w-5" />
             Filter
           </Button>
         }
@@ -157,8 +157,8 @@ export function DataTableFilters({
       <PopoverContent className="w-80" align="start">
         <div className="space-y-4">
           <div className="space-y-2">
-            <h4 className="font-medium leading-none">Filters</h4>
-            <p className="text-sm text-muted-foreground">
+            <h4 className="text-base font-medium leading-none">Filters</h4>
+            <p className="text-base text-muted-foreground">
               Set filters for the table data
             </p>
           </div>
@@ -166,8 +166,8 @@ export function DataTableFilters({
           <div className="space-y-4">
             {/* Application Type - Checkbox Group */}
             <div className="space-y-2">
-              <Label>Application Type</Label>
-              <div className="grid grid-cols-2 gap-2">
+              <Label className="text-base">Application Type</Label>
+              <div className="grid grid-cols-1 gap-2">
                 {Object.values(ApplicationType).map((type) => {
                   const isSelected =
                     localFilters.applicationTypes?.includes(type) ?? false;
@@ -185,7 +185,7 @@ export function DataTableFilters({
                           : "border-input bg-background",
                       )}
                     >
-                      <span className="text-sm font-medium">
+                      <span className="text-base font-medium">
                         {APPLICATION_TYPE_LABELS[type]}
                       </span>
                       {isSelected && (
@@ -201,7 +201,7 @@ export function DataTableFilters({
 
             {/* Application Status - Checkbox Group */}
             <div className="space-y-2">
-              <Label>Application Status</Label>
+              <Label className="text-base">Application Status</Label>
               <div className="grid grid-cols-2 gap-2">
                 {Object.values(ApplicationStatus).map((status) => {
                   const isSelected =
@@ -220,7 +220,7 @@ export function DataTableFilters({
                           : "border-input bg-background",
                       )}
                     >
-                      <span className="text-sm font-medium">
+                      <span className="text-base font-medium">
                         {APPLICATION_STATUS_LABELS[status]}
                       </span>
                       {isSelected && (
@@ -236,7 +236,9 @@ export function DataTableFilters({
 
             {/* Lab Branch - Dropdown */}
             <div className="space-y-2">
-              <Label htmlFor="labBranch">Lab Branch</Label>
+              <Label htmlFor="labBranch" className="text-base">
+                Lab Branch
+              </Label>
               <Select
                 value={localFilters.labBranch ?? null}
                 onValueChange={(value) =>
@@ -265,7 +267,9 @@ export function DataTableFilters({
 
             {/* From Date */}
             <div className="space-y-2">
-              <Label htmlFor="fromDate">From Date</Label>
+              <Label htmlFor="fromDate" className="text-base">
+                From Date
+              </Label>
               <DatePicker
                 date={localFilters.fromDate}
                 onDateChange={(date) => updateFilter("fromDate", date)}
@@ -277,7 +281,9 @@ export function DataTableFilters({
 
             {/* To Date */}
             <div className="space-y-2">
-              <Label htmlFor="toDate">To Date</Label>
+              <Label htmlFor="toDate" className="text-base">
+                To Date
+              </Label>
               <DatePicker
                 date={localFilters.toDate}
                 onDateChange={(date) => updateFilter("toDate", date)}
@@ -289,7 +295,7 @@ export function DataTableFilters({
 
             {/* Date Error Message */}
             {dateError && (
-              <div className="rounded-md bg-destructive/10 p-2 text-sm text-destructive">
+              <div className="rounded-md bg-destructive/10 p-2 text-base text-destructive">
                 {dateError}
               </div>
             )}
@@ -297,12 +303,16 @@ export function DataTableFilters({
 
           {/* Action Buttons */}
           <div className="flex gap-2 pt-2">
-            <Button onClick={handleClear} variant="outline" className="flex-1">
+            <Button
+              onClick={handleClear}
+              variant="outline"
+              className="flex-1 text-base"
+            >
               Clear
             </Button>
             <Button
               onClick={handleApply}
-              className="flex-1"
+              className="flex-1 text-base"
               disabled={!!dateError}
             >
               Apply

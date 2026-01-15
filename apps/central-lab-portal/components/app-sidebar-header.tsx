@@ -30,14 +30,12 @@ export function AppSidebarHeader() {
                   : "aspect-square size-8"
               }`}
             >
-              <User2
-                className={state === "collapsed" ? "size-6" : "size-4"}
-              />
+              <User2 className={state === "collapsed" ? "size-6" : "size-4"} />
             </div>
             {state !== "collapsed" && (
-              <div className="flex flex-col flex-1 text-left text-sm leading-tight justify-center">
+              <div className="flex flex-col flex-1 text-left text-base leading-tight justify-center">
                 <span className="truncate font-semibold">Central Lab</span>
-                <span className="truncate text-xs">Portal</span>
+                <span className="truncate text-sm">Portal</span>
               </div>
             )}
           </SidebarMenuButton>
@@ -46,4 +44,3 @@ export function AppSidebarHeader() {
     </SidebarHeader>
   );
 }
-

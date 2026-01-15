@@ -96,10 +96,10 @@ export function DashboardContent({ user }: DashboardContentProps) {
       <div className="w-full max-w-4xl space-y-12">
         {/* Greeting Section */}
         <div className="text-center space-y-2">
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
+          <h1 className="text-6xl font-bold tracking-tight sm:text-7xl md:text-8xl">
             {greeting}
           </h1>
-          <p className="text-xl text-muted-foreground sm:text-2xl">
+          <p className="text-3xl text-muted-foreground sm:text-4xl">
             {displayName}
           </p>
         </div>
