@@ -6,8 +6,8 @@ import { loadTranslationFiles } from "./actions";
 
 export default async function DevToolsPage() {
   if (
-    process.env.DEPLOYMENT_ENV === "development" ||
-    process.env.DEPLOYMENT_ENV === "staging"
+    process.env.GPASS_CENTRAL_LAB_DEPLOYMENT_ENV === "development" ||
+    process.env.GPASS_CENTRAL_LAB_DEPLOYMENT_ENV === "staging"
   ) {
     // Load files on the server
     const initialFiles = await loadTranslationFiles();

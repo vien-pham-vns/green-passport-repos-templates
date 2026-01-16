@@ -39,7 +39,7 @@ export async function submitCentralLabApplication(
       status: "waiting",
     };
 
-    const response = await fetch(`${apiUrl}/central-lab/v1/applications`, {
+    const response = await fetch(`${apiUrl}/v1/applications`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

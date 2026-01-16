@@ -24,7 +24,9 @@ export function getConfig(): AppConfig {
     assetDomain: process.env.GPASS_CENTRAL_LAB_ASSET_DOMAIN || "",
     publicDomain: process.env.GPASS_CENTRAL_LAB_PUBLIC_DOMAIN || "",
     cspAllowedDomain: process.env.GPASS_CENTRAL_LAB_CSP_ALLOWED_DOMAIN || "",
-    apiUrl: process.env.GPASS_CENTRAL_LAB_API_DOMAIN || "",
+    apiUrl:
+      `${process.env.GPASS_CENTRAL_LAB_API_DOMAIN}/central-lab` ||
+      "http://localhost:3000/central-lab",
     featureFlags: {
       experimental: toBool(process.env.FEATURE_EXPERIMENTAL),
     },

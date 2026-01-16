@@ -9,11 +9,7 @@ interface ApplicationDetailPageProps {
   params: Promise<{ id: string }>;
 }
 
-export default async function ApplicationDetailPage({
-  params,
-}: ApplicationDetailPageProps) {
-  const { id } = await params;
-
+async function ApplicationDetailLoader({ id }: { id: string }) {
   let application;
   try {
     application = await getApplicationById(id);
@@ -26,10 +22,18 @@ export default async function ApplicationDetailPage({
     notFound();
   }
 
+  return <ApplicationDetailContent application={application} />;
+}
+
+export default async function ApplicationDetailPage({
+  params,
+}: ApplicationDetailPageProps) {
+  const { id } = await params;
+
   return (
     <div className="w-full p-6">
       <Suspense fallback={<ApplicationDetailSkeleton />}>
-        <ApplicationDetailContent application={application} />
+        <ApplicationDetailLoader id={id} />
       </Suspense>
     </div>
   );
