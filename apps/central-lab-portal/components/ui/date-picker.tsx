@@ -46,12 +46,12 @@ export function DatePicker({
               className
             )}
             disabled={disabled}
-          />
+          >
+            <IconCalendar className="mr-2 h-4 w-4" />
+            {date ? format(date, "PPP") : <span>{placeholder}</span>}
+          </Button>
         }
-      >
-        <IconCalendar className="mr-2 h-4 w-4" />
-        {date ? format(date, "PPP") : <span>{placeholder}</span>}
-      </PopoverTrigger>
+      />
       <PopoverContent className="w-auto p-0" align="start">
         <Calendar
           mode="single"

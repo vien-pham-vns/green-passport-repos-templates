@@ -10,8 +10,8 @@ import {
 } from "@/features/portal/utils";
 import { PortalTable } from "@/features/portal/components/portal-table";
 import { PortalFilters } from "@/features/portal/components/portal-filters";
-import { getApplicationPortal } from "@/features/portal/actions";
 import { getCurrentUser } from "@/app/actions/auth";
+import { getApplicationPortal } from "@/features/actions/application";
 
 type PageProps = {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
@@ -32,10 +32,17 @@ export default async function CentralLabPage({ searchParams }: PageProps) {
 
   const params = await searchParams;
 
+  /**
+   * For page that have init default params
+   *
+   * Only apply defaults if NO params exist at all (first visit)
+   * Otherwise, use exactly what's in the URL
+   */
   const isFirstVisit = Object.keys(params).length === 0;
   const finalParams = isFirstVisit
     ? { ...params, fromDate: getDefaultFromDate(), toDate: getDefaultToDate() }
     : params;
+  // END
 
   const query = parseSearchParams(finalParams); // params
 

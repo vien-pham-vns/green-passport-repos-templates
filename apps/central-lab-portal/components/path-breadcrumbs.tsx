@@ -9,6 +9,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Home } from "lucide-react";
+import { Route } from "next";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -53,7 +54,7 @@ export function PathBreadcrumbs() {
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <Link href="/dashboard">
+            <Link href="/">
               <Home className="h-4 w-4" />
             </Link>
           </BreadcrumbLink>
@@ -70,7 +71,7 @@ export function PathBreadcrumbs() {
                   <BreadcrumbPage>{crumb.label}</BreadcrumbPage>
                 ) : (
                   <BreadcrumbLink asChild>
-                    <Link href={crumb.href!}>{crumb.label}</Link>
+                    <Link href={crumb.href as Route}>{crumb.label}</Link>
                   </BreadcrumbLink>
                 )}
               </BreadcrumbItem>

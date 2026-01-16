@@ -4,15 +4,9 @@ import {
   ApplicationSearchParams,
   ApplicationApiRequestParam,
   ApplicationPageProps,
-  PageSize,
+  ApplicationStatus,
 } from "./type";
 import { Sort } from "@/types/common";
-import {
-  validatePage,
-  validatePageSize,
-  validateStatus,
-  validateApiParams,
-} from "./validation";
 
 /**
  * Parse URL search params to typed ApplicationSearchParams
@@ -26,17 +20,17 @@ export function parseSearchParams(
   const toDate =
     typeof queryParams.toDate === "string" ? queryParams.toDate : undefined;
 
-  const pageRaw =
+  const page =
     typeof queryParams.page === "string" ? parseInt(queryParams.page, 10) : 1;
-  const page = validatePage(pageRaw);
-
-  const sizeRaw =
-    typeof queryParams.size === "string" ? parseInt(queryParams.size, 10) : 10;
-  const size = validatePageSize(sizeRaw);
+  const size =
+    typeof queryParams.size === "string" ? parseInt(queryParams.size, 10) : 20;
 
   const status =
-    typeof queryParams.status === "string"
-      ? validateStatus(queryParams.status)
+    typeof queryParams.status === "string" &&
+    Object.values(ApplicationStatus).includes(
+      queryParams.status as ApplicationStatus,
+    )
+      ? (queryParams.status as ApplicationStatus)
       : undefined;
 
   // Parse sort
@@ -101,51 +95,38 @@ export function getDefaultToDate(): string {
  */
 export function toApiParams(
   params: Partial<ApplicationSearchParams>,
-): ApplicationApiRequestParam {
-  // Build raw API params object
-  const rawApiParams: Partial<ApplicationApiRequestParam> = {
-    page: params.page ?? 1,
-    page_size: (params.size ?? 10) as PageSize,
+): Partial<ApplicationApiRequestParam> {
+  let apiParams: Partial<ApplicationApiRequestParam> = {
+    page: 1,
+    page_size: 20,
   };
 
-  // Optional: keyword search
-  if (params.q) {
-    rawApiParams.keyword = params.q;
-  }
+  if (params.q) apiParams.keyword = params.q;
 
-  // Optional: status filter
-  if (params.status) {
-    rawApiParams.status = params.status;
-  }
-
-  // Optional: date range filters (convert to Unix timestamps)
   if (params.fromDate) {
     const parsedFromDate = getUnixTime(new Date(params.fromDate));
-    rawApiParams.from_date = parsedFromDate;
+    apiParams.from_date = parsedFromDate;
   }
 
   if (params.toDate) {
     const parsedToDate = getUnixTime(new Date(params.toDate));
-    rawApiParams.to_date = parsedToDate;
+    apiParams.to_date = parsedToDate;
   }
 
-  // Optional: sorting
-  if (params.sort) {
-    const { field, direction } = params.sort;
+  if (params.page) apiParams.page = params.page;
 
-    // Map sort field to API format
-    if (field === "createdAt" || field === "created_at") {
-      rawApiParams.sort_by = "created_at";
-    } else if (field === "status") {
-      rawApiParams.sort_by = "status";
-    }
+  if (params.size) apiParams.page_size = params.size;
 
-    // Map sort direction
-    if (direction === "asc" || direction === "desc") {
-      rawApiParams.sort_dir = direction;
-    }
+  if (
+    params.sort?.field !== undefined &&
+    params.sort?.direction !== undefined
+  ) {
+    apiParams = {
+      ...apiParams,
+      sort_by: params.sort.field,
+      sort_dir: params.sort.direction,
+    };
   }
 
-  // Validate and sanitize all parameters
-  return validateApiParams(rawApiParams);
+  return params;
 }

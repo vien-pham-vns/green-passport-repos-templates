@@ -1,11 +1,11 @@
 import {
-  IconDashboard,
+  // IconDashboard,
   IconUsers,
   IconSettings,
-  IconFileText,
-  IconChartBar,
+  // IconFileText,
+  // IconChartBar,
   IconPackage,
-  IconShoppingCart,
+  // IconShoppingCart,
 } from "@tabler/icons-react";
 
 export interface NavigationItem {
@@ -17,62 +17,62 @@ export interface NavigationItem {
 }
 
 export const navigationItems: NavigationItem[] = [
-  {
-    title: "Dashboard",
-    href: "/dashboard",
-    icon: IconDashboard,
-  },
+  // {
+  //   title: "Dashboard",
+  //   href: "/dashboard",
+  //   icon: IconDashboard,
+  // },
   {
     title: "Applications",
-    href: "/applications",
+    href: "/",
     icon: IconPackage,
   },
-  {
-    title: "Products",
-    href: "/products",
-    icon: IconPackage,
-    badge: 12,
-    children: [
-      {
-        title: "All Products",
-        href: "/products",
-        icon: IconPackage,
-      },
-      {
-        title: "Categories",
-        href: "/products/categories",
-        icon: IconFileText,
-      },
-      {
-        title: "Inventory",
-        href: "/products/inventory",
-        icon: IconChartBar,
-      },
-    ],
-  },
-  {
-    title: "Orders",
-    href: "/orders",
-    icon: IconShoppingCart,
-    children: [
-      {
-        title: "All Orders",
-        href: "/orders",
-        icon: IconShoppingCart,
-      },
-      {
-        title: "Pending",
-        href: "/orders/pending",
-        icon: IconFileText,
-        badge: 5,
-      },
-      {
-        title: "Completed",
-        href: "/orders/completed",
-        icon: IconFileText,
-      },
-    ],
-  },
+  // {
+  //   title: "Products",
+  //   href: "/products",
+  //   icon: IconPackage,
+  //   badge: 12,
+  //   children: [
+  //     {
+  //       title: "All Products",
+  //       href: "/products",
+  //       icon: IconPackage,
+  //     },
+  //     {
+  //       title: "Categories",
+  //       href: "/products/categories",
+  //       icon: IconFileText,
+  //     },
+  //     {
+  //       title: "Inventory",
+  //       href: "/products/inventory",
+  //       icon: IconChartBar,
+  //     },
+  //   ],
+  // },
+  // {
+  //   title: "Orders",
+  //   href: "/orders",
+  //   icon: IconShoppingCart,
+  //   children: [
+  //     {
+  //       title: "All Orders",
+  //       href: "/orders",
+  //       icon: IconShoppingCart,
+  //     },
+  //     {
+  //       title: "Pending",
+  //       href: "/orders/pending",
+  //       icon: IconFileText,
+  //       badge: 5,
+  //     },
+  //     {
+  //       title: "Completed",
+  //       href: "/orders/completed",
+  //       icon: IconFileText,
+  //     },
+  //   ],
+  // },
   {
     title: "Users",
     href: "/profile",

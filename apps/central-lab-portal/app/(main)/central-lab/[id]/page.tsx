@@ -1,9 +1,9 @@
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
 
-import { getApplicationById } from "@/features/portal/actions";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ApplicationDetailContent } from "@/features/portal/components/application-detail-content";
+import { getApplicationById } from "@/features/actions/detail";
 
 interface ApplicationDetailPageProps {
   params: Promise<{ id: string }>;

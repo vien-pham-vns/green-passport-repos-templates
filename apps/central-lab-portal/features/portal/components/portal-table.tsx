@@ -39,14 +39,7 @@ export function PortalTable({
     newPageSize: number,
   ) => {
     const params = new URLSearchParams(searchParams.toString());
-
-    // If page size changed, reset to page 1
-    if (newPageSize !== pageSize) {
-      params.set("page", "1");
-    } else {
-      params.set("page", String(newPageIndex + 1)); // Convert back to 1-based
-    }
-
+    params.set("page", String(newPageIndex + 1)); // Convert back to 1-based
     params.set("size", String(newPageSize));
     navigate(`?${params.toString()}`, { scroll: false });
   };
@@ -56,13 +49,7 @@ export function PortalTable({
 
     if (sorting.length > 0) {
       const sort = sorting[0];
-      // Validate sort field before setting
-      // Map column accessor keys to API field names
-      if (sort.id === "createdAt" || sort.id === "created_at") {
-        params.set("sort", `createdAt:${sort.desc ? "desc" : "asc"}`);
-      } else if (sort.id === "status") {
-        params.set("sort", `status:${sort.desc ? "desc" : "asc"}`);
-      }
+      params.set("sort", `${sort.id}:${sort.desc ? "desc" : "asc"}`);
     } else {
       params.delete("sort");
     }

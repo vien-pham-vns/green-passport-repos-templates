@@ -177,7 +177,6 @@ export async function fetchApi<T>(
 
   try {
     const response = await fetch(url, requestOptions);
-    console.log(response);
     const duration = Date.now() - startTime;
 
     // Log HTTP request
@@ -200,8 +199,6 @@ export async function fetchApi<T>(
 
     // Parse response
     const result = await response.json();
-
-    console.log("response", result);
 
     // Transform response to camelCase if enabled
     if (transformResponse) {
