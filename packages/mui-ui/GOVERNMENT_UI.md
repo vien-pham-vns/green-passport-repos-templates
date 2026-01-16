@@ -28,21 +28,21 @@ All colors meet or exceed WCAG 2.2 AA standards:
 
 ```typescript
 // Primary: Professional Blue
-main: 'hsl(214 84% 35%)' // #1565C0 - 7.47:1 contrast
-light: 'hsl(214 80% 45%)' // #1976D2 - 5.23:1 contrast
-dark: 'hsl(214 85% 25%)' // #0D47A1 - 11.58:1 contrast
+main: "hsl(214 84% 35%)"; // #1565C0 - 7.47:1 contrast
+light: "hsl(214 80% 45%)"; // #1976D2 - 5.23:1 contrast
+dark: "hsl(214 85% 25%)"; // #0D47A1 - 11.58:1 contrast
 
 // Secondary: Trustworthy Teal
-main: 'hsl(183 80% 29%)' // #0E7C7B - 6.12:1 contrast
+main: "hsl(183 80% 29%)"; // #0E7C7B - 6.12:1 contrast
 
 // Error: High-Visibility Red
-main: 'hsl(4 90% 40%)' // #C62828 - 7.26:1 contrast
+main: "hsl(4 90% 40%)"; // #C62828 - 7.26:1 contrast
 
 // Warning: Professional Amber
-main: 'hsl(36 95% 45%)' // #E68A00 - 4.87:1 contrast
+main: "hsl(36 95% 45%)"; // #E68A00 - 4.87:1 contrast
 
 // Success: Clear Green
-main: 'hsl(122 41% 38%)' // #2E7D32 - 5.93:1 contrast
+main: "hsl(122 41% 38%)"; // #2E7D32 - 5.93:1 contrast
 ```
 
 ### 3. Enhanced Focus Indicators (WCAG 2.2)
@@ -84,13 +84,14 @@ Optimized for readability in government contexts:
 Optional high-contrast mode for enhanced visibility:
 
 ```typescript
-import { createGovernmentTheme } from '@dt/mui-ui';
+import { createGovernmentTheme } from "@dt/mui-ui";
 
 // Enable high-contrast mode
 const theme = createGovernmentTheme({}, true);
 ```
 
 High-contrast adjustments:
+
 - Darker primary colors
 - Pure black text (#000000)
 - Pure white backgrounds (#ffffff)
@@ -131,12 +132,12 @@ function App() {
 ### Custom Government Theme
 
 ```typescript
-import { createGovernmentTheme } from '@dt/mui-ui';
+import { createGovernmentTheme } from "@dt/mui-ui";
 
 const customTheme = createGovernmentTheme({
   palette: {
     primary: {
-      main: '#custom-color',
+      main: "#custom-color",
     },
   },
   typography: {
@@ -237,16 +238,16 @@ import Alert from '@mui/material/Alert';
 
 ## Accessibility Features Summary
 
-| Feature | Requirement | Implementation |
-|---------|------------|----------------|
-| Text Contrast | 4.5:1 minimum | 7.47:1 (primary), 7.26:1 (error) |
-| UI Contrast | 3:1 minimum | All components exceed 3:1 |
-| Focus Indicator | 2px minimum | 3px outline + 2px offset |
-| Touch Targets | 24x24px minimum | 44px+ for all interactive elements |
-| Focus Appearance | WCAG 2.2 | 3px solid outline, 2px offset |
-| Color Independence | No color-only info | Icons + text for all states |
-| Keyboard Access | Full navigation | All components keyboard accessible |
-| Screen Readers | Proper semantics | Semantic HTML + ARIA labels |
+| Feature            | Requirement        | Implementation                     |
+| ------------------ | ------------------ | ---------------------------------- |
+| Text Contrast      | 4.5:1 minimum      | 7.47:1 (primary), 7.26:1 (error)   |
+| UI Contrast        | 3:1 minimum        | All components exceed 3:1          |
+| Focus Indicator    | 2px minimum        | 3px outline + 2px offset           |
+| Touch Targets      | 24x24px minimum    | 44px+ for all interactive elements |
+| Focus Appearance   | WCAG 2.2           | 3px solid outline, 2px offset      |
+| Color Independence | No color-only info | Icons + text for all states        |
+| Keyboard Access    | Full navigation    | All components keyboard accessible |
+| Screen Readers     | Proper semantics   | Semantic HTML + ARIA labels        |
 
 ## Design Principles
 
@@ -329,12 +330,16 @@ All components will automatically receive government-compliant styling with no c
 
 ```typescript
 // Before
-import { createAppTheme } from '@dt/mui-ui';
-const theme = createAppTheme({ /* options */ });
+import { createAppTheme } from "@dt/mui-ui";
+const theme = createAppTheme({
+  /* options */
+});
 
 // After
-import { createGovernmentTheme } from '@dt/mui-ui';
-const theme = createGovernmentTheme({ /* same options */ });
+import { createGovernmentTheme } from "@dt/mui-ui";
+const theme = createGovernmentTheme({
+  /* same options */
+});
 ```
 
 ## Support

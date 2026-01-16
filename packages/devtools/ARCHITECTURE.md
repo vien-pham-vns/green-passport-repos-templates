@@ -18,6 +18,7 @@ A modern, simplified translation editor built with **React 19** and **Next.js 16
 ### Components
 
 #### 1. **TranslationEditor** (Simplified Main Component)
+
 [translation-editor-simple.tsx](src/components/translation-editor-simple.tsx)
 
 ```tsx
@@ -39,12 +40,14 @@ export default function TranslationEditor({ initialFiles }) {
 ```
 
 **Features:**
+
 - Auto-loads files from server-side props
 - URL-based filtering (search, feature, show missing)
 - Real-time statistics
 - Inline editing
 
 #### 2. **TranslationToolbar** (Simplified Toolbar)
+
 [translation-toolbar-simple.tsx](src/components/translation-toolbar-simple.tsx)
 
 ```tsx
@@ -65,6 +68,7 @@ export default function TranslationToolbar({ availableFeatures, ... }) {
 ```
 
 **Features:**
+
 - Native URLSearchParams integration
 - React 19 `useTransition` for non-blocking updates
 - Search, feature filter, show missing toggle
@@ -73,6 +77,7 @@ export default function TranslationToolbar({ availableFeatures, ... }) {
 ### Hooks
 
 #### 1. **useTranslationFilters** (Native Hook)
+
 [use-url-search-params.ts](src/hooks/use-url-search-params.ts)
 
 ```tsx
@@ -87,21 +92,29 @@ export function useTranslationFilters() {
   const feature = searchParams.get("feature") ?? "all";
 
   // Update URL (shallow routing)
-  const updateFilter = useCallback((key: string, value: string | boolean) => {
-    const params = new URLSearchParams(searchParams);
-    // ... update logic
-    router.replace(`${pathname}?${params}`, { scroll: false });
-  }, [searchParams, pathname, router]);
+  const updateFilter = useCallback(
+    (key: string, value: string | boolean) => {
+      const params = new URLSearchParams(searchParams);
+      // ... update logic
+      router.replace(`${pathname}?${params}`, { scroll: false });
+    },
+    [searchParams, pathname, router],
+  );
 
   return {
-    search, showMissing, feature,
-    setSearch, setShowMissing, setFeature,
+    search,
+    showMissing,
+    feature,
+    setSearch,
+    setShowMissing,
+    setFeature,
     reset,
   };
 }
 ```
 
 **Why this approach?**
+
 - ✅ Zero dependencies
 - ✅ Native Web API (URLSearchParams)
 - ✅ Shallow routing (no server round-trips)
@@ -109,6 +122,7 @@ export function useTranslationFilters() {
 - ✅ URL state is shareable
 
 #### 2. **useFilteredTranslations** (Filtering Logic)
+
 [use-filtered-translations.ts](src/hooks/use-filtered-translations.ts)
 
 ```tsx
@@ -116,15 +130,22 @@ export function useTranslationFilters() {
 
 export function useFilteredTranslations({ entries, languages, searchQuery, showOnlyMissing, selectedFeature }) {
   // useMemo for expensive computations (React Compiler friendly)
-  const availableFeatures = useMemo(() => { /* ... */ }, [entries]);
-  const filteredEntries = useMemo(() => { /* ... */ }, [entries, selectedFeature, searchQuery, showOnlyMissing, languages]);
-  const languageStats = useMemo(() => { /* ... */ }, [entries, languages]);
+  const availableFeatures = useMemo(() => {
+    /* ... */
+  }, [entries]);
+  const filteredEntries = useMemo(() => {
+    /* ... */
+  }, [entries, selectedFeature, searchQuery, showOnlyMissing, languages]);
+  const languageStats = useMemo(() => {
+    /* ... */
+  }, [entries, languages]);
 
   return { availableFeatures, filteredEntries, languageStats };
 }
 ```
 
 **React Compiler Optimization:**
+
 - Uses `useMemo` for expensive operations
 - Marked with `"use memo"` directive
 - Automatically optimized by React Compiler
@@ -132,6 +153,7 @@ export function useFilteredTranslations({ entries, languages, searchQuery, showO
 ## React 19 Features Used
 
 ### 1. **useTransition** (Non-blocking Updates)
+
 ```tsx
 const [isPending, startTransition] = useTransition();
 
@@ -143,11 +165,13 @@ const handleSearchChange = (value: string) => {
 ```
 
 **Benefits:**
+
 - UI stays responsive during updates
 - Search doesn't block other interactions
 - Visual feedback with `isPending` state
 
 ### 2. **React Compiler** (`"use memo"` directive)
+
 ```tsx
 "use client";
 "use memo"; // Enables React Compiler optimizations
@@ -158,6 +182,7 @@ export default function Component() {
 ```
 
 **Benefits:**
+
 - Automatic memoization
 - Fewer manual `useCallback`/`useMemo`
 - Better performance
@@ -165,6 +190,7 @@ export default function Component() {
 ## Next.js 16 Integration
 
 ### Server Component Pattern
+
 ```tsx
 // app/(main)/devtools/page.tsx (Server Component)
 export default async function DevToolsPage() {
@@ -179,6 +205,7 @@ export default async function DevToolsPage() {
 ```
 
 **Benefits:**
+
 - Files loaded on server (faster initial load)
 - No client-side waterfall
 - SEO-friendly
@@ -187,17 +214,19 @@ export default async function DevToolsPage() {
 ## URL Query Parameters
 
 ### Format
+
 ```
 /devtools?q=search+term&missing=1&feature=auth
 ```
 
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `q` | string | `""` | Search query |
-| `missing` | `0\|1` | `0` | Show only missing translations |
-| `feature` | string | `all` | Filter by top-level key |
+| Parameter | Type   | Default | Description                    |
+| --------- | ------ | ------- | ------------------------------ |
+| `q`       | string | `""`    | Search query                   |
+| `missing` | `0\|1` | `0`     | Show only missing translations |
+| `feature` | string | `all`   | Filter by top-level key        |
 
 ### Benefits
+
 - ✅ Shareable URLs
 - ✅ Browser back/forward works
 - ✅ Bookmarkable states
@@ -231,6 +260,7 @@ packages/devtools/
 ## Dependencies
 
 ### Required
+
 - `react` ^19.2.3
 - `react-dom` ^19.2.3
 - `next` 16.1.1
@@ -238,12 +268,14 @@ packages/devtools/
 - `flat` ^6.0.1 (for nested object flattening)
 
 ### Zero State Management Libraries
+
 - ❌ No Redux
 - ❌ No Zustand
 - ❌ No nuqs
 - ❌ No use-debounce
 
 ### Why?
+
 - Native URLSearchParams handles query state
 - React 19 Compiler handles memoization
 - Next.js router handles navigation
@@ -276,7 +308,7 @@ packages/devtools/
 
 ```tsx
 // Server Component
-import TranslationEditor from '@dt/devtools/translation-editor-simple';
+import TranslationEditor from "@dt/devtools/translation-editor-simple";
 
 export default async function Page() {
   const files = await loadFiles(); // Server-side
@@ -288,6 +320,7 @@ export default async function Page() {
 ## Migration from Old Versions
 
 ### Old (nuqs + external libraries)
+
 ```tsx
 import { useQueryStates } from "nuqs";
 import { useDebouncedCallback } from "use-debounce";
@@ -299,6 +332,7 @@ const handleSearch = useDebouncedCallback((value) => {
 ```
 
 ### New (native APIs)
+
 ```tsx
 import { useTranslationFilters } from "@dt/devtools/hooks/use-translation-filters";
 import { useTransition } from "react";
@@ -312,6 +346,7 @@ const handleSearch = (value: string) => {
 ```
 
 **Benefits:**
+
 - Simpler code
 - Fewer dependencies
 - Better performance with React 19
@@ -344,4 +379,4 @@ pnpm build --filter=@dt/devtools
 
 This architecture demonstrates how modern React 19 and Next.js 16 eliminate the need for external state management libraries. By leveraging native Web APIs (URLSearchParams), React 19 features (useTransition, Compiler), and Next.js server components, we achieve a simpler, more maintainable, and performant solution.
 
-**Key Takeaway:** *Simpler is better. Use the platform.*
+**Key Takeaway:** _Simpler is better. Use the platform._

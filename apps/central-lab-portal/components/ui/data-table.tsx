@@ -11,8 +11,6 @@ import {
   ColumnFiltersState,
   getFilteredRowModel,
   VisibilityState,
-  OnChangeFn,
-  Updater,
 } from "@tanstack/react-table";
 import {
   Table,
@@ -24,13 +22,10 @@ import {
 } from "@/components/ui/table";
 import { useState } from "react";
 import { DataTablePagination } from "./data-table-pagination";
-import { Input } from "./input";
-import { DataTableViewOptions } from "./data-table-view-options";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  searchKey?: string;
   onPaginationChange?: (page: number, pageSize: number) => void;
   onSortingChange?: (sorting: SortingState) => void;
   onFilterChange?: (filters: ColumnFiltersState) => void;
@@ -45,7 +40,6 @@ interface DataTableProps<TData, TValue> {
 export function DataTable<TData, TValue>({
   columns,
   data,
-  searchKey,
   onPaginationChange,
   onSortingChange,
   onFilterChange,
@@ -121,21 +115,6 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="space-y-4">
-      {searchKey && (
-        <div className="flex items-center py-4">
-          <Input
-            placeholder={`Filter by ${searchKey}...`}
-            value={
-              (table.getColumn(searchKey)?.getFilterValue() as string) ?? ""
-            }
-            onChange={(event) =>
-              table.getColumn(searchKey)?.setFilterValue(event.target.value)
-            }
-            className="max-w-sm"
-          />
-          <DataTableViewOptions table={table} />
-        </div>
-      )}
       <div className="rounded-md border">
         <Table>
           <TableHeader>
@@ -147,7 +126,7 @@ export function DataTable<TData, TValue>({
                       ? null
                       : flexRender(
                           header.column.columnDef.header,
-                          header.getContext()
+                          header.getContext(),
                         )}
                   </TableHead>
                 ))}
@@ -165,7 +144,7 @@ export function DataTable<TData, TValue>({
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext()
+                        cell.getContext(),
                       )}
                     </TableCell>
                   ))}

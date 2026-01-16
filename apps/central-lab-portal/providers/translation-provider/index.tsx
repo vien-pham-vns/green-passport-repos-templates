@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
-import { Locale } from '@/lib/i18n-config';
+import { Locale } from "@/lib/i18n-config";
 
-import { TranslateMessages, TranslationContext } from './client';
+import { TranslateMessages, TranslationContext } from "./client";
 
 interface TranslationProviderProps {
   locale: Locale;
@@ -15,5 +15,9 @@ export function TranslationProvider({
   messages,
   children,
 }: TranslationProviderProps) {
-  return <TranslationContext value={{ locale, messages }}>{children}</TranslationContext>;
+  return (
+    <TranslationContext value={{ locale, messages }}>
+      {children}
+    </TranslationContext>
+  );
 }

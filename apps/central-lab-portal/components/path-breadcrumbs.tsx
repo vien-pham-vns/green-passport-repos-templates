@@ -9,6 +9,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Home } from "lucide-react";
+import { Route } from "next";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -23,6 +24,7 @@ const routeLabels: Record<string, string> = {
   settings: "Settings",
   users: "Users",
   products: "Products",
+  applications: "Applications",
   // Add more route labels as needed
 };
 
@@ -40,7 +42,9 @@ export function PathBreadcrumbs() {
   // Build breadcrumb items from pathname segments
   const breadcrumbs: BreadcrumbConfig[] = segments.map((segment, index) => {
     const href = "/" + segments.slice(0, index + 1).join("/");
-    const label = routeLabels[segment] || segment.charAt(0).toUpperCase() + segment.slice(1);
+    const label =
+      routeLabels[segment] ||
+      segment.charAt(0).toUpperCase() + segment.slice(1);
 
     return { label, href };
   });
@@ -67,7 +71,7 @@ export function PathBreadcrumbs() {
                   <BreadcrumbPage>{crumb.label}</BreadcrumbPage>
                 ) : (
                   <BreadcrumbLink asChild>
-                    <Link href={crumb.href!}>{crumb.label}</Link>
+                    <Link href={crumb.href as Route}>{crumb.label}</Link>
                   </BreadcrumbLink>
                 )}
               </BreadcrumbItem>

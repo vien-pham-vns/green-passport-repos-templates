@@ -1,24 +1,30 @@
-'use client';
+"use client";
 
-import { useActionState } from 'react';
+import { useActionState } from "react";
 
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
-import { useTranslations } from '@/providers/translation-provider/client';
+import { useTranslations } from "@/providers/translation-provider/client";
 
-import { type LoginState, loginAction } from './actions';
+import { type LoginState, loginAction } from "./actions";
 
 const Login = () => {
-  const t = useTranslations('login');
+  const t = useTranslations("login");
 
-  const [state, formAction, isPending] = useActionState<LoginState | null, FormData>(
-    loginAction,
-    null
-  );
+  const [state, formAction, isPending] = useActionState<
+    LoginState | null,
+    FormData
+  >(loginAction, null);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900 p-4">
@@ -46,14 +52,16 @@ const Login = () => {
                 id="email"
                 name="email"
                 type="email"
-                placeholder={t('username-placeholder')}
+                placeholder={t("username-placeholder")}
                 disabled={isPending}
                 defaultValue="test@example.com"
                 required
-                className={state?.fieldErrors?.email ? 'border-red-500' : ''}
+                className={state?.fieldErrors?.email ? "border-red-500" : ""}
               />
               {state?.fieldErrors?.email && (
-                <p className="text-sm text-red-500">{state.fieldErrors.email[0]}</p>
+                <p className="text-sm text-red-500">
+                  {state.fieldErrors.email[0]}
+                </p>
               )}
             </div>
 
@@ -63,23 +71,21 @@ const Login = () => {
                 id="password"
                 name="password"
                 type="password"
-                placeholder={t('password-placeholder')}
+                placeholder={t("password-placeholder")}
                 disabled={isPending}
                 defaultValue="password"
                 required
-                className={state?.fieldErrors?.password ? 'border-red-500' : ''}
+                className={state?.fieldErrors?.password ? "border-red-500" : ""}
               />
               {state?.fieldErrors?.password && (
-                <p className="text-sm text-red-500">{state.fieldErrors.password[0]}</p>
+                <p className="text-sm text-red-500">
+                  {state.fieldErrors.password[0]}
+                </p>
               )}
             </div>
 
-            <Button
-              type="submit"
-              className="w-full"
-              disabled={isPending}
-            >
-              {isPending ? 'Signing in...' : t('sign-in-button')}
+            <Button type="submit" className="w-full" disabled={isPending}>
+              {isPending ? "Signing in..." : t("sign-in-button")}
             </Button>
           </form>
         </CardContent>

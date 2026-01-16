@@ -1,6 +1,8 @@
 "use client";
 
-import MuiContainer, { type ContainerProps as MuiContainerProps } from '@mui/material/Container';
+import MuiContainer, {
+  type ContainerProps as MuiContainerProps,
+} from "@mui/material/Container";
 
 export type ContainerProps = MuiContainerProps;
 

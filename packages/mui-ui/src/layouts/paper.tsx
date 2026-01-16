@@ -1,6 +1,8 @@
 "use client";
 
-import MuiPaper, { type PaperProps as MuiPaperProps } from '@mui/material/Paper';
+import MuiPaper, {
+  type PaperProps as MuiPaperProps,
+} from "@mui/material/Paper";
 
 export type PaperProps = MuiPaperProps;
 

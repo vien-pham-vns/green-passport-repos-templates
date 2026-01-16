@@ -4,8 +4,8 @@ import {
   ApplicationSearchParams,
   ApplicationApiRequestParam,
   ApplicationPageProps,
+  ApplicationStatus,
 } from "./type";
-import { transformSort } from "@/utils/transform";
 import { Sort } from "@/types/common";
 
 /**
@@ -19,10 +19,19 @@ export function parseSearchParams(
     typeof queryParams.fromDate === "string" ? queryParams.fromDate : undefined;
   const toDate =
     typeof queryParams.toDate === "string" ? queryParams.toDate : undefined;
+
   const page =
     typeof queryParams.page === "string" ? parseInt(queryParams.page, 10) : 1;
   const size =
     typeof queryParams.size === "string" ? parseInt(queryParams.size, 10) : 20;
+
+  const status =
+    typeof queryParams.status === "string" &&
+    Object.values(ApplicationStatus).includes(
+      queryParams.status as ApplicationStatus,
+    )
+      ? (queryParams.status as ApplicationStatus)
+      : undefined;
 
   // Parse sort
   let sort: Sort | undefined = undefined;
@@ -39,6 +48,7 @@ export function parseSearchParams(
     toDate,
     page,
     size,
+    status,
     sort,
   };
 }
@@ -56,6 +66,7 @@ export function queryToUrlString(
   if (query.toDate) params.set("toDate", query.toDate);
   if (query.page) params.set("page", String(query.page));
   if (query.size) params.set("size", String(query.size));
+  if (query.status) params.set("status", query.status);
   if (query.sort) {
     params.set("sort", `${query.sort.field}:${query.sort.direction}`);
   }
@@ -80,13 +91,14 @@ export function getDefaultToDate(): string {
 
 /**
  * Transform ApplicationSearchParams to API request params
+ * Maps frontend query params to backend API format with validation
  */
 export function toApiParams(
   params: Partial<ApplicationSearchParams>,
 ): Partial<ApplicationApiRequestParam> {
   let apiParams: Partial<ApplicationApiRequestParam> = {
     page: 1,
-    size: 20,
+    page_size: 20,
   };
 
   if (params.q) apiParams.keyword = params.q;
@@ -103,14 +115,18 @@ export function toApiParams(
 
   if (params.page) apiParams.page = params.page;
 
-  if (params.size) apiParams.size = params.size;
+  if (params.size) apiParams.page_size = params.size;
 
-  if (params.sort) {
-    const sortValue = transformSort(params.sort);
-    if (sortValue !== undefined) {
-      apiParams.sort = sortValue;
-    }
+  if (
+    params.sort?.field !== undefined &&
+    params.sort?.direction !== undefined
+  ) {
+    apiParams = {
+      ...apiParams,
+      sort_by: params.sort.field,
+      sort_dir: params.sort.direction,
+    };
   }
 
-  return apiParams;
+  return params;
 }

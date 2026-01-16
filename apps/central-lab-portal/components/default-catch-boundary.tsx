@@ -8,7 +8,10 @@ export interface DefaultCatchBoundaryProps {
   reset?: () => void;
 }
 
-export function DefaultCatchBoundary({ error, reset }: DefaultCatchBoundaryProps) {
+export function DefaultCatchBoundary({
+  error,
+  reset,
+}: DefaultCatchBoundaryProps) {
   const router = useRouter();
 
   console.error(error);

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 interface UseExportExcelConfig {
   defaultFields: string[];
@@ -12,7 +12,7 @@ interface UseExportExcelConfig {
  * });
  */
 export function useExportExcel({ defaultFields }: UseExportExcelConfig) {
-  'use memo'; // react compiler opt-in
+  "use memo"; // react compiler opt-in
 
   const [exportFields, setExportFields] = useState<string[]>(defaultFields);
 

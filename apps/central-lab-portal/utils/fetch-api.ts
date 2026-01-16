@@ -1,12 +1,15 @@
-'use server';
+"use server";
 
-import { cookies } from 'next/headers';
+import { cookies } from "next/headers";
 
-import { NEXT_LOCALE } from '@/lib/constants';
-import { getHeaderAccessToken } from '@/lib/auth';
-import { logHttpRequest } from './logger';
-import { toCamel, toSnake } from './transform';
-import { type QueryParamsFilter, buildRequestParams } from './fetch-api-helpers';
+import { NEXT_LOCALE } from "@/lib/constants";
+import { getHeaderAccessToken } from "@/lib/auth";
+import { logHttpRequest } from "./logger";
+import { toCamel, toSnake } from "./transform";
+import {
+  type QueryParamsFilter,
+  buildRequestParams,
+} from "./fetch-api-helpers";
 
 /**
  * Extended RequestInit with Next.js specific options
@@ -21,7 +24,7 @@ interface NextRequestInit extends RequestInit {
 /**
  * Fetch API configuration options
  */
-export interface FetchApiOptions extends Omit<NextRequestInit, 'body'> {
+export interface FetchApiOptions extends Omit<NextRequestInit, "body"> {
   /** Query parameters to append to URL */
   params?: QueryParamsFilter;
   /** Request body (will be automatically converted to snake_case) */
@@ -71,10 +74,10 @@ export interface CookieContext {
 export async function getCookieContext(): Promise<CookieContext> {
   const accessToken = await getHeaderAccessToken();
   const cookieStore = await cookies();
-  const locale = cookieStore.get(NEXT_LOCALE)?.value || 'en';
+  const locale = cookieStore.get(NEXT_LOCALE)?.value || "en";
 
   if (!accessToken) {
-    throw new Error('Failed to get accessToken');
+    throw new Error("Failed to get accessToken");
   }
 
   return { accessToken, locale };
@@ -105,7 +108,7 @@ export async function getCookieContext(): Promise<CookieContext> {
  */
 export async function fetchApi<T>(
   path: string,
-  options: FetchApiOptions = {}
+  options: FetchApiOptions = {},
 ): Promise<T> {
   const {
     params,
@@ -114,7 +117,7 @@ export async function fetchApi<T>(
     transformResponse = true,
     transformRequest = true,
     accessToken,
-    locale = 'en',
+    locale = "en",
     includeCredentials = true,
     logRequest = true,
     logLabel,
@@ -124,7 +127,7 @@ export async function fetchApi<T>(
 
   if (!accessToken) {
     throw new Error(
-      'accessToken is required. Use getCookieContext() to get it, then pass it in options.'
+      "accessToken is required. Use getCookieContext() to get it, then pass it in options.",
     );
   }
 
@@ -133,17 +136,17 @@ export async function fetchApi<T>(
   if (params) {
     const requestParams = buildRequestParams(params);
     const queryString = new URLSearchParams(
-      requestParams as Record<string, string>
+      requestParams as Record<string, string>,
     ).toString();
     url = queryString ? `${path}?${queryString}` : path;
   }
 
   // Prepare headers
   const headers: HeadersInit = {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
     Authorization: `Bearer ${accessToken}`,
-    'X-app-language': locale,
-    'X-source-channel': process.env.NEXT_PUBLIC_BASE_PATH || '',
+    "X-app-language": locale,
+    "X-source-channel": process.env.NEXT_PUBLIC_BASE_PATH || "",
     ...customHeaders,
   };
 
@@ -151,7 +154,7 @@ export async function fetchApi<T>(
   const requestOptions: NextRequestInit = {
     ...fetchOptions,
     headers,
-    credentials: includeCredentials ? 'include' : fetchOptions.credentials,
+    credentials: includeCredentials ? "include" : fetchOptions.credentials,
   };
 
   // Add cache tags if provided
@@ -164,7 +167,9 @@ export async function fetchApi<T>(
 
   // Transform and add body if present
   if (body) {
-    requestOptions.body = JSON.stringify(transformRequest ? toSnake(body) : body);
+    requestOptions.body = JSON.stringify(
+      transformRequest ? toSnake(body) : body,
+    );
   }
 
   // Log request start time
@@ -177,17 +182,19 @@ export async function fetchApi<T>(
     // Log HTTP request
     if (logRequest) {
       logHttpRequest(
-        requestOptions.method || 'GET',
+        requestOptions.method || "GET",
         url,
         response.status,
         duration,
-        logLabel || 'fetchApi'
+        logLabel || "fetchApi",
       );
     }
 
     // Handle non-OK responses
     if (!response.ok) {
-      throw new Error(`HTTP ${response.status}: ${response.statusText} - ${url}`);
+      throw new Error(
+        `HTTP ${response.status}: ${response.statusText} - ${url}`,
+      );
     }
 
     // Parse response
@@ -204,11 +211,11 @@ export async function fetchApi<T>(
     if (logRequest) {
       const duration = Date.now() - startTime;
       logHttpRequest(
-        requestOptions.method || 'GET',
+        requestOptions.method || "GET",
         url,
         500,
         duration,
-        logLabel || 'fetchApi'
+        logLabel || "fetchApi",
       );
     }
     throw error;
@@ -220,9 +227,9 @@ export async function fetchApi<T>(
  */
 export async function get<T>(
   path: string,
-  options?: Omit<FetchApiOptions, 'method'>
+  options?: Omit<FetchApiOptions, "method">,
 ): Promise<T> {
-  return fetchApi<T>(path, { ...options, method: 'GET' });
+  return fetchApi<T>(path, { ...options, method: "GET" });
 }
 
 /**
@@ -231,9 +238,9 @@ export async function get<T>(
 export async function post<T>(
   path: string,
   body?: unknown,
-  options?: Omit<FetchApiOptions, 'method' | 'body'>
+  options?: Omit<FetchApiOptions, "method" | "body">,
 ): Promise<T> {
-  return fetchApi<T>(path, { ...options, method: 'POST', body });
+  return fetchApi<T>(path, { ...options, method: "POST", body });
 }
 
 /**
@@ -242,9 +249,9 @@ export async function post<T>(
 export async function put<T>(
   path: string,
   body?: unknown,
-  options?: Omit<FetchApiOptions, 'method' | 'body'>
+  options?: Omit<FetchApiOptions, "method" | "body">,
 ): Promise<T> {
-  return fetchApi<T>(path, { ...options, method: 'PUT', body });
+  return fetchApi<T>(path, { ...options, method: "PUT", body });
 }
 
 /**
@@ -253,9 +260,9 @@ export async function put<T>(
 export async function patch<T>(
   path: string,
   body?: unknown,
-  options?: Omit<FetchApiOptions, 'method' | 'body'>
+  options?: Omit<FetchApiOptions, "method" | "body">,
 ): Promise<T> {
-  return fetchApi<T>(path, { ...options, method: 'PATCH', body });
+  return fetchApi<T>(path, { ...options, method: "PATCH", body });
 }
 
 /**
@@ -263,7 +270,7 @@ export async function patch<T>(
  */
 export async function del<T>(
   path: string,
-  options?: Omit<FetchApiOptions, 'method'>
+  options?: Omit<FetchApiOptions, "method">,
 ): Promise<T> {
-  return fetchApi<T>(path, { ...options, method: 'DELETE' });
+  return fetchApi<T>(path, { ...options, method: "DELETE" });
 }

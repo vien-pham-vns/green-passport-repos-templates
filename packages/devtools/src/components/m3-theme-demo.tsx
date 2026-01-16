@@ -1,25 +1,25 @@
-'use client';
+"use client";
 
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import Chip from '@mui/material/Chip';
-import TextField from '@mui/material/TextField';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import LinearProgress from '@mui/material/LinearProgress';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import Divider from '@mui/material/Divider';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
-import DownloadIcon from '@mui/icons-material/Download';
-import { shapeTokens, elevationTokens } from '@dt/mui-ui';
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import Chip from "@mui/material/Chip";
+import TextField from "@mui/material/TextField";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import LinearProgress from "@mui/material/LinearProgress";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import Divider from "@mui/material/Divider";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import ShareIcon from "@mui/icons-material/Share";
+import DownloadIcon from "@mui/icons-material/Download";
+import { shapeTokens, elevationTokens } from "@dt/mui-ui";
 
 /**
  * Material Design 3 Theme Demo Component
@@ -33,7 +33,7 @@ import { shapeTokens, elevationTokens } from '@dt/mui-ui';
  */
 export default function M3ThemeDemo() {
   return (
-    <Box sx={{ p: 4, maxWidth: 1400, mx: 'auto' }}>
+    <Box sx={{ p: 4, maxWidth: 1400, mx: "auto" }}>
       {/* Header */}
       <Box sx={{ mb: 6 }}>
         <Typography variant="h3" gutterBottom>
@@ -53,7 +53,12 @@ export default function M3ThemeDemo() {
 
         <Grid container spacing={3}>
           <Grid size={{ xs: 12, md: 6 }}>
-            <Typography variant="caption" display="block" color="text.secondary" gutterBottom>
+            <Typography
+              variant="caption"
+              display="block"
+              color="text.secondary"
+              gutterBottom
+            >
               DISPLAY STYLES
             </Typography>
             <Typography variant="h1" gutterBottom>
@@ -68,7 +73,12 @@ export default function M3ThemeDemo() {
           </Grid>
 
           <Grid size={{ xs: 12, md: 6 }}>
-            <Typography variant="caption" display="block" color="text.secondary" gutterBottom>
+            <Typography
+              variant="caption"
+              display="block"
+              color="text.secondary"
+              gutterBottom
+            >
               HEADLINE STYLES
             </Typography>
             <Typography variant="h4" gutterBottom>
@@ -83,7 +93,12 @@ export default function M3ThemeDemo() {
           </Grid>
 
           <Grid size={{ xs: 12, md: 6 }}>
-            <Typography variant="caption" display="block" color="text.secondary" gutterBottom>
+            <Typography
+              variant="caption"
+              display="block"
+              color="text.secondary"
+              gutterBottom
+            >
               TITLE & BODY STYLES
             </Typography>
             <Typography variant="subtitle1" gutterBottom>
@@ -112,7 +127,7 @@ export default function M3ThemeDemo() {
         </Typography>
         <Divider sx={{ my: 3 }} />
 
-        <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', mb: 3 }}>
+        <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap", mb: 3 }}>
           <Button variant="contained">Contained</Button>
           <Button variant="contained" color="secondary">
             Secondary
@@ -122,7 +137,7 @@ export default function M3ThemeDemo() {
           </Button>
         </Box>
 
-        <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', mb: 3 }}>
+        <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap", mb: 3 }}>
           <Button variant="outlined">Outlined</Button>
           <Button variant="outlined" color="error">
             Error
@@ -132,7 +147,7 @@ export default function M3ThemeDemo() {
           </Button>
         </Box>
 
-        <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', mb: 3 }}>
+        <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap", mb: 3 }}>
           <Button variant="text">Text</Button>
           <Button variant="text" color="success">
             Success
@@ -142,7 +157,7 @@ export default function M3ThemeDemo() {
           </Button>
         </Box>
 
-        <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+        <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
           <Button variant="contained" size="large" startIcon={<DownloadIcon />}>
             Large Button
           </Button>
@@ -165,7 +180,7 @@ export default function M3ThemeDemo() {
         </Typography>
         <Divider sx={{ my: 3 }} />
 
-        <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+        <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
           <Chip label="Default" />
           <Chip label="Primary" color="primary" />
           <Chip label="Secondary" color="secondary" />
@@ -194,10 +209,15 @@ export default function M3ThemeDemo() {
                   Card Title
                 </Typography>
                 <Typography variant="body2" color="text.secondary" paragraph>
-                  M3 cards use outlined variant by default with 12px border radius.
+                  M3 cards use outlined variant by default with 12px border
+                  radius.
                 </Typography>
-                <LinearProgress variant="determinate" value={75} sx={{ mb: 2 }} />
-                <Box sx={{ display: 'flex', gap: 1 }}>
+                <LinearProgress
+                  variant="determinate"
+                  value={75}
+                  sx={{ mb: 2 }}
+                />
+                <Box sx={{ display: "flex", gap: 1 }}>
                   <Button size="small" variant="contained">
                     Action
                   </Button>
@@ -210,15 +230,23 @@ export default function M3ThemeDemo() {
           </Grid>
 
           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-            <Card variant="outlined" sx={{ bgcolor: 'primary.main', color: 'primary.contrastText' }}>
+            <Card
+              variant="outlined"
+              sx={{ bgcolor: "primary.main", color: "primary.contrastText" }}
+            >
               <CardContent>
                 <Typography variant="h6" gutterBottom>
                   Colored Card
                 </Typography>
                 <Typography variant="body2" paragraph>
-                  Cards can be customized with theme colors while maintaining M3 shape.
+                  Cards can be customized with theme colors while maintaining M3
+                  shape.
                 </Typography>
-                <Chip label="Featured" size="small" sx={{ bgcolor: 'background.paper' }} />
+                <Chip
+                  label="Featured"
+                  size="small"
+                  sx={{ bgcolor: "background.paper" }}
+                />
               </CardContent>
             </Card>
           </Grid>
@@ -226,7 +254,11 @@ export default function M3ThemeDemo() {
           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
             <Card variant="outlined">
               <CardContent>
-                <Typography variant="subtitle2" gutterBottom color="text.secondary">
+                <Typography
+                  variant="subtitle2"
+                  gutterBottom
+                  color="text.secondary"
+                >
                   STATISTICS
                 </Typography>
                 <Typography variant="h4" gutterBottom fontWeight={600}>
@@ -305,17 +337,17 @@ export default function M3ThemeDemo() {
               <Box
                 sx={{
                   p: 3,
-                  bgcolor: 'primary.main',
-                  color: 'primary.contrastText',
+                  bgcolor: "primary.main",
+                  color: "primary.contrastText",
                   borderRadius: `${value}px`,
-                  textAlign: 'center',
+                  textAlign: "center",
                 }}
               >
                 <Typography variant="subtitle2" fontWeight={600}>
                   {name}
                 </Typography>
                 <Typography variant="caption">
-                  {value === 9999 ? 'Full (pill)' : `${value}px`}
+                  {value === 9999 ? "Full (pill)" : `${value}px`}
                 </Typography>
               </Box>
             </Grid>
@@ -336,9 +368,9 @@ export default function M3ThemeDemo() {
               <Box
                 sx={{
                   p: 3,
-                  bgcolor: 'background.paper',
+                  bgcolor: "background.paper",
                   borderRadius: 2,
-                  textAlign: 'center',
+                  textAlign: "center",
                   boxShadow: value,
                 }}
               >
@@ -346,7 +378,7 @@ export default function M3ThemeDemo() {
                   {name}
                 </Typography>
                 <Typography variant="caption" color="text.secondary">
-                  {value === 'none' ? 'No shadow' : 'Subtle elevation'}
+                  {value === "none" ? "No shadow" : "Subtle elevation"}
                 </Typography>
               </Box>
             </Grid>
@@ -355,7 +387,7 @@ export default function M3ThemeDemo() {
       </Paper>
 
       {/* Usage Example */}
-      <Paper variant="outlined" sx={{ p: 4, bgcolor: 'grey.50' }}>
+      <Paper variant="outlined" sx={{ p: 4, bgcolor: "grey.50" }}>
         <Typography variant="h5" gutterBottom fontWeight={500}>
           Using M3 Tokens
         </Typography>
@@ -365,12 +397,12 @@ export default function M3ThemeDemo() {
           component="pre"
           sx={{
             p: 2,
-            bgcolor: 'grey.900',
-            color: 'grey.100',
+            bgcolor: "grey.900",
+            color: "grey.100",
             borderRadius: 2,
-            overflow: 'auto',
-            fontSize: '0.875rem',
-            fontFamily: 'monospace',
+            overflow: "auto",
+            fontSize: "0.875rem",
+            fontFamily: "monospace",
           }}
         >
           {`import { shapeTokens, elevationTokens } from '@dt/mui-ui';

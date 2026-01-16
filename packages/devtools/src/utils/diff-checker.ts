@@ -1,4 +1,4 @@
-import type { TranslationDiff, FlatTranslationEntry } from '../types';
+import type { TranslationDiff, FlatTranslationEntry } from "../types";
 
 /**
  * Compare translations and generate diff
@@ -18,7 +18,7 @@ export function generateTranslationDiff(
     if (missingLanguages.length > 0) {
       diffs.push({
         key: entry.key,
-        type: 'missing',
+        type: "missing",
         languages: missingLanguages,
         values: entry.values,
       });

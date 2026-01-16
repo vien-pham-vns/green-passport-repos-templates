@@ -5,8 +5,8 @@ import {
   InputLabel,
   Select as MuiSelect,
   type SelectProps as MuiSelectProps,
-} from '@mui/material';
-import MenuItem from '@mui/material/MenuItem';
+} from "@mui/material";
+import MenuItem from "@mui/material/MenuItem";
 
 export type SelectProps = MuiSelectProps & {
   label?: string;
@@ -22,10 +22,10 @@ export type SelectProps = MuiSelectProps & {
  * </Select>
  */
 export default function Select({ label, ...props }: SelectProps) {
-  const labelId = label ? `${props.id || 'select'}-label` : undefined;
+  const labelId = label ? `${props.id || "select"}-label` : undefined;
 
   return (
-    <FormControl size={props.size || 'small'} fullWidth={props.fullWidth}>
+    <FormControl size={props.size || "small"} fullWidth={props.fullWidth}>
       {label && <InputLabel id={labelId}>{label}</InputLabel>}
       <MuiSelect labelId={labelId} label={label} {...props} />
     </FormControl>

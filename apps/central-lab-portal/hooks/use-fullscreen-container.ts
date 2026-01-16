@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 /**
  * Hook that automatically detects the fullscreen element and returns it as a container
@@ -20,7 +20,9 @@ import { useEffect, useState } from 'react';
  * ```
  */
 export const useFullscreenContainer = (): HTMLElement | undefined => {
-  const [container, setContainer] = useState<HTMLElement | undefined>(undefined);
+  const [container, setContainer] = useState<HTMLElement | undefined>(
+    undefined,
+  );
 
   useEffect(() => {
     const handleFullscreenChange = () => {
@@ -31,13 +33,13 @@ export const useFullscreenContainer = (): HTMLElement | undefined => {
     };
 
     // Listen for fullscreen changes
-    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
 
     // Check initial state
     handleFullscreenChange();
 
     return () => {
-      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
     };
   }, []);
 

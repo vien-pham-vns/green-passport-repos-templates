@@ -1,6 +1,6 @@
-import type { Route } from 'next';
-import { usePathname, useRouter } from 'next/navigation';
-import { useTransition } from 'react';
+import type { Route } from "next";
+import { usePathname, useRouter } from "next/navigation";
+import { useTransition } from "react";
 
 /**
  * Custom hook for handling navigation with loading state
@@ -14,13 +14,13 @@ export function useNavigation() {
   const navigate = (
     url: Route | string,
     options?: { scroll?: boolean },
-    isPush?: true
+    isPush?: true,
   ) => {
     // If URL starts with '?', preserve the current pathname
     // If URL is just '?', use pathname without query params
     let finalUrl = url;
-    if (url.startsWith('?')) {
-      finalUrl = url === '?' ? pathname : `${pathname}${url}`;
+    if (url.startsWith("?")) {
+      finalUrl = url === "?" ? pathname : `${pathname}${url}`;
     }
 
     if (!isPush) {

@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useRef } from 'react';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
-import UploadFileIcon from '@mui/icons-material/UploadFile';
+import { useRef } from "react";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
+import UploadFileIcon from "@mui/icons-material/UploadFile";
 
 interface FileUploaderProps {
   onFilesSelected: (files: FileList) => void;
@@ -42,16 +42,16 @@ export default function FileUploader({
     <Paper
       variant="outlined"
       sx={{
-        border: '2px dashed',
-        borderColor: 'divider',
+        border: "2px dashed",
+        borderColor: "divider",
         borderRadius: 3,
         p: 6,
-        textAlign: 'center',
-        cursor: 'pointer',
-        transition: 'all 0.2s',
-        '&:hover': {
-          borderColor: 'primary.main',
-          bgcolor: 'action.hover',
+        textAlign: "center",
+        cursor: "pointer",
+        transition: "all 0.2s",
+        "&:hover": {
+          borderColor: "primary.main",
+          bgcolor: "action.hover",
         },
       }}
       onDrop={handleDrop}
@@ -63,25 +63,40 @@ export default function FileUploader({
         type="file"
         accept=".json"
         multiple
-        style={{ display: 'none' }}
+        style={{ display: "none" }}
         onChange={handleChange}
       />
 
-      <UploadFileIcon sx={{ fontSize: 56, color: 'primary.main', mb: 2, opacity: 0.6 }} />
+      <UploadFileIcon
+        sx={{ fontSize: 56, color: "primary.main", mb: 2, opacity: 0.6 }}
+      />
 
       <Typography variant="h6" gutterBottom fontWeight={500}>
-        {loading ? 'Loading files...' : 'Upload Translation Files'}
+        {loading ? "Loading files..." : "Upload Translation Files"}
       </Typography>
 
-      <Typography variant="body2" color="text.secondary" sx={{ mb: 3, maxWidth: 400, mx: 'auto' }}>
+      <Typography
+        variant="body2"
+        color="text.secondary"
+        sx={{ mb: 3, maxWidth: 400, mx: "auto" }}
+      >
         Drag and drop your translation JSON files here, or click to browse
       </Typography>
 
-      <Button variant="contained" disabled={loading} sx={{ textTransform: 'none' }}>
+      <Button
+        variant="contained"
+        disabled={loading}
+        sx={{ textTransform: "none" }}
+      >
         Select Files
       </Button>
 
-      <Typography variant="caption" display="block" color="text.secondary" sx={{ mt: 2 }}>
+      <Typography
+        variant="caption"
+        display="block"
+        color="text.secondary"
+        sx={{ mt: 2 }}
+      >
         Supports: en.json, th.json, etc.
       </Typography>
     </Paper>

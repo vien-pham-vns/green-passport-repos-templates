@@ -1,13 +1,13 @@
-import { cache } from 'react';
+import { cache } from "react";
 
-import 'server-only';
+import "server-only";
 
-import { getLocale } from './cookies';
-import type { Locale } from './i18n-config';
+import { getLocale } from "./cookies";
+import type { Locale } from "./i18n-config";
 
 const dictionaries = {
-  en: () => import('../messages/en.json').then((module) => module.default),
-  th: () => import('../messages/th.json').then((module) => module.default),
+  en: () => import("../messages/en.json").then((module) => module.default),
+  th: () => import("../messages/th.json").then((module) => module.default),
 };
 
 export const getDictionary = cache(async (locale: Locale) => {

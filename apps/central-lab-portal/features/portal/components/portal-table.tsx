@@ -6,13 +6,13 @@ import { SortingState } from "@tanstack/react-table";
 import { DataTable } from "@/components/ui/data-table";
 import { useNavigation } from "@/hooks/use-navigation";
 
-import { ApplicationItem, ApplicationSearchParams } from "../type";
+import { ApplicationData, ApplicationSearchParams } from "../type";
 import { useColumns } from "../hooks/use-columns";
 import { useEffect } from "react";
 import { queryToUrlString } from "../utils";
 
 interface PortalTableProps {
-  data: ApplicationItem[];
+  data: ApplicationData[];
   query: Partial<ApplicationSearchParams>;
   total: number;
   page: number;

@@ -43,8 +43,8 @@ pnpm add @dt/devtools
 
 ```tsx
 // app/devtools/page.tsx (Server Component)
-import { Suspense } from 'react';
-import TranslationEditor from '@dt/devtools/translation-editor-simple';
+import { Suspense } from "react";
+import TranslationEditor from "@dt/devtools/translation-editor-simple";
 
 export default async function DevToolsPage() {
   // Load translation files server-side
@@ -62,26 +62,23 @@ export default async function DevToolsPage() {
 
 ```tsx
 // app/devtools/actions.ts
-'use server';
+"use server";
 
-import fs from 'fs/promises';
-import path from 'path';
+import fs from "fs/promises";
+import path from "path";
 
 export async function loadTranslationFiles() {
-  const translationsDir = path.join(process.cwd(), 'public/translations');
+  const translationsDir = path.join(process.cwd(), "public/translations");
   const files = await fs.readdir(translationsDir);
 
   const translations = await Promise.all(
     files
-      .filter((file) => file.endsWith('.json'))
+      .filter((file) => file.endsWith(".json"))
       .map(async (filename) => {
-        const content = await fs.readFile(
-          path.join(translationsDir, filename),
-          'utf-8'
-        );
-        const language = filename.replace('.json', '');
+        const content = await fs.readFile(path.join(translationsDir, filename), "utf-8");
+        const language = filename.replace(".json", "");
         return { language, filename, content };
-      })
+      }),
   );
 
   return translations;
@@ -104,15 +101,15 @@ TranslationEditor (Main)
 #### `useTranslationFilters()` - URL State Management
 
 ```tsx
-import { useTranslationFilters } from '@dt/devtools/hooks/use-translation-filters';
+import { useTranslationFilters } from "@dt/devtools/hooks/use-translation-filters";
 
 function MyComponent() {
   const filters = useTranslationFilters();
 
   // Read values
-  console.log(filters.search);       // "" or search query
-  console.log(filters.showMissing);  // false or true
-  console.log(filters.feature);      // "all" or feature name
+  console.log(filters.search); // "" or search query
+  console.log(filters.showMissing); // false or true
+  console.log(filters.feature); // "all" or feature name
 
   // Update values (updates URL automatically)
   filters.setSearch("hello");
@@ -123,33 +120,33 @@ function MyComponent() {
 ```
 
 **URL Format:**
+
 ```
 /devtools?q=search+term&missing=1&feature=auth
 ```
 
-| Param | Type | Default | Description |
-|-------|------|---------|-------------|
-| `q` | string | `""` | Search query for translations |
-| `missing` | `0\|1` | `0` | Show only missing translations |
-| `feature` | string | `all` | Filter by top-level key |
+| Param     | Type   | Default | Description                    |
+| --------- | ------ | ------- | ------------------------------ |
+| `q`       | string | `""`    | Search query for translations  |
+| `missing` | `0\|1` | `0`     | Show only missing translations |
+| `feature` | string | `all`   | Filter by top-level key        |
 
 #### `useFilteredTranslations()` - Filtering Logic
 
 ```tsx
-import { useFilteredTranslations } from '@dt/devtools/hooks/use-filtered-translations';
+import { useFilteredTranslations } from "@dt/devtools/hooks/use-filtered-translations";
 
 function MyComponent() {
   const filters = useTranslationFilters();
   const { files, entries, languages } = useTranslationFiles();
 
-  const { availableFeatures, filteredEntries, languageStats } =
-    useFilteredTranslations({
-      entries,
-      languages,
-      searchQuery: filters.search,
-      showOnlyMissing: filters.showMissing,
-      selectedFeature: filters.feature,
-    });
+  const { availableFeatures, filteredEntries, languageStats } = useFilteredTranslations({
+    entries,
+    languages,
+    searchQuery: filters.search,
+    showOnlyMissing: filters.showMissing,
+    selectedFeature: filters.feature,
+  });
 
   // availableFeatures: ["auth", "common", "dashboard", ...]
   // filteredEntries: Array of filtered translation entries
@@ -162,7 +159,7 @@ function MyComponent() {
 ### 1. useTransition (Non-blocking Updates)
 
 ```tsx
-import { useTransition } from 'react';
+import { useTransition } from "react";
 
 function SearchInput() {
   const filters = useTranslationFilters();
@@ -175,12 +172,7 @@ function SearchInput() {
     });
   };
 
-  return (
-    <input
-      onChange={(e) => handleSearch(e.target.value)}
-      style={{ opacity: isPending ? 0.5 : 1 }}
-    />
-  );
+  return <input onChange={(e) => handleSearch(e.target.value)} style={{ opacity: isPending ? 0.5 : 1 }} />;
 }
 ```
 
@@ -227,11 +219,12 @@ interface TranslationEditorProps {
 ```
 
 **Example:**
+
 ```tsx
 <TranslationEditor
   initialFiles={[
-    { language: 'en', filename: 'en.json', content: '{"hello":"Hello"}' },
-    { language: 'th', filename: 'th.json', content: '{"hello":"สวัสดี"}' }
+    { language: "en", filename: "en.json", content: '{"hello":"Hello"}' },
+    { language: "th", filename: "th.json", content: '{"hello":"สวัสดี"}' },
   ]}
 />
 ```
@@ -243,6 +236,7 @@ interface TranslationEditorProps {
 Native URLSearchParams-based filtering.
 
 **Returns:**
+
 ```tsx
 {
   search: string;
@@ -260,6 +254,7 @@ Native URLSearchParams-based filtering.
 Filter and compute translation statistics.
 
 **Returns:**
+
 ```tsx
 {
   availableFeatures: string[];
@@ -273,6 +268,7 @@ Filter and compute translation statistics.
 Manage translation file state.
 
 **Returns:**
+
 ```tsx
 {
   files: TranslationFile[];
@@ -291,22 +287,22 @@ Manage translation file state.
 ### Custom File Loading
 
 ```tsx
-'use client';
+"use client";
 
-import { useTranslationFiles } from '@dt/devtools/hooks/use-translation-files';
+import { useTranslationFiles } from "@dt/devtools/hooks/use-translation-files";
 
 export function CustomLoader() {
   const { loadFiles } = useTranslationFiles();
 
   const loadFromAPI = async () => {
-    const response = await fetch('/api/translations');
+    const response = await fetch("/api/translations");
     const data = await response.json();
 
     // Convert API data to FileList
     const dataTransfer = new DataTransfer();
     for (const { filename, content } of data) {
-      const blob = new Blob([content], { type: 'application/json' });
-      const file = new File([blob], filename, { type: 'application/json' });
+      const blob = new Blob([content], { type: "application/json" });
+      const file = new File([blob], filename, { type: "application/json" });
       dataTransfer.items.add(file);
     }
 
@@ -320,26 +316,19 @@ export function CustomLoader() {
 ### Building Custom Filters
 
 ```tsx
-'use client';
+"use client";
 
-import { useTranslationFilters } from '@dt/devtools/hooks/use-translation-filters';
+import { useTranslationFilters } from "@dt/devtools/hooks/use-translation-filters";
 
 export function CustomFilters() {
   const filters = useTranslationFilters();
 
   return (
     <div>
-      <input
-        placeholder="Search..."
-        onChange={(e) => filters.setSearch(e.target.value)}
-      />
+      <input placeholder="Search..." onChange={(e) => filters.setSearch(e.target.value)} />
 
       <label>
-        <input
-          type="checkbox"
-          checked={filters.showMissing}
-          onChange={(e) => filters.setShowMissing(e.target.checked)}
-        />
+        <input type="checkbox" checked={filters.showMissing} onChange={(e) => filters.setShowMissing(e.target.checked)} />
         Show only missing
       </label>
     </div>
@@ -410,8 +399,8 @@ interface TranslationFile {
 
 ```ts
 interface FlatTranslationEntry {
-  key: string;                    // "auth.login.title"
-  path: string[];                 // ["auth", "login", "title"]
+  key: string; // "auth.login.title"
+  path: string[]; // ["auth", "login", "title"]
   values: Record<string, string>; // { en: "Login", th: "เข้าสู่ระบบ" }
 }
 ```

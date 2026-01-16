@@ -1,4 +1,23 @@
-import { SearchParamsAsString, Sort } from "@/types/common";
+import {
+  AppImage,
+  PaginationData,
+  SearchParamsAsString,
+  Sort,
+} from "@/types/common";
+import { User } from "@/types/user";
+
+export enum ApplicationType {
+  LAB_TEST = "lab_test",
+  REVIEW_DOC = "review_doc",
+}
+
+export enum ApplicationStatus {
+  WAITING = "waiting",
+  PROCESSING = "processing",
+  COMPLETED = "completed",
+  CANCELLED = "cancelled",
+  NEW = "new",
+}
 
 export interface ApplicationSearchParams {
   q: string;
@@ -6,42 +25,42 @@ export interface ApplicationSearchParams {
   toDate: string;
   page: number;
   size: number;
+  status: ApplicationStatus;
   sort: Sort;
 }
 
-export interface ApplicationItem {
-  id: string;
-  batchlot: string;
-  dateCreated: string;
-  totalWeight: number;
-  farmName: string;
-  farmerId: string;
-  farmerName: string;
-  province: string;
-  district: string;
-  subDistrict: string;
-  status: string;
-}
-
 export interface ApplicationData {
-  data: ApplicationItem[];
-  total: number;
-  page: number;
-  size: number;
+  id: string;
+  number: string;
+  type: ApplicationType;
+  status: ApplicationStatus;
+  labBranch: string;
+  result: string;
+  resultFile: AppImage;
+  userCreated: User;
+  assignee: User;
+  createdAt: string;
+  paymentId: string;
 }
 
 export interface ApplicationTableResponse {
-  success: boolean;
-  data: ApplicationData;
+  message: string;
+  pagination: PaginationData;
+  data: ApplicationData[];
 }
 
+/**
+ * Maps to backend API query parameters
+ */
 export interface ApplicationApiRequestParam {
+  page: number;
+  page_size: number;
   keyword: string;
+  status: ApplicationStatus;
+  sort_by: Sort["field"];
+  sort_dir: Sort["direction"];
   from_date: number;
   to_date: number;
-  page: number;
-  size: number;
-  sort: string; // -abc (desc), abc (asc)
 }
 
 export interface ApplicationPageProps extends PageProps<"/central-lab"> {

@@ -4,7 +4,7 @@
  * Provides utilities to identify users and reset analytics in PostHog and Google Analytics.
  * Call these functions after user authentication or logout.
  */
-import posthog from 'posthog-js';
+import posthog from "posthog-js";
 
 export interface User {
   id: string;

@@ -1,9 +1,9 @@
-import { flatten, unflatten } from 'flat';
+import { flatten, unflatten } from "flat";
 import type {
   TranslationObject,
   FlatTranslationEntry,
   TranslationFile,
-} from '../types';
+} from "../types";
 
 /**
  * Flatten nested translation object into dot-notation entries
@@ -15,11 +15,11 @@ export function flattenTranslations(
   const entries: FlatTranslationEntry[] = [];
 
   // Use flat package for nested flattening
-  const flattened = flatten(obj, { delimiter: '.' }) as Record<string, string>;
+  const flattened = flatten(obj, { delimiter: "." }) as Record<string, string>;
 
   for (const [key, value] of Object.entries(flattened)) {
-    if (typeof value === 'string') {
-      const parts = key.split('.');
+    if (typeof value === "string") {
+      const parts = key.split(".");
       entries.push({
         key,
         path: parts,
@@ -44,7 +44,7 @@ export function unflattenTranslations(
     flatObj[key] = value;
   }
 
-  return unflatten(flatObj, { delimiter: '.' }) as TranslationObject;
+  return unflatten(flatObj, { delimiter: "." }) as TranslationObject;
 }
 
 /**
@@ -54,9 +54,9 @@ export function getNestedValue(
   obj: TranslationObject,
   key: string,
 ): string | undefined {
-  const flattened = flatten(obj, { delimiter: '.' }) as Record<string, unknown>;
+  const flattened = flatten(obj, { delimiter: "." }) as Record<string, unknown>;
   const value = flattened[key];
-  return typeof value === 'string' ? value : undefined;
+  return typeof value === "string" ? value : undefined;
 }
 
 /**
@@ -72,10 +72,13 @@ export function setNestedValue(
   const result = structuredClone(obj);
 
   // Flatten, set value, then unflatten
-  const flattened = flatten(result, { delimiter: '.' }) as Record<string, string>;
+  const flattened = flatten(result, { delimiter: "." }) as Record<
+    string,
+    string
+  >;
   flattened[key] = value;
 
-  return unflatten(flattened, { delimiter: '.' }) as TranslationObject;
+  return unflatten(flattened, { delimiter: "." }) as TranslationObject;
 }
 
 /**
@@ -96,7 +99,7 @@ export function parseTranslationFile(
     };
   } catch (error) {
     throw new Error(
-      `Failed to parse ${filename}: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      `Failed to parse ${filename}: ${error instanceof Error ? error.message : "Unknown error"}`,
     );
   }
 }
@@ -127,7 +130,7 @@ export function mergeTranslationFiles(
   const mergedEntries: FlatTranslationEntry[] = [];
 
   for (const key of Array.from(allKeys).sort()) {
-    const parts = key.split('.');
+    const parts = key.split(".");
     const values: Record<string, string> = {};
 
     for (const file of files) {

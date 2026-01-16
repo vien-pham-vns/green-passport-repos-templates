@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 
 import {
@@ -10,8 +10,8 @@ import {
 } from "@/features/portal/utils";
 import { PortalTable } from "@/features/portal/components/portal-table";
 import { PortalFilters } from "@/features/portal/components/portal-filters";
-import { getApplicationPortal } from "@/features/portal/example-actions";
 import { getCurrentUser } from "@/app/actions/auth";
+import { getApplicationPortal } from "@/features/actions/application";
 
 type PageProps = {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
@@ -23,7 +23,7 @@ async function ApplicationDataLoader(
   const apiParams = toApiParams(query);
 
   const responseData = await getApplicationPortal(apiParams);
-  return responseData.data;
+  return responseData;
 }
 
 export default async function CentralLabPage({ searchParams }: PageProps) {
@@ -52,16 +52,15 @@ export default async function CentralLabPage({ searchParams }: PageProps) {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Portal Dashboard</h1>
-        <p className="text-muted-foreground">
+        <h1 className="text-4xl font-bold tracking-tight">
+          Applications Dashboard
+        </h1>
+        <p className="text-base text-muted-foreground">
           Manage and track laboratory applications
         </p>
       </div>
 
       <Card>
-        <CardHeader>
-          <CardTitle>Applications</CardTitle>
-        </CardHeader>
         <CardContent className="space-y-4">
           <PortalFilters />
 
@@ -69,9 +68,9 @@ export default async function CentralLabPage({ searchParams }: PageProps) {
             <PortalTable
               data={applicationData.data}
               query={query}
-              total={applicationData.total}
-              page={applicationData.page}
-              pageSize={applicationData.size}
+              total={applicationData.pagination.total}
+              page={applicationData.pagination.page}
+              pageSize={applicationData.pagination.pageSize}
             />
           </Suspense>
         </CardContent>
