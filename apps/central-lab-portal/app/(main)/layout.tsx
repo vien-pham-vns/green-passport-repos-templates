@@ -16,9 +16,7 @@ import { redirect } from "next/navigation";
 export default async function MainLayout({
   children,
 }: React.PropsWithChildren) {
-  // Auth check is handled by proxy.ts - this only runs for authenticated users
   const user = await getCurrentUser();
-  console.log("user", user);
   if (!user) {
     redirect("/login");
   }
