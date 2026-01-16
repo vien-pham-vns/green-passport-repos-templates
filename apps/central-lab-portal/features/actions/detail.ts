@@ -24,8 +24,7 @@ async function getApplicationDetailByIdCached(id: string) {
       method: "GET",
       cacheTags: [`application-detail-${id}`],
       logLabel: "ApplicationDetail",
-      accessToken:
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjgzM2FmNzM5LTlhODUtNDViOS04Y2JiLWYzMWQ5MjA3NzQ1OSIsInJvbGUiOiI3NDUwMTkyYy0wODliLTQzOTMtYWY3Ny1iNmNkMzEzOThjZTIiLCJhcHBfYWNjZXNzIjpmYWxzZSwiYWRtaW5fYWNjZXNzIjpmYWxzZSwiaWF0IjoxNzY4MzczOTI2LCJleHAiOjE3ODM5MjU5MjYsImlzcyI6ImRpcmVjdHVzIiwidXNlcl9saW5lX2lkIjpudWxsLCJzdWIiOiIvZmUvZGFzaGJvYXJkIiwicHJvZmlsZV9pZCI6IjRmMmUzNDE5LTYzZGItNDI3Ny1iMzFiLTU5MGQ3MWMxMjQ0MyIsImp0aSI6IjMxNTk0YWQ3LTRiZDMtNGEzMy05YzU4LTA2ZTY4YzViYjk2ZiJ9.63tcunScyfgkaId9OoTprSg98tk3zX5sOfo-e4od3D4",
+      accessToken: "abcxyz",
     },
   );
 
