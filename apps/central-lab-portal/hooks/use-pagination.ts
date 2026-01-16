@@ -1,8 +1,8 @@
-'use memo';
+"use memo";
 
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams } from "next/navigation";
 
-import { useNavigation } from './use-navigation';
+import { useNavigation } from "./use-navigation";
 
 interface UsePaginationOptions {
   page: number;
@@ -18,18 +18,20 @@ export const usePagination = ({ page, size }: UsePaginationOptions) => {
 
   const updatePagination = (newPage: number, newSize?: number) => {
     const params = new URLSearchParams(searchParams.toString());
-    params.set('page', String(newPage + 1));
+    params.set("page", String(newPage + 1));
 
     if (newSize !== undefined) {
-      params.set('size', String(newSize));
+      params.set("size", String(newSize));
     }
 
     navigate(`?${params.toString()}`, { scroll: false });
   };
 
-  const handlePageChange = (currentPage: number) => updatePagination(currentPage);
+  const handlePageChange = (currentPage: number) =>
+    updatePagination(currentPage);
 
-  const handlePageSizeChange = (pageSize: number) => updatePagination(0, pageSize);
+  const handlePageSizeChange = (pageSize: number) =>
+    updatePagination(0, pageSize);
 
   return {
     handlePageChange,

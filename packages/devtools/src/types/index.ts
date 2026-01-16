@@ -40,7 +40,7 @@ export interface TranslationProject {
  */
 export interface TranslationDiff {
   key: string;
-  type: 'added' | 'removed' | 'modified' | 'missing';
+  type: "added" | "removed" | "modified" | "missing";
   languages: string[];
   values: Record<string, string | undefined>;
 }
@@ -59,6 +59,6 @@ export interface TranslationFilter {
  */
 export interface ExportOptions {
   languages: string[];
-  format: 'json' | 'zip';
+  format: "json" | "zip";
   filename?: string;
 }

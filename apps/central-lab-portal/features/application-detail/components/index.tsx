@@ -10,22 +10,22 @@ import ApplicationDetailTitle from "@/features/application-detail/components/tit
 import { cn } from "@/lib/utils";
 
 export default function ApplicationDetail({
-	children,
-	className,
+  children,
+  className,
 }: {
-	children: React.ReactNode;
-	className?: string;
+  children: React.ReactNode;
+  className?: string;
 }) {
-	return (
-		<div
-			className={cn(
-				"application-root w-[1280px] mx-auto p-8 bg-white shadow-lg border border-black text-sm font-sans min-h-[1414px]",
-				className,
-			)}
-		>
-			{children}
-		</div>
-	);
+  return (
+    <div
+      className={cn(
+        "application-root w-[1280px] mx-auto p-8 bg-white shadow-lg border border-black text-sm font-sans min-h-[1414px]",
+        className,
+      )}
+    >
+      {children}
+    </div>
+  );
 }
 
 // Attach sub-components

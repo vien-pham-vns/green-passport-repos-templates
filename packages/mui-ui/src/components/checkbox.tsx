@@ -1,7 +1,9 @@
 "use client";
 
-import MuiCheckbox, { type CheckboxProps as MuiCheckboxProps } from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
+import MuiCheckbox, {
+  type CheckboxProps as MuiCheckboxProps,
+} from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
 export type CheckboxProps = MuiCheckboxProps & {
   label?: string;
@@ -20,7 +22,9 @@ export type CheckboxProps = MuiCheckboxProps & {
  */
 export default function Checkbox({ label, ...props }: CheckboxProps) {
   if (label) {
-    return <FormControlLabel control={<MuiCheckbox {...props} />} label={label} />;
+    return (
+      <FormControlLabel control={<MuiCheckbox {...props} />} label={label} />
+    );
   }
   return <MuiCheckbox {...props} />;
 }

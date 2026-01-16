@@ -1,14 +1,14 @@
-'server only';
+"server only";
 
-import { toSnake } from './transform';
+import { toSnake } from "./transform";
 
 export type QueryParamsFilter = Record<string, unknown>;
 
 export const toCurl = (input: RequestInfo, init?: RequestInit) => {
-  const url = typeof input === 'string' ? input : input.url;
-  const method = init?.method || 'GET';
+  const url = typeof input === "string" ? input : input.url;
+  const method = init?.method || "GET";
   const headerItems = new Headers(
-    init?.headers || (input instanceof Request ? input.headers : {})
+    init?.headers || (input instanceof Request ? input.headers : {}),
   );
   const body = init?.body;
 
@@ -18,7 +18,7 @@ export const toCurl = (input: RequestInfo, init?: RequestInit) => {
     curl.push(`-H "${key}: ${value}"`);
   });
 
-  if (body && typeof body === 'string') {
+  if (body && typeof body === "string") {
     curl.push(`--data '${body}'`);
   }
 
@@ -26,11 +26,13 @@ export const toCurl = (input: RequestInfo, init?: RequestInit) => {
 
   return {
     curl,
-    curlString: curl.join(' '),
+    curlString: curl.join(" "),
   };
 };
 
-export const buildRequestParams = (params: QueryParamsFilter): QueryParamsFilter => {
+export const buildRequestParams = (
+  params: QueryParamsFilter,
+): QueryParamsFilter => {
   const searchParams = new URLSearchParams();
   const snakeCaseParams = toSnake(params) as QueryParamsFilter;
 

@@ -1,7 +1,7 @@
 "use client";
 
-import MuiGrid from '@mui/material/Grid';
-import type { GridProps as MuiGridProps } from '@mui/material/Grid';
+import MuiGrid from "@mui/material/Grid";
+import type { GridProps as MuiGridProps } from "@mui/material/Grid";
 
 export type GridProps = MuiGridProps;
 

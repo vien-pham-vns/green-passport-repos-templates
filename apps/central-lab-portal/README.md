@@ -75,6 +75,7 @@ For a complete overview of the monorepo structure and shared packages, please se
 This application leverages the latest features of Next.js 16 and React 19, with a strong focus on React Server Components (RSC).
 
 Key patterns include:
+
 - **Server-First Approach**: Components are Server Components by default.
 - **Server Actions**: For mutations and form handling.
 - **React 19 Hooks**: `useActionState`, `useFormStatus`, `useOptimistic`, and `use`.
@@ -86,6 +87,7 @@ For detailed explanations and code examples of these patterns, please consult th
 ## Docker Deployment
 
 The application is configured for containerized deployment:
+
 - **Output**: `standalone` mode for optimized Docker images.
 - **Multi-stage builds**: Supported via Next.js standalone output.
 - **Environment**: Configurable via environment variables.

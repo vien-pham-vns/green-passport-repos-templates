@@ -3,26 +3,26 @@
  * Safe to expose to client through /api/config
  */
 export interface AppConfig {
-	// Base Path
-	basePath: string;
+  // Base Path
+  basePath: string;
 
-	// Asset Domain
-	assetDomain: string;
+  // Asset Domain
+  assetDomain: string;
 
-	// Public Domain
-	publicDomain: string;
+  // Public Domain
+  publicDomain: string;
 
-	// CSP Allowed Domain
-	cspAllowedDomain: string;
+  // CSP Allowed Domain
+  cspAllowedDomain: string;
 
-	// API Configuration
-	apiUrl: string;
+  // API Configuration
+  apiUrl: string;
 
-	// Feature Flags
-	featureFlags: {
-		[key: string]: boolean;
-	};
+  // Feature Flags
+  featureFlags: {
+    [key: string]: boolean;
+  };
 
-	// Is Local Dev
-	isLocalDev: boolean;
+  // Is Local Dev
+  isLocalDev: boolean;
 }

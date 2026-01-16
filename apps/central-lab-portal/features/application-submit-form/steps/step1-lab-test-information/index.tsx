@@ -9,34 +9,34 @@ import { TestReportSection } from "./components/TestReportSection";
 import { useTaxInvoiceLogic } from "./hooks/use-tax-invoice-logic";
 
 export const Step1LabTestInformation = () => {
-	const {
-		control,
-		sameCompanyForTaxReport,
-		setSameCompanyForTaxReport,
-		isTaxInfoRequired,
-	} = useTaxInvoiceLogic();
+  const {
+    control,
+    sameCompanyForTaxReport,
+    setSameCompanyForTaxReport,
+    isTaxInfoRequired,
+  } = useTaxInvoiceLogic();
 
-	return (
-		<StepContainer
-			title="Lab Test Information"
-			description="Please provide your laboratory test information"
-		>
-			<CentralLabSection />
+  return (
+    <StepContainer
+      title="Lab Test Information"
+      description="Please provide your laboratory test information"
+    >
+      <CentralLabSection />
 
-			<TestReportSection
-				sameCompanyForTaxReport={sameCompanyForTaxReport}
-				setSameCompanyForTaxReport={setSameCompanyForTaxReport}
-			/>
+      <TestReportSection
+        sameCompanyForTaxReport={sameCompanyForTaxReport}
+        setSameCompanyForTaxReport={setSameCompanyForTaxReport}
+      />
 
-			<TaxInvoiceSection
-				control={control}
-				sameCompanyForTaxReport={sameCompanyForTaxReport}
-				isTaxInfoRequired={isTaxInfoRequired}
-			/>
+      <TaxInvoiceSection
+        control={control}
+        sameCompanyForTaxReport={sameCompanyForTaxReport}
+        isTaxInfoRequired={isTaxInfoRequired}
+      />
 
-			<DeliverySection />
+      <DeliverySection />
 
-			<ContactPersonSection />
-		</StepContainer>
-	);
+      <ContactPersonSection />
+    </StepContainer>
+  );
 };

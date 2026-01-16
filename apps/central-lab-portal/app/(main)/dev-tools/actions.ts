@@ -1,7 +1,7 @@
-'use server';
+"use server";
 
-import { readFile, readdir } from 'fs/promises';
-import { join } from 'path';
+import { readFile, readdir } from "fs/promises";
+import { join } from "path";
 
 export interface TranslationFileData {
   language: string;
@@ -14,16 +14,16 @@ export interface TranslationFileData {
  */
 export async function loadTranslationFiles(): Promise<TranslationFileData[]> {
   try {
-    const translationsDir = join(process.cwd(), 'messages');
+    const translationsDir = join(process.cwd(), "messages");
     const files = await readdir(translationsDir);
 
     const translationFiles: TranslationFileData[] = [];
 
     for (const filename of files) {
-      if (filename.endsWith('.json')) {
+      if (filename.endsWith(".json")) {
         const filePath = join(translationsDir, filename);
-        const content = await readFile(filePath, 'utf-8');
-        const language = filename.replace('.json', '');
+        const content = await readFile(filePath, "utf-8");
+        const language = filename.replace(".json", "");
 
         translationFiles.push({
           language,
@@ -35,7 +35,7 @@ export async function loadTranslationFiles(): Promise<TranslationFileData[]> {
 
     return translationFiles;
   } catch (error) {
-    console.error('Error loading translation files:', error);
+    console.error("Error loading translation files:", error);
     return [];
   }
 }
@@ -45,16 +45,16 @@ export async function loadTranslationFiles(): Promise<TranslationFileData[]> {
  */
 export async function saveTranslationFile(
   filename: string,
-  content: string
+  content: string,
 ): Promise<{ success: boolean; error?: string }> {
   try {
-    const translationsDir = join(process.cwd(), 'messages');
+    const translationsDir = join(process.cwd(), "messages");
     const filePath = join(translationsDir, filename);
 
     // Validate JSON before saving
     JSON.parse(content);
 
-    await readFile(filePath, 'utf-8'); // Ensure file exists
+    await readFile(filePath, "utf-8"); // Ensure file exists
 
     // Note: In a real app, you'd write the file here
     // For safety, we'll skip the actual write in this demo
@@ -64,7 +64,7 @@ export async function saveTranslationFile(
   } catch (error) {
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Failed to save file',
+      error: error instanceof Error ? error.message : "Failed to save file",
     };
   }
 }

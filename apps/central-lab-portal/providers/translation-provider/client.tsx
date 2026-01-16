@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import React, { createContext } from 'react';
+import React, { createContext } from "react";
 
-import { get } from 'es-toolkit/compat';
-import Mustache from 'mustache';
+import { get } from "es-toolkit/compat";
+import Mustache from "mustache";
 
-import { Locale } from '@/lib/i18n-config';
-import { initDateLocale } from '@/utils/date';
+import { Locale } from "@/lib/i18n-config";
+import { initDateLocale } from "@/utils/date";
 
 export type TranslateMessages = Record<string, unknown>;
 
@@ -22,7 +22,10 @@ interface TranslationContextProps {
 
 const Context = createContext<TranslationContextValue | null>(null);
 
-export function TranslationContext({ value, children }: TranslationContextProps) {
+export function TranslationContext({
+  value,
+  children,
+}: TranslationContextProps) {
   return <Context.Provider value={value}>{children}</Context.Provider>;
 }
 
@@ -33,7 +36,7 @@ export function useTranslationsContext(): {
   const context = React.useContext(Context);
 
   if (!context) {
-    throw new Error('useTranslation must be used within TranslationProvider');
+    throw new Error("useTranslation must be used within TranslationProvider");
   }
 
   // Initialize date locale based on translation locale
@@ -44,12 +47,12 @@ export function useTranslationsContext(): {
 
 export const interpolate = (
   text: string,
-  values: Record<string, unknown> = {}
+  values: Record<string, unknown> = {},
 ): string => {
   try {
     return Mustache.render(text, values);
   } catch (error) {
-    console.error('Translation interpolation error:', error);
+    console.error("Translation interpolation error:", error);
     return text;
   }
 };
@@ -85,6 +88,6 @@ export function useTranslations(key: string) {
 
   return (curKey: string, values?: Record<string, unknown>): string => {
     const text = get(res, curKey, curKey);
-    return typeof text === 'string' ? interpolate(text, values) : String(text);
+    return typeof text === "string" ? interpolate(text, values) : String(text);
   };
 }

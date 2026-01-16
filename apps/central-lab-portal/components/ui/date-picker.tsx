@@ -43,7 +43,7 @@ export function DatePicker({
             className={cn(
               "w-full justify-start text-left font-normal",
               !date && "text-muted-foreground",
-              className
+              className,
             )}
             disabled={disabled}
           >
@@ -71,4 +71,3 @@ export function DatePicker({
     </Popover>
   );
 }
-

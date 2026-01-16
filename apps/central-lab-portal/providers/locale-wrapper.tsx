@@ -3,16 +3,16 @@ import { getLocale } from "@/lib/server-i18n";
 import { LocaleProvider } from "./locale-context";
 
 export default async function LocaleWrapper({
-	children,
+  children,
 }: {
-	children: React.ReactNode;
+  children: React.ReactNode;
 }) {
-	const locale = await getLocale();
-	const dictPromise = getDictionary(locale);
+  const locale = await getLocale();
+  const dictPromise = getDictionary(locale);
 
-	return (
-		<LocaleProvider locale={locale} dictPromise={dictPromise}>
-			{children}
-		</LocaleProvider>
-	);
+  return (
+    <LocaleProvider locale={locale} dictPromise={dictPromise}>
+      {children}
+    </LocaleProvider>
+  );
 }

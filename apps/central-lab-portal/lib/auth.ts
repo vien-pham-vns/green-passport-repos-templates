@@ -1,12 +1,12 @@
-'use server';
+"use server";
 
-import { cookies } from 'next/headers';
+import { cookies } from "next/headers";
 
 import {
   HEADER_ACCESS_TOKEN,
   PROFILE_ID_COOKIE_NAME,
   TOKEN_COOKIE_NAME,
-} from './constants';
+} from "./constants";
 
 /**
  * Get authentication token from cookie
@@ -33,7 +33,11 @@ export const getHeaderAccessToken = async function () {
 export async function clearAuthCookies() {
   const cookieStore = await cookies();
 
-  const cookiesToClear = [TOKEN_COOKIE_NAME, PROFILE_ID_COOKIE_NAME, HEADER_ACCESS_TOKEN];
+  const cookiesToClear = [
+    TOKEN_COOKIE_NAME,
+    PROFILE_ID_COOKIE_NAME,
+    HEADER_ACCESS_TOKEN,
+  ];
 
   cookiesToClear.forEach((cookieName) => {
     if (cookieStore.has(cookieName)) {

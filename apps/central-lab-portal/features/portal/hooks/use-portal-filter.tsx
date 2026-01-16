@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useSearchParams } from 'next/navigation';
-import { format } from 'date-fns';
+import { useSearchParams } from "next/navigation";
+import { format } from "date-fns";
 
-import { useNavigation } from '@/hooks/use-navigation';
+import { useNavigation } from "@/hooks/use-navigation";
 
 type PortalFilters = {
   fromDate: string | null;
@@ -14,15 +14,17 @@ export function usePortalFilter() {
   const searchParams = useSearchParams();
   const { navigate } = useNavigation();
 
-  const fromDateParam = searchParams.get('fromDate');
-  const toDateParam = searchParams.get('toDate');
+  const fromDateParam = searchParams.get("fromDate");
+  const toDateParam = searchParams.get("toDate");
 
   const filters: PortalFilters = {
     fromDate: fromDateParam ?? null,
     toDate: toDateParam ?? null,
   };
 
-  const updateSearchParams = (updates: Record<string, string | null | undefined>) => {
+  const updateSearchParams = (
+    updates: Record<string, string | null | undefined>,
+  ) => {
     const params = new URLSearchParams(searchParams.toString());
 
     Object.entries(updates).forEach(([key, value]) => {
@@ -38,20 +40,20 @@ export function usePortalFilter() {
 
   const handleFiltersChange = (updatedFilters: Partial<PortalFilters>) => {
     const updates: Record<string, string | null | undefined> = {
-      page: '1', // Reset to first page on filter change
+      page: "1", // Reset to first page on filter change
     };
 
     // From date
     if (updatedFilters.fromDate !== undefined) {
       updates.fromDate = updatedFilters.fromDate
-        ? format(new Date(updatedFilters.fromDate), 'yyyy-MM-dd')
+        ? format(new Date(updatedFilters.fromDate), "yyyy-MM-dd")
         : null;
     }
 
     // To date
     if (updatedFilters.toDate !== undefined) {
       updates.toDate = updatedFilters.toDate
-        ? format(new Date(updatedFilters.toDate), 'yyyy-MM-dd')
+        ? format(new Date(updatedFilters.toDate), "yyyy-MM-dd")
         : null;
     }
 

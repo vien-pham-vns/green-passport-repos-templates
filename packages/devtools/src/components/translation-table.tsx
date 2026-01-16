@@ -1,22 +1,22 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import TextField from '@mui/material/TextField';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Chip from '@mui/material/Chip';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
-import Typography from '@mui/material/Typography';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import WarningIcon from '@mui/icons-material/Warning';
-import type { FlatTranslationEntry } from '../types';
+import { useState } from "react";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import TextField from "@mui/material/TextField";
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
+import Chip from "@mui/material/Chip";
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import WarningIcon from "@mui/icons-material/Warning";
+import type { FlatTranslationEntry } from "../types";
 
 interface TranslationTableProps {
   entries: FlatTranslationEntry[];
@@ -37,9 +37,7 @@ export default function TranslationTable({
   } | null>(null);
 
   const filteredEntries = showOnlyMissing
-    ? entries.filter((entry) =>
-        languages.some((lang) => !entry.values[lang]),
-      )
+    ? entries.filter((entry) => languages.some((lang) => !entry.values[lang]))
     : entries;
 
   const handleCopyKey = (key: string) => {
@@ -67,7 +65,7 @@ export default function TranslationTable({
               sx={{
                 minWidth: 250,
                 fontWeight: 600,
-                bgcolor: 'background.paper',
+                bgcolor: "background.paper",
                 py: 2,
               }}
             >
@@ -79,8 +77,8 @@ export default function TranslationTable({
                 sx={{
                   minWidth: 300,
                   fontWeight: 600,
-                  textTransform: 'uppercase',
-                  bgcolor: 'background.paper',
+                  textTransform: "uppercase",
+                  bgcolor: "background.paper",
                   py: 2,
                 }}
               >
@@ -93,16 +91,18 @@ export default function TranslationTable({
           {filteredEntries.length === 0 ? (
             <TableRow>
               <TableCell colSpan={languages.length + 1} align="center">
-                <Box sx={{ py: 4 }}>
-                  No translations found
-                </Box>
+                <Box sx={{ py: 4 }}>No translations found</Box>
               </TableCell>
             </TableRow>
           ) : (
             filteredEntries.map((entry) => (
-              <TableRow key={entry.key} hover sx={{ '&:last-child td': { borderBottom: 0 } }}>
+              <TableRow
+                key={entry.key}
+                hover
+                sx={{ "&:last-child td": { borderBottom: 0 } }}
+              >
                 <TableCell sx={{ py: 1.5 }}>
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                     <Tooltip title="Copy key">
                       <IconButton
                         size="small"
@@ -116,9 +116,9 @@ export default function TranslationTable({
                       variant="body2"
                       component="code"
                       sx={{
-                        fontFamily: 'monospace',
-                        fontSize: '0.813rem',
-                        color: 'text.secondary',
+                        fontFamily: "monospace",
+                        fontSize: "0.813rem",
+                        color: "text.secondary",
                       }}
                     >
                       {entry.key}
@@ -139,12 +139,12 @@ export default function TranslationTable({
                           fullWidth
                           multiline
                           autoFocus
-                          defaultValue={value || ''}
+                          defaultValue={value || ""}
                           onBlur={(e) =>
                             handleEdit(entry.key, lang, e.target.value)
                           }
                           onKeyDown={(e) => {
-                            if (e.key === 'Enter' && !e.shiftKey) {
+                            if (e.key === "Enter" && !e.shiftKey) {
                               e.preventDefault();
                               handleEdit(
                                 entry.key,
@@ -157,16 +157,18 @@ export default function TranslationTable({
                         />
                       ) : (
                         <Box
-                          onClick={() => setEditingCell({ key: entry.key, language: lang })}
+                          onClick={() =>
+                            setEditingCell({ key: entry.key, language: lang })
+                          }
                           sx={{
-                            cursor: 'pointer',
+                            cursor: "pointer",
                             p: 1,
                             borderRadius: 1,
                             minHeight: 36,
-                            display: 'flex',
-                            alignItems: 'center',
-                            '&:hover': {
-                              bgcolor: 'action.hover',
+                            display: "flex",
+                            alignItems: "center",
+                            "&:hover": {
+                              bgcolor: "action.hover",
                             },
                           }}
                         >

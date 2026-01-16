@@ -1,28 +1,28 @@
-'use server';
+"use server";
 
-import { cookies } from 'next/headers';
-import { cache } from 'react';
+import { cookies } from "next/headers";
+import { cache } from "react";
 
-import { type Locale } from './i18n-config';
+import { type Locale } from "./i18n-config";
 
 import {
   HEADER_ACCESS_TOKEN,
   NEXT_LOCALE,
   PROFILE_ID_COOKIE_NAME,
   TOKEN_COOKIE_NAME,
-} from './constants';
+} from "./constants";
 
 // TODO: Import AppConfig from your app-config file
 // For now, we'll use environment variables
-const getDeploymentEnv = () => process.env.NODE_ENV || 'development';
-const isLocalDev = process.env.NODE_ENV === 'development';
+const getDeploymentEnv = () => process.env.NODE_ENV || "development";
+const isLocalDev = process.env.NODE_ENV === "development";
 
 /**
  * Locale
  */
 export const getLocale = cache(async function (): Promise<Locale> {
   const cookieStore = await cookies();
-  const locale = (cookieStore.get(NEXT_LOCALE)?.value || 'th') as Locale;
+  const locale = (cookieStore.get(NEXT_LOCALE)?.value || "th") as Locale;
   return locale;
 });
 
@@ -30,10 +30,10 @@ export async function setLocale(locale: Locale) {
   const cookieStore = await cookies();
   cookieStore.set(NEXT_LOCALE, locale, {
     httpOnly: true,
-    secure: getDeploymentEnv() === 'production',
-    sameSite: 'lax',
+    secure: getDeploymentEnv() === "production",
+    sameSite: "lax",
     maxAge: 60 * 60 * 24 * 365, // 1 year
-    path: '/',
+    path: "/",
   });
 }
 
@@ -50,10 +50,10 @@ export async function setProfileId(profileId: string) {
   const cookieStore = await cookies();
   cookieStore.set(PROFILE_ID_COOKIE_NAME, profileId, {
     httpOnly: true,
-    secure: getDeploymentEnv() === 'production',
-    sameSite: 'lax',
+    secure: getDeploymentEnv() === "production",
+    sameSite: "lax",
     maxAge: 60 * 60 * 24 * 7, // 7 days
-    path: '/',
+    path: "/",
   });
 }
 
@@ -66,19 +66,19 @@ export async function setCredential(token: string) {
   if (isLocalDev) {
     cookieStore.set(TOKEN_COOKIE_NAME, token, {
       httpOnly: true,
-      secure: getDeploymentEnv() === 'production',
-      sameSite: 'lax',
+      secure: getDeploymentEnv() === "production",
+      sameSite: "lax",
       maxAge: 60 * 60 * 24 * 7, // 7 days
-      path: '/',
+      path: "/",
     });
   }
 
   // This is force server api using header authorization in server to server.
   cookieStore.set(HEADER_ACCESS_TOKEN, token, {
     httpOnly: true,
-    secure: getDeploymentEnv() === 'production',
-    sameSite: 'lax',
+    secure: getDeploymentEnv() === "production",
+    sameSite: "lax",
     maxAge: 60 * 60 * 24 * 7, // 7 days
-    path: '/',
+    path: "/",
   });
 }

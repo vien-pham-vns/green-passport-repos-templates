@@ -14,21 +14,21 @@ Material Design 3 uses a simplified type scale with 5 categories, each with 3 si
 
 Following the [M3 Type Scale](https://m3.material.io/styles/typography/type-scale-tokens):
 
-| MUI Variant | M3 Role        | Font Size | Weight | Line Height | Letter Spacing | Usage                     |
-| ----------- | -------------- | --------- | ------ | ----------- | -------------- | ------------------------- |
-| `h1`        | Display Large  | 57px      | 400    | 64px        | -0.25px        | Hero sections, marketing  |
-| `h2`        | Display Medium | 45px      | 400    | 52px        | 0px            | Large headlines           |
-| `h3`        | Display Small  | 36px      | 400    | 44px        | 0px            | Section headers           |
-| `h4`        | Headline Medium| 28px      | 400    | 36px        | 0px            | Card titles, page headers |
-| `h5`        | Headline Small | 24px      | 400    | 32px        | 0px            | Subsection headers        |
-| `h6`        | Title Large    | 22px      | 400    | 28px        | 0px            | Prominent titles          |
-| `subtitle1` | Title Medium   | 16px      | 500    | 24px        | 0.15px         | Medium emphasis titles    |
-| `subtitle2` | Title Small    | 14px      | 500    | 20px        | 0.1px          | Section labels            |
-| `body1`     | Body Large     | 16px      | 400    | 24px        | 0.5px          | Primary content           |
-| `body2`     | Body Medium    | 14px      | 400    | 20px        | 0.25px         | Secondary content         |
-| `button`    | Label Large    | 14px      | 500    | 20px        | 0.1px          | Button text               |
-| `caption`   | Body Small     | 12px      | 400    | 16px        | 0.4px          | Captions, helper text     |
-| `overline`  | Label Small    | 11px      | 500    | 16px        | 0.5px          | Overlines, labels         |
+| MUI Variant | M3 Role         | Font Size | Weight | Line Height | Letter Spacing | Usage                     |
+| ----------- | --------------- | --------- | ------ | ----------- | -------------- | ------------------------- |
+| `h1`        | Display Large   | 57px      | 400    | 64px        | -0.25px        | Hero sections, marketing  |
+| `h2`        | Display Medium  | 45px      | 400    | 52px        | 0px            | Large headlines           |
+| `h3`        | Display Small   | 36px      | 400    | 44px        | 0px            | Section headers           |
+| `h4`        | Headline Medium | 28px      | 400    | 36px        | 0px            | Card titles, page headers |
+| `h5`        | Headline Small  | 24px      | 400    | 32px        | 0px            | Subsection headers        |
+| `h6`        | Title Large     | 22px      | 400    | 28px        | 0px            | Prominent titles          |
+| `subtitle1` | Title Medium    | 16px      | 500    | 24px        | 0.15px         | Medium emphasis titles    |
+| `subtitle2` | Title Small     | 14px      | 500    | 20px        | 0.1px          | Section labels            |
+| `body1`     | Body Large      | 16px      | 400    | 24px        | 0.5px          | Primary content           |
+| `body2`     | Body Medium     | 14px      | 400    | 20px        | 0.25px         | Secondary content         |
+| `button`    | Label Large     | 14px      | 500    | 20px        | 0.1px          | Button text               |
+| `caption`   | Body Small      | 12px      | 400    | 16px        | 0.4px          | Captions, helper text     |
+| `overline`  | Label Small     | 11px      | 500    | 16px        | 0.5px          | Overlines, labels         |
 
 **Note:** All typography values are based on official [Material Design 3 specifications](https://m3.material.io/styles/typography/type-scale-tokens) with exact line heights and letter spacing matching the M3 type scale.
 
@@ -38,26 +38,26 @@ Material Design 3 defines 7 shape tokens for consistent corner roundedness acros
 
 Following the [M3 Shape Scale](https://m3.material.io/styles/shape/shape-scale-tokens):
 
-| Token         | Value   | Usage                                                                         |
-| ------------- | ------- | ----------------------------------------------------------------------------- |
-| `none`        | 0px     | Square corners - dividers, switches                                           |
-| `extraSmall`  | 4px     | Very subtle rounding - chips, badges                                          |
-| `small`       | 8px     | Subtle rounding - small buttons, cards                                        |
-| `medium`      | 12px    | Standard rounding - cards, dialogs, text fields (default)                     |
-| `large`       | 16px    | Increased rounding - large cards, navigation drawers                          |
-| `extraLarge`  | 28px    | High rounding - large dialogs, bottom sheets (28px for web, 24px for Android) |
-| `full`        | 9999px  | Fully rounded - pills, FABs, toggle buttons                                   |
+| Token        | Value  | Usage                                                                         |
+| ------------ | ------ | ----------------------------------------------------------------------------- |
+| `none`       | 0px    | Square corners - dividers, switches                                           |
+| `extraSmall` | 4px    | Very subtle rounding - chips, badges                                          |
+| `small`      | 8px    | Subtle rounding - small buttons, cards                                        |
+| `medium`     | 12px   | Standard rounding - cards, dialogs, text fields (default)                     |
+| `large`      | 16px   | Increased rounding - large cards, navigation drawers                          |
+| `extraLarge` | 28px   | High rounding - large dialogs, bottom sheets (28px for web, 24px for Android) |
+| `full`       | 9999px | Fully rounded - pills, FABs, toggle buttons                                   |
 
 ```typescript
 import { shapeTokens } from "@dt/mui-ui";
 
-shapeTokens.none;       // 0px   - Square corners
+shapeTokens.none; // 0px   - Square corners
 shapeTokens.extraSmall; // 4px   - Chips, badges
-shapeTokens.small;      // 8px   - Small cards, buttons
-shapeTokens.medium;     // 12px  - Cards, dialogs, text fields (default)
-shapeTokens.large;      // 16px  - Large cards, sheets
+shapeTokens.small; // 8px   - Small cards, buttons
+shapeTokens.medium; // 12px  - Cards, dialogs, text fields (default)
+shapeTokens.large; // 16px  - Large cards, sheets
 shapeTokens.extraLarge; // 28px  - Large dialogs, bottom sheets
-shapeTokens.full;       // 9999px - Pills, FABs, fully rounded
+shapeTokens.full; // 9999px - Pills, FABs, fully rounded
 ```
 
 ### Component Shape Mappings

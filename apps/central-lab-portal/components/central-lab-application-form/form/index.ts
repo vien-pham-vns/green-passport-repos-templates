@@ -13,6 +13,6 @@ export { useCentralLabFormContext } from "@/components/central-lab-application-f
  * </CentralLabForm>
  */
 export const CentralLabForm = Object.assign(CentralLabFormRoot, {
-	Content: FormContent,
-	Actions: FormActions,
+  Content: FormContent,
+  Actions: FormActions,
 });
