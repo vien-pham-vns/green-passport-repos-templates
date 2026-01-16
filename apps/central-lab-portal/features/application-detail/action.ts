@@ -13,18 +13,15 @@ export const getApplicationById = async (
   id: string,
 ): Promise<ApplicationData | null> => {
   try {
-    const response = await fetch(
-      `${apiUrl}/central-lab/v1/applications/${id}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        next: {
-          revalidate: 60,
-          tags: ["application-id"],
-        },
+    const response = await fetch(`${apiUrl}/v1/applications/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
+      next: {
+        revalidate: 60,
+        tags: ["application-id"],
+      },
+    });
 
     if (!response.ok) {
       console.error(

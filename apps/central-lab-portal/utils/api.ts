@@ -1,3 +1,5 @@
+import { getConfig } from "@/lib/config";
+
 // API Version Type for Type Safety
 export type ApiVersion = "v1" | "v2";
 
@@ -14,6 +16,8 @@ export type ApiVersion = "v1" | "v2";
  * api('doa/request-reset-password', 'v2')
     Returns: '<domain>/api/v2/doa/request-reset-password'
  */
+const config = getConfig();
+
 export const api = (path: string, version: ApiVersion): string => {
   const cleanPath = path.replace(/^\//, "");
   return `${process.env.API_CORE_DOMAIN}/api/${version}/${cleanPath}`;
@@ -26,5 +30,5 @@ export const apiCore = (path: string, version: ApiVersion): string => {
 
 export const apiCentralLab = (path: string, version: ApiVersion): string => {
   const cleanPath = path.replace(/^\//, "");
-  return `${process.env.API_EGAP_CENTRAL_LAB_DOMAIN}/${version}/${cleanPath}`;
+  return `${config.apiUrl}/${version}/${cleanPath}`;
 };
