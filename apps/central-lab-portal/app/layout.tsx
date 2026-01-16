@@ -5,6 +5,7 @@ import "./globals.css";
 
 import { ThemeProvider } from "@/components/theme-provider";
 import ProviderLayout from "./provider-layout";
+import ConfigWrapper from "@/providers/config-wrapper";
 
 const poppins = Poppins({
   weight: ["300", "400", "500", "700"],
@@ -34,16 +35,18 @@ export default function RootLayout({ children }: Readonly<LayoutProps>) {
       className={poppins.variable}
     >
       <body className="antialiased">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Suspense fallback={<>Loading...</>}>
-            <ProviderLayout>{children}</ProviderLayout>
-          </Suspense>
-        </ThemeProvider>
+        <ConfigWrapper>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Suspense fallback={<>Loading...</>}>
+              <ProviderLayout>{children}</ProviderLayout>
+            </Suspense>
+          </ThemeProvider>
+        </ConfigWrapper>
       </body>
     </html>
   );

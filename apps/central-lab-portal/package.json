@@ -46,7 +46,10 @@
     "date-fns": "4.1.0",
     "embla-carousel-react": "latest",
     "es-toolkit": "1.43.0",
+    "html2canvas": "^1.4.1",
+    "html2canvas-pro": "^1.6.4",
     "input-otp": "latest",
+    "jspdf": "^4.0.0",
     "lucide-react": "^0.454.0",
     "mustache": "4.2.0",
     "next": "16.1.1",
@@ -56,6 +59,7 @@
     "react-day-picker": "latest",
     "react-dom": "^19",
     "react-hook-form": "^7.60.0",
+    "react-imask": "^7.6.1",
     "react-resizable-panels": "latest",
     "recharts": "latest",
     "shadcn": "latest",
@@ -64,7 +68,7 @@
     "tailwindcss-animate": "^1.0.7",
     "vaul": "latest",
     "vinxi": "0.5.3",
-    "zod": "3.25.76"
+    "zod": "^4.1.13"
   },
   "devDependencies": {
     "@dt/eslint-config": "workspace:*",
