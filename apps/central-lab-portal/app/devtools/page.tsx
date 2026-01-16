@@ -1,7 +1,6 @@
 import { Suspense } from "react";
 
 import TranslationEditor from "@dt/devtools/translation-editor-simple";
-import { loadEnv } from "@dt/devtools/utils/variables-env";
 
 import { loadTranslationFiles } from "./actions";
 
